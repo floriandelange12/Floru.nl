@@ -9,10 +9,8 @@
 
 function floru_create_pages() {
 
-    // Only run once
-    if ( get_option( 'floru_pages_created' ) ) {
-        return;
-    }
+    // Only run full creation once, but always ensure templates are assigned.
+    $pages_created = get_option( 'floru_pages_created' );
 
     $pages = array(
         array(
@@ -34,8 +32,8 @@ function floru_create_pages() {
             'content'  => '<!-- Content is rendered by the page template -->',
         ),
         array(
-            'title'    => 'Team',
-            'slug'     => 'team',
+            'title'    => 'Our Team',
+            'slug'     => 'our-team',
             'template' => 'templates/template-team.php',
             'content'  => '<!-- Content is rendered by the page template -->',
         ),
@@ -54,13 +52,22 @@ function floru_create_pages() {
     );
 
     foreach ( $pages as $page_data ) {
-        // Check if page already exists
+        // Check if page already exists by slug
         $existing = get_page_by_path( $page_data['slug'] );
 
+        // For the team page, also check old "team" slug
+        if ( ! $existing && $page_data['slug'] === 'our-team' ) {
+            $existing = get_page_by_path( 'team' );
+        }
+
         if ( $existing ) {
-            // Update template if page exists
+            // Always ensure correct template is assigned
             update_post_meta( $existing->ID, '_wp_page_template', $page_data['template'] );
             continue;
+        }
+
+        if ( $pages_created ) {
+            continue; // Don't create new pages if initial setup already ran
         }
 
         // Create the page
@@ -87,3 +94,4 @@ function floru_create_pages() {
     update_option( 'floru_pages_created', true );
 }
 add_action( 'after_switch_theme', 'floru_create_pages' );
+add_action( 'init', 'floru_create_pages', 20 );

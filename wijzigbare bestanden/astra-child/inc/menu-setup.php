@@ -29,7 +29,7 @@ function floru_create_menus() {
             'home'     => 'Home',
             'about'    => 'About',
             'services' => 'Services',
-            'team'     => 'Team',
+            'our-team' => 'Our Team',
             'clients'  => 'Clients',
             'contact'  => 'Contact',
         );
