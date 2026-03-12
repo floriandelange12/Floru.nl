@@ -483,32 +483,389 @@ function floru_team_details_save( $post_id ) {
 }
 
 /**
- * Client meta boxes: Website Link
+ * Client meta boxes: Logo, Website, Display Order — clean UI matching Team Members.
  */
 add_action( 'add_meta_boxes', 'floru_client_meta_boxes' );
 function floru_client_meta_boxes() {
+    remove_meta_box( 'postimagediv', 'floru_client', 'side' );
+    remove_meta_box( 'pageparentdiv', 'floru_client', 'side' );
+
     add_meta_box(
         'floru_client_details',
-        'Client Details',
+        'Website & Display Order',
         'floru_client_details_render',
         'floru_client',
         'normal',
-        'high'
+        'default'
     );
 }
 
-function floru_client_details_render( $post ) {
+/**
+ * Disable Gutenberg for Clients — classic editor is cleaner for this CPT.
+ */
+add_filter( 'use_block_editor_for_post_type', 'floru_client_disable_gutenberg', 10, 2 );
+function floru_client_disable_gutenberg( $use, $post_type ) {
+    if ( $post_type === 'floru_client' ) {
+        return false;
+    }
+    return $use;
+}
+
+/**
+ * Enqueue media library scripts on Client edit screens.
+ */
+add_action( 'admin_enqueue_scripts', 'floru_client_admin_scripts' );
+function floru_client_admin_scripts( $hook ) {
+    if ( $hook !== 'post.php' && $hook !== 'post-new.php' ) {
+        return;
+    }
+    global $post;
+    if ( isset( $post ) && $post->post_type === 'floru_client' ) {
+        wp_enqueue_media();
+    }
+}
+
+/**
+ * Inject Client profile section after the title — Logo, Website URL, Description.
+ */
+add_action( 'edit_form_after_title', 'floru_client_profile_section' );
+function floru_client_profile_section( $post ) {
+    if ( $post->post_type !== 'floru_client' ) {
+        return;
+    }
+
     wp_nonce_field( 'floru_client_details_nonce', 'floru_client_details_nonce' );
-    $link = get_post_meta( $post->ID, '_floru_client_link', true );
+
+    $link          = get_post_meta( $post->ID, '_floru_client_link', true );
+    $thumbnail_id  = get_post_thumbnail_id( $post->ID );
+    $thumbnail_url = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'medium' ) : '';
     ?>
-    <table class="form-table">
-        <tr>
-            <th><label for="floru_client_link">Website URL (optional)</label></th>
-            <td><input type="url" id="floru_client_link" name="floru_client_link" value="<?php echo esc_url( $link ); ?>" class="regular-text" placeholder="https://www.example.com"></td>
-        </tr>
-    </table>
-    <p class="description">Set the Featured Image as the client's logo. Use the editor for an optional short description.</p>
+    <div id="floru-client-profile-section">
+        <div class="floru-cp-row">
+            <!-- Logo -->
+            <div class="floru-cp-logo-col">
+                <label class="floru-cp-label">Logo</label>
+                <div id="floru-cp-logo-preview" class="floru-cp-logo-preview <?php echo $thumbnail_url ? 'has-logo' : ''; ?>">
+                    <?php if ( $thumbnail_url ) : ?>
+                        <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
+                    <?php else : ?>
+                        <span class="floru-cp-logo-placeholder">
+                            <span class="dashicons dashicons-format-image"></span>
+                            <span>Add logo</span>
+                        </span>
+                    <?php endif; ?>
+                </div>
+                <input type="hidden" id="floru_client_thumbnail_id" name="_thumbnail_id" value="<?php echo esc_attr( $thumbnail_id ? $thumbnail_id : '-1' ); ?>">
+                <div class="floru-cp-logo-actions">
+                    <button type="button" class="button" id="floru-cp-logo-btn"><?php echo $thumbnail_id ? 'Change Logo' : 'Upload Logo'; ?></button>
+                    <button type="button" class="button floru-cp-remove-btn" id="floru-cp-logo-remove" <?php echo ! $thumbnail_id ? 'style="display:none;"' : ''; ?>>Remove</button>
+                </div>
+            </div>
+            <!-- Website URL -->
+            <div class="floru-cp-fields-col">
+                <div class="floru-cp-field">
+                    <label class="floru-cp-label" for="floru_client_link">Website URL <span class="floru-cp-hint">— optional</span></label>
+                    <input type="url" id="floru_client_link" name="floru_client_link" value="<?php echo esc_url( $link ); ?>" class="widefat" placeholder="https://www.example.com">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="floru-cp-desc-heading">Description</h3>
+
+    <style>
+        #floru-client-profile-section {
+            background: #fff;
+            border: 1px solid #dcdcde;
+            border-radius: 4px;
+            padding: 18px 22px;
+            margin: 12px 0 0;
+        }
+        .floru-cp-row {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+        .floru-cp-logo-col {
+            flex: 0 0 160px;
+        }
+        .floru-cp-fields-col {
+            flex: 1;
+            min-width: 0;
+        }
+        .floru-cp-label {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 5px;
+            color: #50575e;
+        }
+        .floru-cp-hint {
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            color: #a7aaad;
+        }
+        .floru-cp-field {
+            margin-bottom: 14px;
+        }
+        .floru-cp-field:last-child {
+            margin-bottom: 0;
+        }
+        .floru-cp-logo-preview {
+            width: 160px;
+            height: 120px;
+            border-radius: 6px;
+            border: 2px dashed #c3c4c7;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f6f7f7;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .floru-cp-logo-preview:hover {
+            border-color: #2271b1;
+        }
+        .floru-cp-logo-preview.has-logo {
+            border-style: solid;
+            border-color: #dcdcde;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            background: #fff;
+        }
+        .floru-cp-logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 8px;
+        }
+        .floru-cp-logo-placeholder {
+            text-align: center;
+            color: #a7aaad;
+        }
+        .floru-cp-logo-placeholder .dashicons {
+            display: block;
+            font-size: 28px;
+            width: 28px;
+            height: 28px;
+            margin: 0 auto 4px;
+        }
+        .floru-cp-logo-placeholder span:last-child {
+            font-size: 11px;
+        }
+        .floru-cp-logo-actions {
+            margin-top: 8px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .floru-cp-logo-actions .button {
+            background: none;
+            border: none;
+            box-shadow: none;
+            font-size: 12px;
+            min-height: auto;
+            line-height: 1;
+            padding: 2px 0;
+            color: #2271b1;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .floru-cp-logo-actions .button:hover {
+            color: #135e96;
+            text-decoration: underline;
+        }
+        .floru-cp-logo-actions .button:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        .floru-cp-remove-btn {
+            color: #b32d2e !important;
+            font-size: 11px !important;
+        }
+        .floru-cp-remove-btn:hover {
+            color: #8a1c1c !important;
+        }
+        .floru-cp-desc-heading {
+            margin: 18px 0 0;
+            padding: 0;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #50575e;
+        }
+        .post-type-floru_client #postdivrich {
+            margin-top: 6px;
+        }
+        #floru_client_details .inside {
+            padding: 12px;
+        }
+        .floru-cp-bottom-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .floru-cp-bottom-row .floru-cp-field {
+            margin-bottom: 0;
+        }
+        .floru-cp-bottom-row .floru-cp-field:first-child {
+            flex: 1;
+        }
+        .floru-cp-bottom-row .floru-cp-field:last-child {
+            flex: 0 0 100px;
+        }
+        @media (max-width: 782px) {
+            .floru-cp-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .floru-cp-logo-col {
+                flex: none;
+            }
+            .floru-cp-fields-col {
+                width: 100%;
+            }
+            .floru-cp-bottom-row {
+                flex-direction: column;
+            }
+            .floru-cp-bottom-row .floru-cp-field:last-child {
+                flex: none;
+                width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+    jQuery(function($) {
+        var frame;
+        function openMedia() {
+            if (frame) { frame.open(); return; }
+            frame = wp.media({
+                title: 'Select Client Logo',
+                button: { text: 'Use This Logo' },
+                multiple: false,
+                library: { type: 'image' }
+            });
+            frame.on('select', function() {
+                var attachment = frame.state().get('selection').first().toJSON();
+                var url = attachment.sizes && attachment.sizes.medium ? attachment.sizes.medium.url : attachment.url;
+                $('#floru_client_thumbnail_id').val(attachment.id);
+                $('#floru-cp-logo-preview').addClass('has-logo').html('<img src="' + url + '" alt="">');
+                $('#floru-cp-logo-btn').text('Change Logo');
+                $('#floru-cp-logo-remove').show();
+            });
+            frame.open();
+        }
+        $('#floru-cp-logo-btn, #floru-cp-logo-preview').on('click', function(e) {
+            e.preventDefault();
+            openMedia();
+        });
+        $('#floru-cp-logo-remove').on('click', function(e) {
+            e.preventDefault();
+            $('#floru_client_thumbnail_id').val('-1');
+            $('#floru-cp-logo-preview').removeClass('has-logo').html(
+                '<span class="floru-cp-logo-placeholder">' +
+                '<span class="dashicons dashicons-format-image"></span>' +
+                '<span>Add logo</span></span>'
+            );
+            $('#floru-cp-logo-btn').text('Upload Logo');
+            $(this).hide();
+        });
+    });
+    </script>
     <?php
+}
+
+/**
+ * Custom title placeholder for Clients.
+ */
+add_filter( 'enter_title_here', 'floru_client_title_placeholder', 10, 2 );
+function floru_client_title_placeholder( $title, $post ) {
+    if ( $post->post_type === 'floru_client' ) {
+        return 'Client name (e.g. SAAB)';
+    }
+    return $title;
+}
+
+function floru_client_details_render( $post ) {
+    ?>
+    <div class="floru-cp-bottom-row">
+        <div class="floru-cp-field">
+            <label class="floru-cp-label" for="floru_client_order">Display Order</label>
+            <input type="number" id="floru_client_order" name="menu_order" value="<?php echo esc_attr( $post->menu_order ); ?>" min="0" step="1" style="width:100%;">
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Client admin list: custom columns with logo.
+ */
+add_filter( 'manage_floru_client_posts_columns', 'floru_client_admin_columns' );
+function floru_client_admin_columns( $columns ) {
+    $new = array();
+    $new['cb']           = $columns['cb'];
+    $new['floru_logo']   = 'Logo';
+    $new['title']        = 'Name';
+    $new['floru_link']   = 'Website';
+    $new['menu_order']   = 'Order';
+    return $new;
+}
+
+add_action( 'manage_floru_client_posts_custom_column', 'floru_client_admin_column_content', 10, 2 );
+function floru_client_admin_column_content( $column, $post_id ) {
+    switch ( $column ) {
+        case 'floru_logo':
+            if ( has_post_thumbnail( $post_id ) ) {
+                echo get_the_post_thumbnail( $post_id, array( 48, 48 ), array( 'style' => 'border-radius:4px;object-fit:contain;width:48px;height:48px;background:#fff;' ) );
+            } else {
+                echo '<span style="display:inline-block;width:48px;height:48px;border-radius:4px;background:#e5e7eb;"></span>';
+            }
+            break;
+        case 'floru_link':
+            $link = get_post_meta( $post_id, '_floru_client_link', true );
+            echo $link ? '<a href="' . esc_url( $link ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( wp_parse_url( $link, PHP_URL_HOST ) ) . '</a>' : '—';
+            break;
+        case 'menu_order':
+            echo esc_html( get_post_field( 'menu_order', $post_id ) );
+            break;
+    }
+}
+
+add_filter( 'manage_edit-floru_client_sortable_columns', 'floru_client_sortable_columns' );
+function floru_client_sortable_columns( $columns ) {
+    $columns['menu_order'] = 'menu_order';
+    return $columns;
+}
+
+/**
+ * Admin CSS for Clients list & edit screen.
+ */
+add_action( 'admin_head', 'floru_client_admin_css' );
+function floru_client_admin_css() {
+    $screen = get_current_screen();
+    if ( ! $screen ) {
+        return;
+    }
+    if ( $screen->id === 'edit-floru_client' ) {
+        echo '<style>
+            .column-floru_logo { width: 60px; }
+            .column-menu_order { width: 60px; }
+            .column-floru_link { width: 200px; }
+        </style>';
+    }
+    if ( $screen->id === 'floru_client' ) {
+        echo '<style>
+            .post-type-floru_client #titlewrap { margin-bottom: 0; }
+            .post-type-floru_client #post-body-content { margin-bottom: 12px; }
+        </style>';
+    }
 }
 
 add_action( 'save_post_floru_client', 'floru_client_details_save' );

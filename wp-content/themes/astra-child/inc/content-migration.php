@@ -14,6 +14,180 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'after_switch_theme', 'floru_migrate_content', 30 );
+
+/**
+ * One-time migration to ensure all real team members exist.
+ * Checks each member individually by title — safe to run alongside existing data.
+ */
+add_action( 'admin_init', 'floru_ensure_team_members' );
+function floru_ensure_team_members() {
+    if ( get_option( 'floru_team_members_v2' ) ) {
+        return;
+    }
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    $members = array(
+        array(
+            'title' => 'Ruud de Pruyssenaere de la Woestijne',
+            'role'  => 'Director FLORU Consultancy — Army, Brigadier General ret.',
+            'order' => 1,
+        ),
+        array(
+            'title' => 'Jaap Willemse',
+            'role'  => 'Air Force, Major General ret.',
+            'order' => 2,
+        ),
+        array(
+            'title' => 'Michael van der Klip',
+            'role'  => 'Navy, Commander ret.',
+            'order' => 3,
+        ),
+        array(
+            'title' => 'Jan Zeggelaar',
+            'role'  => 'Army, Major ret.',
+            'order' => 4,
+        ),
+        array(
+            'title' => 'Peter Lenselink',
+            'role'  => 'Navy, Rear Admiral LH ret.',
+            'order' => 5,
+        ),
+        array(
+            'title' => 'Michiel Hijmans',
+            'role'  => 'Navy, Rear Admiral LH ret.',
+            'order' => 6,
+        ),
+        array(
+            'title' => 'Marina Eppen-Pruyssenaere',
+            'role'  => 'Technical Support',
+            'order' => 7,
+        ),
+    );
+
+    foreach ( $members as $member ) {
+        $exists = new WP_Query( array(
+            'post_type'      => 'floru_team',
+            'title'          => $member['title'],
+            'posts_per_page' => 1,
+            'fields'         => 'ids',
+        ) );
+        if ( ! $exists->have_posts() ) {
+            $post_id = wp_insert_post( array(
+                'post_type'   => 'floru_team',
+                'post_title'  => $member['title'],
+                'post_status' => 'publish',
+                'menu_order'  => $member['order'],
+            ) );
+            if ( $post_id && ! is_wp_error( $post_id ) ) {
+                update_post_meta( $post_id, '_floru_team_role', $member['role'] );
+            }
+        }
+    }
+
+    update_option( 'floru_team_members_v2', true );
+}
+
+/**
+ * One-time migration to replace dummy clients with real Floru clients.
+ */
+add_action( 'admin_init', 'floru_ensure_real_clients' );
+function floru_ensure_real_clients() {
+    if ( get_option( 'floru_clients_v2' ) ) {
+        return;
+    }
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    // Remove existing dummy clients.
+    $dummy_clients = get_posts( array(
+        'post_type'      => 'floru_client',
+        'posts_per_page' => -1,
+        'fields'         => 'ids',
+    ) );
+    foreach ( $dummy_clients as $dummy_id ) {
+        wp_delete_post( $dummy_id, true );
+    }
+
+    // Real clients from floru.nl.
+    $clients = array(
+        array(
+            'title'   => 'SAAB',
+            'content' => 'SAAB serves the global market with world-leading products, services and solutions from military defence to civil security. With operations on every continent, Saab continuously develops, adapts and improves new technology to meet customers\' changing needs.',
+            'order'   => 1,
+        ),
+        array(
+            'title'   => 'NU Security Consultancy',
+            'content' => 'NU Security Consultancy (NUSC) offers all-round security services. Theft, sabotage, vandalism, industrial espionage, etc. are examples of threats and risks for every organization. NUSC maps out every risk and provides clear recommendations for organizational, structural and electronic measures to be taken. NUSC provides customization.',
+            'order'   => 2,
+        ),
+        array(
+            'title'   => 'CNIM',
+            'content' => 'CNIM is a French industrial engineering contractor and equipment manufacturer. We operate in the environment, energy, defense and high technology sectors. CNIM designs and manufactures equipment and offers solutions for a safer, better protected, more energy-efficient and environmentally sound world.',
+            'order'   => 3,
+        ),
+        array(
+            'title'   => 'Exensor',
+            'content' => 'The world leader in the design, development, integration and supply of networked unattended ground sensor systems for homeland security and military applications. We focus on customer needs by adapting our solutions to meet their specific requirements.',
+            'order'   => 4,
+        ),
+        array(
+            'title'   => 'Pro Systems',
+            'content' => 'Pro Systems. Synonymous with audio-visual solutions. Creates the most amazing virtual environments, from which you can safely train all imaginable actions. Furnished any desired space with audio-visual total solutions.',
+            'order'   => 5,
+        ),
+        array(
+            'title'   => 'Stratego',
+            'content' => 'Stratego is a recruitment agency which focuses on former military personnel. It supports companies and organizations in Recruitment & selection, secondment / project management and other capacity solutions. Stratego is located at the interface of Defence and the business community and distinguishes itself – just like the candidates – on knowledge, quality, mentality and result orientation.',
+            'order'   => 6,
+        ),
+        array(
+            'title'   => 'X-Systems',
+            'content' => 'X-SYSTEMS is a Dutch Mobile & IoT Security company, located in The Hague (city of Justice and Peace) and Eindhoven (city of Technology) and focusses itself entirely on end-to-end and end-point information and communication security.',
+            'order'   => 7,
+        ),
+        array(
+            'title'   => 'Dujardin',
+            'content' => 'Dujardin has been successful in the market for architectural security solutions for decades. Our specialization is safe-related with safe rooms, security doors, turnstiles and burglar-resistant walls (both compact and lightweight). Dujardin is in charge of all activities. From advice to transport, installation and fault handling. We provide solutions and not just products. This service and the willingness to contribute ideas form the basis for a lasting relationship.',
+            'order'   => 8,
+        ),
+        array(
+            'title'   => 'VREE',
+            'content' => 'VREE\'s mission is to make multiplayer VR available to everyone. Creating full body vr applications have a few hurdles that require smart solutions. Developing these solutions is difficult and often time consuming. The VREE Platform provides content developers with a solid software foundation.',
+            'order'   => 9,
+        ),
+        array(
+            'title'   => 'G4S',
+            'content' => 'G4S Whether it concerns the safety of people, or the security of buildings, goods or processes: every situation requires its own approach. When it comes to security and safety, G4S is at home in all markets. G4S analyzes the situation, thinks along and provides you with the right people and the latest technique.',
+            'order'   => 10,
+        ),
+        array(
+            'title'   => 'Everbridge',
+            'content' => 'Everbridge supports organizations in the field of crisis management, alerting, upscaling and incident management. Respond supplies distinctive and appropriate ICT solutions that reduce the risk profile, complexity and costs of crisis management processes. Hence, disruptions are resolved faster, have fewer consequences and can even be prevented. Respond provides customization.',
+            'order'   => 11,
+        ),
+        array(
+            'title'   => 'TBM',
+            'content' => 'TBM supplies high-quality security goods and services to government organisations in the Benelux. TBM is the exclusive representative of a number of qualified international partners and suppliers in the security domain. TBM offers a range of products, services and solutions in the field of weapons, accessories, tactical equipment and technological applications. In addition, TBM also focuses on the development of innovative products and services. Consider for instance the design and integration of robotics and technological applications.',
+            'order'   => 12,
+        ),
+    );
+
+    foreach ( $clients as $client ) {
+        wp_insert_post( array(
+            'post_type'    => 'floru_client',
+            'post_title'   => $client['title'],
+            'post_content' => $client['content'],
+            'post_status'  => 'publish',
+            'menu_order'   => $client['order'],
+        ) );
+    }
+
+    update_option( 'floru_clients_v2', true );
+}
+
 function floru_migrate_content() {
     if ( get_option( 'floru_content_migrated' ) ) {
         return;
