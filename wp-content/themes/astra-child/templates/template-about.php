@@ -42,9 +42,9 @@ $m = function( $key, $default = '' ) use ( $pid ) {
             <div>
                 <div class="floru-intro__image-wrapper">
                     <?php if ( has_post_thumbnail( $pid ) ) : ?>
-                        <?php echo get_the_post_thumbnail( $pid, 'large', array( 'style' => 'width:100%;display:block;', 'loading' => 'lazy' ) ); ?>
+                        <?php echo get_the_post_thumbnail( $pid, 'large', array( 'class' => 'floru-img-block', 'loading' => 'lazy' ) ); ?>
                     <?php else : ?>
-                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/placeholder.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" style="width:100%;display:block;">
+                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/placeholder.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" class="floru-img-block">
                     <?php endif; ?>
                 </div>
             </div>
@@ -108,8 +108,10 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                 <div class="floru-trust-item__icon">
                     <?php echo floru_icon( $icon ); ?>
                 </div>
-                <h4><?php echo esc_html( $title ); ?></h4>
-                <p><?php echo esc_html( $desc ); ?></p>
+                <div class="floru-trust-item__text">
+                    <h4><?php echo esc_html( $title ); ?></h4>
+                    <p><?php echo esc_html( $desc ); ?></p>
+                </div>
             </div>
             <?php endif; endfor; ?>
         </div>
@@ -124,7 +126,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
         <div class="floru-cta__actions">
             <?php
             $cta_text = $m( '_floru_pcta_btn_text', 'Contact Us' );
-            $cta_url  = $m( '_floru_pcta_btn_url', '/contact/' );
+            $cta_url  = $m( '_floru_pcta_btn_url', home_url( '/contact/' ) );
             if ( $cta_text ) : ?>
                 <a href="<?php echo esc_url( $cta_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $cta_text ); ?></a>
             <?php endif; ?>

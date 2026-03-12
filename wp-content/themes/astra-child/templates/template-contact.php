@@ -74,34 +74,24 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 
             <!-- Contact Form Area -->
             <div>
-                <div class="floru-card" style="padding: 48px 40px;">
+                <div class="floru-card floru-card--form">
                     <h3 class="floru-mb-24">Send Us a Message</h3>
                     <?php
                     $form_shortcode = $m( '_floru_contact_form_shortcode' );
                     if ( $form_shortcode ) :
                         echo do_shortcode( $form_shortcode );
                     else :
-                    ?>
-                    <form class="floru-form" method="post" action="#">
-                        <div class="form-group">
-                            <label for="floru-name">Name</label>
-                            <input type="text" id="floru-name" name="name" placeholder="Your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="floru-email">Email</label>
-                            <input type="email" id="floru-email" name="email" placeholder="Your email address" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="floru-company">Company</label>
-                            <input type="text" id="floru-company" name="company" placeholder="Your company name">
-                        </div>
-                        <div class="form-group">
-                            <label for="floru-message">Message</label>
-                            <textarea id="floru-message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
-                        </div>
-                        <button type="submit" class="floru-btn floru-btn--primary" style="width: 100%;">Send Message</button>
-                    </form>
-                    <?php endif; ?>
+                        if ( current_user_can( 'manage_options' ) ) : ?>
+                            <div class="floru-admin-notice">
+                                <p><strong>Admin:</strong> No contact form configured. Edit this page and enter a form plugin shortcode (e.g. WPForms, Contact Form 7) in the &ldquo;Form Shortcode&rdquo; field.</p>
+                            </div>
+                        <?php else :
+                            $fallback_email = $m( '_floru_contact_email', 'info@floru.nl' );
+                            if ( $fallback_email ) : ?>
+                                <p>Please contact us directly at <a href="mailto:<?php echo esc_attr( $fallback_email ); ?>"><?php echo esc_html( $fallback_email ); ?></a>. We typically respond within one business day.</p>
+                            <?php endif;
+                        endif;
+                    endif; ?>
                 </div>
             </div>
 

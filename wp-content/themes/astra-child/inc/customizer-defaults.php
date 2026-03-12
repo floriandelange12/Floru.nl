@@ -65,4 +65,4 @@ function floru_set_customizer_defaults() {
     update_option( 'astra-settings', $astra_settings );
     update_option( 'floru_customizer_initialized', true );
 }
-add_action( 'after_setup_theme', 'floru_set_customizer_defaults' );
+add_action( 'after_switch_theme', 'floru_set_customizer_defaults', 40 );

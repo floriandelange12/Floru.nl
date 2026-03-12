@@ -86,4 +86,4 @@ function floru_create_pages() {
 
     update_option( 'floru_pages_created', true );
 }
-add_action( 'init', 'floru_create_pages' );
+add_action( 'after_switch_theme', 'floru_create_pages' );

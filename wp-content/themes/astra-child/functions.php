@@ -81,10 +81,13 @@ function floru_template_include( $template ) {
 }
 
 // Register custom navigation menus
-register_nav_menus( array(
-    'floru-primary'  => __( 'Floru Primary Menu', 'astra-child-floru' ),
-    'floru-footer'   => __( 'Floru Footer Menu', 'astra-child-floru' ),
-) );
+add_action( 'after_setup_theme', 'floru_register_menus' );
+function floru_register_menus() {
+    register_nav_menus( array(
+        'floru-primary'  => __( 'Floru Primary Menu', 'astra-child-floru' ),
+        'floru-footer'   => __( 'Floru Footer Menu', 'astra-child-floru' ),
+    ) );
+}
 
 // Custom excerpt length
 add_filter( 'excerpt_length', 'floru_excerpt_length' );
@@ -98,12 +101,8 @@ function floru_excerpt_more( $more ) {
     return '&hellip;';
 }
 
-// Add SVG support for logo upload
-add_filter( 'upload_mimes', 'floru_allow_svg' );
-function floru_allow_svg( $mimes ) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
+// SVG upload: use the "Safe SVG" plugin if SVG support is needed.
+// Enabling SVG via upload_mimes without sanitization is a security risk.
 
 /**
  * Helper: Render an inline SVG icon by name.

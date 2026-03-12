@@ -49,14 +49,16 @@ function floru_create_menus() {
                 $order++;
             }
         }
-
-        // Assign to Astra's primary menu location
-        $locations = get_theme_mod( 'nav_menu_locations', array() );
-        $locations['primary']       = $menu_id;
-        $locations['floru-primary'] = $menu_id;
-        set_theme_mod( 'nav_menu_locations', $locations );
+    } else {
+        $menu_id = $menu_exists->term_id;
     }
+
+    // Always assign menu to locations (even if menu already existed)
+    $locations = get_theme_mod( 'nav_menu_locations', array() );
+    $locations['primary']       = $menu_id;
+    $locations['floru-primary'] = $menu_id;
+    set_theme_mod( 'nav_menu_locations', $locations );
 
     update_option( 'floru_menus_created', true );
 }
-add_action( 'init', 'floru_create_menus', 20 );
+add_action( 'after_switch_theme', 'floru_create_menus', 20 );

@@ -26,16 +26,16 @@ $m = function( $key, $default = '' ) use ( $pid ) {
         <?php
         $content = get_the_content();
         if ( $content && trim( strip_tags( $content ) ) ) : ?>
-            <div style="font-size: 1.0625rem; color: var(--floru-slate); line-height: 1.8;">
+            <div class="floru-intro-text">
                 <?php echo wp_kses_post( apply_filters( 'the_content', $content ) ); ?>
             </div>
         <?php else : ?>
-            <p style="font-size: 1.0625rem; color: var(--floru-slate); line-height: 1.8;">Floru brings together a small, dedicated team of professionals with deep roots in the defence and security sector. Each of us has held positions within government, the armed forces, or the defence industry — and we draw on that combined experience to deliver results for our clients.</p>
+            <p class="floru-intro-text">Floru brings together a small, dedicated team of professionals with deep roots in the defence and security sector. Each of us has held positions within government, the armed forces, or the defence industry — and we draw on that combined experience to deliver results for our clients.</p>
         <?php endif; ?>
     </div>
 </section>
 
-<section class="floru-section floru-section--gray" style="padding-top: 0;">
+<section class="floru-section floru-section--gray floru-section--flush-top">
     <div class="floru-container">
         <div class="floru-team-grid">
             <?php
@@ -63,7 +63,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                         <span class="floru-team-card__role"><?php echo esc_html( $role ); ?></span>
                     <?php endif; ?>
                     <?php if ( get_the_content() ) : ?>
-                        <div style="font-size: 0.875rem; color: var(--floru-muted); line-height: 1.65; margin-top: 12px;">
+                        <div class="floru-team-card__bio">
                             <?php the_content(); ?>
                         </div>
                     <?php endif; ?>
@@ -90,7 +90,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
             <div class="floru-cta__actions">
                 <?php
                 $cta_text = $m( '_floru_pcta_btn_text', 'Contact Us' );
-                $cta_url  = $m( '_floru_pcta_btn_url', '/contact/' );
+                $cta_url  = $m( '_floru_pcta_btn_url', home_url( '/contact/' ) );
                 if ( $cta_text ) : ?>
                     <a href="<?php echo esc_url( $cta_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $cta_text ); ?></a>
                 <?php endif; ?>

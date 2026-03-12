@@ -21,9 +21,9 @@ $m = function( $key, $default = '' ) use ( $pid ) {
             <div class="floru-hero__actions">
                 <?php
                 $btn1_text = $m( '_floru_hero_btn1_text', 'Our Approach' );
-                $btn1_url  = $m( '_floru_hero_btn1_url', '/about/' );
+                $btn1_url  = $m( '_floru_hero_btn1_url', home_url( '/about/' ) );
                 $btn2_text = $m( '_floru_hero_btn2_text', 'Get in Touch' );
-                $btn2_url  = $m( '_floru_hero_btn2_url', '/contact/' );
+                $btn2_url  = $m( '_floru_hero_btn2_url', home_url( '/contact/' ) );
                 if ( $btn1_text ) : ?>
                     <a href="<?php echo esc_url( $btn1_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $btn1_text ); ?></a>
                 <?php endif; ?>
@@ -54,7 +54,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                 <p><?php echo esc_html( $m( '_floru_intro_text2', 'With decades of experience at the intersection of government, industry, and procurement, we provide the strategic insight and practical support our clients need to succeed.' ) ); ?></p>
                 <?php
                 $intro_btn_text = $m( '_floru_intro_btn_text', 'Learn More About Us' );
-                $intro_btn_url  = $m( '_floru_intro_btn_url', '/about/' );
+                $intro_btn_url  = $m( '_floru_intro_btn_url', home_url( '/about/' ) );
                 if ( $intro_btn_text ) : ?>
                     <a href="<?php echo esc_url( $intro_btn_url ); ?>" class="floru-btn floru-btn--outline floru-btn--sm"><?php echo esc_html( $intro_btn_text ); ?></a>
                 <?php endif; ?>
@@ -110,9 +110,9 @@ $m = function( $key, $default = '' ) use ( $pid ) {
         <div class="floru-services-grid">
             <?php
             $svc_defaults = array(
-                1 => array( 'Business Development', 'Market opportunity identification, procurement pipeline mapping, and go-to-market strategies tailored to the European defence landscape.', 'trending-up', '/services/' ),
-                2 => array( 'Stakeholder Engagement', 'Connecting our clients with the right decision-makers across government, military, and industry — with the right message at the right time.', 'users', '/services/' ),
-                3 => array( 'Tender Support', 'End-to-end tender lifecycle guidance — from positioning and pre-qualification through to proposal development and contract award.', 'file-text', '/services/' ),
+                1 => array( 'Business Development', 'Market opportunity identification, procurement pipeline mapping, and go-to-market strategies tailored to the European defence landscape.', 'trending-up', home_url( '/services/' ) ),
+                2 => array( 'Stakeholder Engagement', 'Connecting our clients with the right decision-makers across government, military, and industry — with the right message at the right time.', 'users', home_url( '/services/' ) ),
+                3 => array( 'Tender Support', 'End-to-end tender lifecycle guidance — from positioning and pre-qualification through to proposal development and contract award.', 'file-text', home_url( '/services/' ) ),
             );
             for ( $i = 1; $i <= 3; $i++ ) :
                 $title = $m( '_floru_hsvc' . $i . '_title', $svc_defaults[ $i ][0] );
@@ -183,7 +183,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
             <?php
             $team_members = new WP_Query( array(
                 'post_type'      => 'floru_team',
-                'posts_per_page' => 4,
+                'posts_per_page' => 3,
                 'orderby'        => 'menu_order',
                 'order'          => 'ASC',
             ) );
@@ -192,7 +192,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                     $role         = get_post_meta( get_the_ID(), '_floru_team_role', true );
                     $profile_link = get_post_meta( get_the_ID(), '_floru_team_profile_link', true );
                     $team_page    = get_page_by_path( 'team' );
-                    $team_url     = $team_page ? get_permalink( $team_page ) : '/team/';
+                    $team_url     = $team_page ? get_permalink( $team_page ) : home_url( '/team/' );
             ?>
             <div class="floru-team-card">
                 <div class="floru-team-card__editorial-image">
@@ -233,9 +233,9 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 
         <?php
         $team_btn_text = $m( '_floru_hteam_btn_text', 'Meet the Full Team' );
-        $team_btn_url  = $m( '_floru_hteam_btn_url', '/team/' );
+        $team_btn_url  = $m( '_floru_hteam_btn_url', home_url( '/team/' ) );
         if ( $team_btn_text ) : ?>
-        <div class="floru-text-center" style="margin-top: 40px;">
+        <div class="floru-text-center floru-mt-40">
             <a href="<?php echo esc_url( $team_btn_url ); ?>" class="floru-btn floru-btn--outline"><?php echo esc_html( $team_btn_text ); ?></a>
         </div>
         <?php endif; ?>
@@ -250,7 +250,7 @@ $clients = new WP_Query( array(
     'order'          => 'ASC',
     ) );
 if ( $clients->have_posts() ) : ?>
-<section class="floru-section floru-section--gray" style="padding-top: 40px; padding-bottom: 40px;">
+<section class="floru-section floru-section--gray floru-section--compact">
     <div class="floru-container">
         <div class="floru-clients-band">
             <p class="floru-clients-band__label"><?php echo esc_html( $m( '_floru_hclients_label', 'Trusted by international defence companies including' ) ); ?></p>
@@ -284,7 +284,7 @@ if ( $clients->have_posts() ) : ?>
             <div class="floru-cta__actions">
                 <?php
                 $cta_btn_text = $m( '_floru_hcta_btn_text', 'Contact Us' );
-                $cta_btn_url  = $m( '_floru_hcta_btn_url', '/contact/' );
+                $cta_btn_url  = $m( '_floru_hcta_btn_url', home_url( '/contact/' ) );
                 if ( $cta_btn_text ) : ?>
                     <a href="<?php echo esc_url( $cta_btn_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $cta_btn_text ); ?></a>
                 <?php endif; ?>

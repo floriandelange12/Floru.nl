@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_action( 'admin_init', 'floru_migrate_content' );
+add_action( 'after_switch_theme', 'floru_migrate_content', 30 );
 function floru_migrate_content() {
     if ( get_option( 'floru_content_migrated' ) ) {
         return;
@@ -34,16 +34,16 @@ function floru_migrate_content() {
             '_floru_hero_heading'     => 'Strategic Guidance for Defence and Security Markets',
             '_floru_hero_description' => 'We help international defence and security companies navigate government markets, build decisive stakeholder relationships, and win critical tenders across the Netherlands and Europe.',
             '_floru_hero_btn1_text'   => 'Our Approach',
-            '_floru_hero_btn1_url'    => '/about/',
+            '_floru_hero_btn1_url'    => home_url( '/about/' ),
             '_floru_hero_btn2_text'   => 'Get in Touch',
-            '_floru_hero_btn2_url'    => '/contact/',
+            '_floru_hero_btn2_url'    => home_url( '/contact/' ),
             // Intro
             '_floru_intro_label'     => 'Who We Are',
             '_floru_intro_heading'   => 'A Trusted Partner in Defence Business Development',
             '_floru_intro_text1'     => 'Floru is a specialised consultancy supporting international defence, security, and high-technology companies entering or expanding in the Dutch and European markets.',
             '_floru_intro_text2'     => 'With decades of experience at the intersection of government, industry, and procurement, we provide the strategic insight and practical support our clients need to succeed.',
             '_floru_intro_btn_text'  => 'Learn More About Us',
-            '_floru_intro_btn_url'   => '/about/',
+            '_floru_intro_btn_url'   => home_url( '/about/' ),
             // Stats
             '_floru_stat1_number'    => '20+',
             '_floru_stat1_label'     => 'Years of Experience',
@@ -58,15 +58,15 @@ function floru_migrate_content() {
             '_floru_hsvc1_title'     => 'Business Development',
             '_floru_hsvc1_desc'      => 'Market opportunity identification, procurement pipeline mapping, and go-to-market strategies tailored to the European defence landscape.',
             '_floru_hsvc1_icon'      => 'trending-up',
-            '_floru_hsvc1_url'       => '/services/',
+            '_floru_hsvc1_url'       => home_url( '/services/' ),
             '_floru_hsvc2_title'     => 'Stakeholder Engagement',
             '_floru_hsvc2_desc'      => 'Connecting our clients with the right decision-makers across government, military, and industry — with the right message at the right time.',
             '_floru_hsvc2_icon'      => 'users',
-            '_floru_hsvc2_url'       => '/services/',
+            '_floru_hsvc2_url'       => home_url( '/services/' ),
             '_floru_hsvc3_title'     => 'Tender Support',
             '_floru_hsvc3_desc'      => 'End-to-end tender lifecycle guidance — from positioning and pre-qualification through to proposal development and contract award.',
             '_floru_hsvc3_icon'      => 'file-text',
-            '_floru_hsvc3_url'       => '/services/',
+            '_floru_hsvc3_url'       => home_url( '/services/' ),
             // Why Floru
             '_floru_why_label'       => 'Why Floru',
             '_floru_why_heading'     => 'Built on Experience,<br>Driven by Results',
@@ -88,14 +88,14 @@ function floru_migrate_content() {
             '_floru_hteam_heading'     => 'Senior Professionals, Personal Approach',
             '_floru_hteam_description' => 'Our consultants bring decades of experience in defence, government, international business, and procurement.',
             '_floru_hteam_btn_text'    => 'Meet the Full Team',
-            '_floru_hteam_btn_url'     => '/team/',
+            '_floru_hteam_btn_url'     => home_url( '/team/' ),
             // Clients band
             '_floru_hclients_label' => 'Trusted by international defence companies including',
             // CTA
             '_floru_hcta_heading'     => 'Ready to Discuss Your Next Opportunity?',
             '_floru_hcta_description' => 'Whether you are exploring market entry, preparing for a tender, or seeking strategic support — we welcome the conversation.',
             '_floru_hcta_btn_text'    => 'Contact Us',
-            '_floru_hcta_btn_url'     => '/contact/',
+            '_floru_hcta_btn_url'     => home_url( '/contact/' ),
         );
         foreach ( $home_meta as $key => $value ) {
             if ( get_post_meta( $h, $key, true ) === '' ) {
@@ -163,7 +163,7 @@ function floru_migrate_content() {
             '_floru_pcta_heading'     => 'Interested in Working Together?',
             '_floru_pcta_description' => 'We welcome the opportunity to discuss how we can support your objectives in the European defence market.',
             '_floru_pcta_btn_text'    => 'Contact Us',
-            '_floru_pcta_btn_url'     => '/contact/',
+            '_floru_pcta_btn_url'     => home_url( '/contact/' ),
         );
         foreach ( $about_meta as $key => $value ) {
             if ( get_post_meta( $a, $key, true ) === '' ) {
@@ -186,20 +186,20 @@ function floru_migrate_content() {
             // Service 1
             '_floru_svc1_label' => 'Service 01',
             '_floru_svc1_title' => 'Business Development',
-            '_floru_svc1_desc'  => '<p>Entering or expanding in European defence markets requires more than a good product — it demands an understanding of political dynamics, procurement cycles, and institutional relationships.</p><p>Floru provides strategic business development support for companies looking to grow their presence in the Dutch and European defence and security market. We help you identify opportunities, understand the competitive landscape, and develop a clear path to engagement.</p><h4>What we deliver:</h4><ul style="color: var(--floru-slate); line-height: 1.9; padding-left: 1.25em;"><li>Market analysis and opportunity identification</li><li>Go-to-market strategy for the Netherlands and Europe</li><li>Competitive landscape and positioning</li><li>Procurement pipeline monitoring</li><li>Strategic advisory on partnerships and teaming</li></ul>',
+            '_floru_svc1_desc'  => '<p>Entering or expanding in European defence markets requires more than a good product — it demands an understanding of political dynamics, procurement cycles, and institutional relationships.</p><p>Floru provides strategic business development support for companies looking to grow their presence in the Dutch and European defence and security market. We help you identify opportunities, understand the competitive landscape, and develop a clear path to engagement.</p><h4>What we deliver:</h4><ul><li>Market analysis and opportunity identification</li><li>Go-to-market strategy for the Netherlands and Europe</li><li>Competitive landscape and positioning</li><li>Procurement pipeline monitoring</li><li>Strategic advisory on partnerships and teaming</li></ul>',
             // Service 2
             '_floru_svc2_label' => 'Service 02',
             '_floru_svc2_title' => 'Stakeholder Engagement',
-            '_floru_svc2_desc'  => '<p>Defence procurement decisions involve multiple layers of stakeholders — military end-users, programme managers, political decision-makers, and procurement officials. Reaching the right people with the right message at the right time is critical.</p><p>Floru leverages its established network and institutional knowledge to connect our clients with the stakeholders who matter. We facilitate introductions, support relationship-building, and help our clients navigate complex organisational structures.</p><h4>What we deliver:</h4><ul style="color: var(--floru-slate); line-height: 1.9; padding-left: 1.25em;"><li>Stakeholder mapping and analysis</li><li>Introductions to key government and military contacts</li><li>Event and exhibition support</li><li>Communication and messaging strategy</li><li>Government relations advisory</li></ul>',
+            '_floru_svc2_desc'  => '<p>Defence procurement decisions involve multiple layers of stakeholders — military end-users, programme managers, political decision-makers, and procurement officials. Reaching the right people with the right message at the right time is critical.</p><p>Floru leverages its established network and institutional knowledge to connect our clients with the stakeholders who matter. We facilitate introductions, support relationship-building, and help our clients navigate complex organisational structures.</p><h4>What we deliver:</h4><ul><li>Stakeholder mapping and analysis</li><li>Introductions to key government and military contacts</li><li>Event and exhibition support</li><li>Communication and messaging strategy</li><li>Government relations advisory</li></ul>',
             // Service 3
             '_floru_svc3_label' => 'Service 03',
             '_floru_svc3_title' => 'Tender Support',
-            '_floru_svc3_desc'  => '<p>Government procurement in defence and security is complex, time-sensitive, and highly competitive. A strong tender response requires not only technical excellence but also strategic positioning, clear communication, and full compliance with procurement requirements.</p><p>Floru supports clients throughout the tender process — from early identification and pre-qualification through to proposal development, pricing strategy, and post-submission negotiation. We bring in-depth knowledge of Dutch and European procurement practices.</p><h4>What we deliver:</h4><ul style="color: var(--floru-slate); line-height: 1.9; padding-left: 1.25em;"><li>Tender identification and tracking</li><li>Pre-qualification and compliance review</li><li>Proposal strategy and management</li><li>Win theme development</li><li>Post-submission support and debrief guidance</li></ul>',
+            '_floru_svc3_desc'  => '<p>Government procurement in defence and security is complex, time-sensitive, and highly competitive. A strong tender response requires not only technical excellence but also strategic positioning, clear communication, and full compliance with procurement requirements.</p><p>Floru supports clients throughout the tender process — from early identification and pre-qualification through to proposal development, pricing strategy, and post-submission negotiation. We bring in-depth knowledge of Dutch and European procurement practices.</p><h4>What we deliver:</h4><ul><li>Tender identification and tracking</li><li>Pre-qualification and compliance review</li><li>Proposal strategy and management</li><li>Win theme development</li><li>Post-submission support and debrief guidance</li></ul>',
             // CTA
             '_floru_pcta_heading'     => 'Let Us Help You Succeed',
             '_floru_pcta_description' => 'Every client and project is unique. Contact us to discuss how our services can be tailored to your objectives.',
             '_floru_pcta_btn_text'    => 'Get in Touch',
-            '_floru_pcta_btn_url'     => '/contact/',
+            '_floru_pcta_btn_url'     => home_url( '/contact/' ),
         );
         foreach ( $services_meta as $key => $value ) {
             if ( get_post_meta( $s, $key, true ) === '' ) {
@@ -255,11 +255,68 @@ function floru_migrate_content() {
             '_floru_pcta_heading'     => 'Work With Our Team',
             '_floru_pcta_description' => 'We bring a personal, senior-level approach to every engagement. Get in touch to discuss your objectives.',
             '_floru_pcta_btn_text'    => 'Contact Us',
-            '_floru_pcta_btn_url'     => '/contact/',
+            '_floru_pcta_btn_url'     => home_url( '/contact/' ),
         );
         foreach ( $team_meta as $key => $value ) {
             if ( get_post_meta( $t, $key, true ) === '' ) {
                 update_post_meta( $t, $key, $value );
+            }
+        }
+
+        // Create team members if none exist yet.
+        $existing_team = new WP_Query( array(
+            'post_type'      => 'floru_team',
+            'posts_per_page' => 1,
+            'fields'         => 'ids',
+        ) );
+        if ( ! $existing_team->have_posts() ) {
+            $team_members = array(
+                array(
+                    'title' => 'Ruud de Pruyssenaere de la Woestijne',
+                    'role'  => 'Director FLORU Consultancy — Army, Brigadier General ret.',
+                    'order' => 1,
+                ),
+                array(
+                    'title' => 'Jaap Willemse',
+                    'role'  => 'Air Force, Major General ret.',
+                    'order' => 2,
+                ),
+                array(
+                    'title' => 'Michael van der Klip',
+                    'role'  => 'Navy, Commander ret.',
+                    'order' => 3,
+                ),
+                array(
+                    'title' => 'Jan Zeggelaar',
+                    'role'  => 'Army, Major ret.',
+                    'order' => 4,
+                ),
+                array(
+                    'title' => 'Peter Lenselink',
+                    'role'  => 'Navy, Rear Admiral LH ret.',
+                    'order' => 5,
+                ),
+                array(
+                    'title' => 'Michiel Hijmans',
+                    'role'  => 'Navy, Rear Admiral LH ret.',
+                    'order' => 6,
+                ),
+                array(
+                    'title' => 'Marina Eppen-Pruyssenaere',
+                    'role'  => 'Technical Support',
+                    'order' => 7,
+                ),
+            );
+            foreach ( $team_members as $member ) {
+                $post_id = wp_insert_post( array(
+                    'post_type'   => 'floru_team',
+                    'post_title'  => $member['title'],
+                    'post_status' => 'publish',
+                    'menu_order'  => $member['order'],
+                ) );
+                if ( $post_id && ! is_wp_error( $post_id ) ) {
+                    update_post_meta( $post_id, '_floru_team_role', $member['role'] );
+                }
             }
         }
     }
@@ -288,94 +345,12 @@ function floru_migrate_content() {
             '_floru_pcta_heading'     => 'Interested in Working With Us?',
             '_floru_pcta_description' => 'We would be happy to discuss our experience and how we can support your goals. References are available upon request.',
             '_floru_pcta_btn_text'    => 'Contact Us',
-            '_floru_pcta_btn_url'     => '/contact/',
+            '_floru_pcta_btn_url'     => home_url( '/contact/' ),
         );
         foreach ( $clients_meta as $key => $value ) {
             if ( get_post_meta( $cl, $key, true ) === '' ) {
                 update_post_meta( $cl, $key, $value );
             }
-        }
-    }
-
-    /* ======================================================================
-       TEAM MEMBERS (Custom Post Type)
-       ====================================================================== */
-    $existing_team = get_posts( array(
-        'post_type'   => 'floru_team',
-        'numberposts' => 1,
-        'post_status' => 'any',
-    ) );
-
-    if ( empty( $existing_team ) ) {
-        $team_members = array(
-            array(
-                'name'    => 'Jan van der Berg',
-                'role'    => 'Managing Director',
-                'excerpt' => 'Over 20 years of experience in defence procurement, government affairs, and international business development across European markets.',
-                'content' => '<p>Extensive background in defence and security consulting, with a proven track record of supporting international companies in the Dutch and European defence market. Experienced in government relations, strategic advisory, and programme management.</p>',
-                'order'   => 1,
-            ),
-            array(
-                'name'    => 'Peter de Vries',
-                'role'    => 'Senior Consultant',
-                'excerpt' => 'Former military officer with deep expertise in defence acquisition, programme management, and stakeholder engagement at the national and NATO level.',
-                'content' => '<p>Brings a wealth of experience from senior positions within the armed forces and defence organisations. Specialises in bridging the gap between industry capabilities and government requirements, with particular expertise in tender strategy and compliance.</p>',
-                'order'   => 2,
-            ),
-            array(
-                'name'    => 'Mark Hendriks',
-                'role'    => 'Consultant',
-                'excerpt' => 'Specialist in market entry strategy, competitive analysis, and partnership development for defence and high-technology companies.',
-                'content' => '<p>Focused on helping international companies identify and pursue opportunities in the European defence and security market. Experienced in go-to-market planning, procurement pipeline analysis, and building strategic alliances with local partners.</p>',
-                'order'   => 3,
-            ),
-        );
-
-        foreach ( $team_members as $member ) {
-            $post_id = wp_insert_post( array(
-                'post_type'    => 'floru_team',
-                'post_title'   => $member['name'],
-                'post_content' => $member['content'],
-                'post_excerpt' => $member['excerpt'],
-                'post_status'  => 'publish',
-                'menu_order'   => $member['order'],
-            ) );
-            if ( $post_id && ! is_wp_error( $post_id ) ) {
-                update_post_meta( $post_id, '_floru_team_role', $member['role'] );
-            }
-        }
-    }
-
-    /* ======================================================================
-       CLIENTS (Custom Post Type)
-       ====================================================================== */
-    $existing_clients = get_posts( array(
-        'post_type'   => 'floru_client',
-        'numberposts' => 1,
-        'post_status' => 'any',
-    ) );
-
-    if ( empty( $existing_clients ) ) {
-        // Create representative client entries matching the site's defence/security focus.
-        // These use names only — no logos are uploaded since we don't have image files.
-        // The site owner should add featured images (logos) via the admin.
-        $client_entries = array(
-            array( 'name' => 'International Defence Company A', 'order' => 1 ),
-            array( 'name' => 'European Security Systems',      'order' => 2 ),
-            array( 'name' => 'Defence Technology Group',        'order' => 3 ),
-            array( 'name' => 'Naval Systems International',     'order' => 4 ),
-            array( 'name' => 'Aerospace & Defence Solutions',   'order' => 5 ),
-            array( 'name' => 'Military Electronics Corp',       'order' => 6 ),
-        );
-
-        foreach ( $client_entries as $client ) {
-            wp_insert_post( array(
-                'post_type'    => 'floru_client',
-                'post_title'   => $client['name'],
-                'post_content' => '',
-                'post_status'  => 'publish',
-                'menu_order'   => $client['order'],
-            ) );
         }
     }
 
@@ -396,41 +371,4 @@ function floru_migrate_content() {
        MARK MIGRATION AS COMPLETE
        ====================================================================== */
     update_option( 'floru_content_migrated', true );
-}
-
-/**
- * Second migration pass: rename generic team member titles to real names.
- * Runs independently of the first migration.
- */
-add_action( 'admin_init', 'floru_migrate_team_names' );
-function floru_migrate_team_names() {
-    if ( get_option( 'floru_team_names_migrated' ) ) {
-        return;
-    }
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
-    }
-
-    $renames = array(
-        'Senior Consultant'         => 'Jan van der Berg',
-        'Defence Advisor'           => 'Peter de Vries',
-        'Business Development Lead' => 'Mark Hendriks',
-    );
-    foreach ( $renames as $old_title => $new_title ) {
-        $found = get_posts( array(
-            'post_type'   => 'floru_team',
-            'title'       => $old_title,
-            'numberposts' => 1,
-            'post_status' => 'any',
-        ) );
-        if ( ! empty( $found ) ) {
-            wp_update_post( array(
-                'ID'         => $found[0]->ID,
-                'post_title' => $new_title,
-                'post_name'  => sanitize_title( $new_title ),
-            ) );
-        }
-    }
-
-    update_option( 'floru_team_names_migrated', true );
 }

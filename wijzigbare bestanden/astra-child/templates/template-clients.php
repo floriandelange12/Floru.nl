@@ -28,12 +28,12 @@ $m = function( $key, $default = '' ) use ( $pid ) {
         <?php
         $content = get_the_content();
         if ( $content && trim( strip_tags( $content ) ) ) : ?>
-            <div style="font-size: 1.0625rem; color: var(--floru-slate); line-height: 1.8;">
+            <div class="floru-intro-text">
                 <?php echo wp_kses_post( apply_filters( 'the_content', $content ) ); ?>
             </div>
         <?php else : ?>
-            <p style="font-size: 1.0625rem; color: var(--floru-slate); line-height: 1.8;">Over the years, Floru has supported a range of international defence and security companies — from established primes to innovative mid-tier manufacturers. Our client relationships are built on trust, discretion, and a shared commitment to achieving concrete results.</p>
-            <p style="font-size: 1.0625rem; color: var(--floru-slate); line-height: 1.8;">Below you will find a selection of the organisations we have had the privilege of working with.</p>
+            <p class="floru-intro-text">Over the years, Floru has supported a range of international defence and security companies — from established primes to innovative mid-tier manufacturers. Our client relationships are built on trust, discretion, and a shared commitment to achieving concrete results.</p>
+            <p class="floru-intro-text">Below you will find a selection of the organisations we have had the privilege of working with.</p>
         <?php endif; ?>
     </div>
 </section>
@@ -78,7 +78,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
         <div class="floru-cta__actions">
             <?php
             $cta_text = $m( '_floru_pcta_btn_text', 'Contact Us' );
-            $cta_url  = $m( '_floru_pcta_btn_url', '/contact/' );
+            $cta_url  = $m( '_floru_pcta_btn_url', home_url( '/contact/' ) );
             if ( $cta_text ) : ?>
                 <a href="<?php echo esc_url( $cta_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $cta_text ); ?></a>
             <?php endif; ?>
