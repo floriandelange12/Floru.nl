@@ -63,7 +63,7 @@ $footer_tagline = get_option( 'floru_footer_tagline', 'Defence & Security Consul
             </div>
         </div>
         <div class="floru-footer__bottom">
-            <span>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. All rights reserved.</span>
+            <span>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> Floru Consultancy. All rights reserved.</span>
             <?php if ( $footer_tagline ) : ?>
                 <span><?php echo esc_html( $footer_tagline ); ?></span>
             <?php endif; ?>

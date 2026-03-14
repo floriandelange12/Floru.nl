@@ -18,6 +18,7 @@ if not exist "%TARGET_ROOT%" mkdir "%TARGET_ROOT%"
 call :make_hardlink "style.css"
 call :make_hardlink "functions.php"
 call :make_hardlink "footer.php"
+call :make_hardlink "single-floru_client.php"
 
 call :make_junction "assets"
 call :make_junction "inc"

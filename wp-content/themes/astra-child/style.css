@@ -22,9 +22,11 @@
     --floru-charcoal:    #2D3748;
     --floru-slate:       #4A5568;
     --floru-muted:       #718096;
+    --floru-light:       #F7F8FA;
     --floru-light-gray:  #E2E8F0;
     --floru-off-white:   #F7F8FA;
     --floru-white:       #FFFFFF;
+    --floru-gold:        #C9913B;
     --floru-accent:      #C9913B;
     --floru-accent-dark: #A8772E;
     --floru-accent-light:#E8D5B0;
@@ -989,7 +991,17 @@ a:hover {
     margin-bottom: 8px;
 }
 
-/* Client Detail Page (single) */
+/* Client Detail Page (single) — redesigned */
+.floru-client-page-hero {
+    background: var(--floru-light);
+    padding: 28px 0 24px;
+    border-bottom: 1px solid var(--floru-border);
+}
+
+.floru-client-page-hero .floru-breadcrumb {
+    margin-bottom: 20px;
+}
+
 .floru-breadcrumb {
     font-size: 0.8125rem;
     color: var(--floru-muted);
@@ -1017,23 +1029,26 @@ a:hover {
 .floru-client-hero {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 32px;
+    max-width: 680px;
 }
 
 .floru-client-hero__logo {
-    flex: 0 0 180px;
+    flex: 0 0 120px;
+    height: 120px;
     background: #fff;
     border: 1px solid var(--floru-border);
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .floru-client-hero__logo img {
-    max-width: 140px;
-    max-height: 80px;
+    max-width: 80px;
+    max-height: 60px;
     object-fit: contain;
 }
 
@@ -1065,13 +1080,13 @@ a:hover {
 
 .floru-client-hero__badge {
     display: inline-block;
-    background: var(--floru-light);
-    color: var(--floru-navy);
-    font-size: 0.75rem;
+    background: var(--floru-navy);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 5px 12px;
+    letter-spacing: 0.06em;
+    padding: 5px 14px;
     border-radius: 4px;
 }
 
@@ -1100,7 +1115,7 @@ a:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 0;
 }
 
 .floru-client-highlight {
@@ -1109,17 +1124,164 @@ a:hover {
     gap: 10px;
     background: #fff;
     border: 1px solid var(--floru-border);
-    border-radius: 8px;
+    border-left: 3px solid var(--floru-gold);
+    border-radius: 0 8px 8px 0;
     padding: 14px 16px;
     font-size: 0.875rem;
     color: var(--floru-navy);
     font-weight: 500;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.floru-client-highlight:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .floru-client-highlight svg {
     flex-shrink: 0;
     color: var(--floru-gold);
     margin-top: 1px;
+}
+
+/* Self-hosted video embed */
+.floru-video {
+    position: relative;
+    width: 100%;
+    max-width: 840px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a1628 0%, #1a2a44 50%, #0f1b33 100%);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.floru-video video,
+.floru-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+}
+
+/* Mute/unmute toggle */
+.floru-video__mute-toggle {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.15s ease;
+    opacity: 0.7;
+}
+
+.floru-video__mute-toggle:hover {
+    background: rgba(0, 0, 0, 0.75);
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.floru-video__mute-toggle .floru-icon-unmuted {
+    display: none;
+}
+
+.floru-video.is-unmuted .floru-video__mute-toggle .floru-icon-muted {
+    display: none;
+}
+
+.floru-video.is-unmuted .floru-video__mute-toggle .floru-icon-unmuted {
+    display: block;
+}
+
+/* Video section variants */
+.floru-client-video-section {
+    background: var(--floru-navy-dark);
+    padding: 56px 0;
+    position: relative;
+}
+
+.floru-client-video-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--floru-gold);
+    border-radius: 2px;
+}
+
+.floru-client-video-section--alt {
+    background: var(--floru-navy-dark);
+}
+
+/* Highlights section */
+.floru-client-highlights-section {
+    padding: 28px 0 40px;
+}
+
+.floru-client-highlights-section__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--floru-gold);
+    margin-bottom: 14px;
+}
+
+/* Crop talking-head videos tighter on the speaker */
+.floru-client-video-section[data-slug="stratego-work"] .floru-video video {
+    transform: scale(1.3) translateY(-5%);
+}
+
+/* Content section */
+.floru-client-content-section {
+    padding: 56px 0 48px;
+    border-bottom: 1px solid var(--floru-border);
+}
+
+/* Description + Sidebar layout */
+.floru-client-body {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+    align-items: start;
+}
+
+.floru-client-body__content {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--floru-slate);
+}
+
+.floru-client-body__content > p:first-child {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: var(--floru-navy);
+    font-weight: 500;
+}
+
+.floru-client-body__content p {
+    margin-bottom: 1.25em;
+}
+
+.floru-client-body__content p:last-child {
+    margin-bottom: 0;
 }
 
 .floru-client-detail__content {
@@ -1174,10 +1336,12 @@ a:hover {
 .floru-client-sidebar-card {
     background: #fff;
     border: 1px solid var(--floru-border);
-    border-radius: 12px;
+    border-top: 3px solid var(--floru-gold);
+    border-radius: 2px 2px 12px 12px;
     padding: 28px;
     position: sticky;
     top: 100px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .floru-client-sidebar-card__heading {
@@ -1240,13 +1404,28 @@ a:hover {
     color: var(--floru-navy);
 }
 
+.floru-client-back-link--light {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.floru-client-back-link--light:hover {
+    color: #fff;
+}
+
+.floru-client-back-link-wrapper {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 /* ==========================================================================
    CTA SECTION
    ========================================================================== */
 
 .floru-cta {
     background-color: var(--floru-navy);
-    padding: 64px 0;
+    padding: 64px 20px;
 }
 
 .floru-cta__inner {
@@ -1254,6 +1433,8 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     gap: 60px;
+    max-width: var(--floru-container-width);
+    margin: 0 auto;
 }
 
 .floru-cta__text {
@@ -1287,6 +1468,10 @@ a:hover {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
+.site-footer .site-below-footer-wrap {
+    background-color: transparent !important;
+}
+
 .site-footer a {
     color: rgba(255, 255, 255, 0.6) !important;
     transition: color var(--floru-transition);
@@ -1301,7 +1486,30 @@ a:hover {
 }
 
 .floru-footer {
+    background-color: var(--floru-navy-dark);
+    color: rgba(255, 255, 255, 0.6);
     padding: 80px 0 40px;
+    position: relative;
+}
+
+/* Gold accent line at top of footer (CTA-footer boundary) */
+.floru-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--floru-accent) 0%, transparent 100%);
+}
+
+.floru-footer a {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s ease;
+}
+
+.floru-footer a:hover {
+    color: var(--floru-accent);
 }
 
 .floru-footer__grid {
@@ -1312,10 +1520,10 @@ a:hover {
 }
 
 .floru-footer__brand p {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.45);
     font-size: 0.875rem;
     line-height: 1.7;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 
 .floru-footer__brand img {
@@ -1325,11 +1533,13 @@ a:hover {
 
 .floru-footer h4 {
     color: var(--floru-white);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 20px;
+    letter-spacing: 0.12em;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(201, 145, 59, 0.35);
 }
 
 .floru-footer ul {
@@ -1339,16 +1549,18 @@ a:hover {
 }
 
 .floru-footer ul li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .floru-footer ul li a {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.55) !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    transition: color 0.2s ease, padding-left 0.2s ease;
 }
 
 .floru-footer ul li a:hover {
     color: var(--floru-accent) !important;
+    padding-left: 4px;
 }
 
 .floru-footer__bottom {
@@ -1358,7 +1570,8 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.02em;
 }
 
 /* ==========================================================================
@@ -1715,6 +1928,11 @@ a:focus-visible {
 .floru-mt-40 { margin-top: 40px; }
 .floru-btn--full { width: 100%; }
 .floru-section--compact { padding-top: 40px; padding-bottom: 40px; }
+
+.floru-section--hero-tight {
+    padding-top: 32px;
+    padding-bottom: 40px;
+}
 .floru-section--flush-top { padding-top: 0; }
 .floru-img-block { width: 100%; display: block; }
 
@@ -1850,13 +2068,14 @@ a:focus-visible {
     max-height: 40px;
     width: auto;
     filter: brightness(0) invert(1);
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .floru-footer__brand-name {
     font-size: 1.25rem;
     font-weight: 700;
     color: #fff;
+    letter-spacing: 0.02em;
 }
 
 .floru-team-card__bio {
@@ -1889,6 +2108,8 @@ a:focus-visible {
 
 .ast-page-builder-template .site-content > .ast-container {
     display: block;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /* Override Astra default link colors */
@@ -2064,6 +2285,12 @@ a:focus-visible {
         gap: 32px;
     }
 
+    .floru-footer__bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
     .floru-news-grid {
         grid-template-columns: 1fr;
     }
@@ -2108,7 +2335,7 @@ a:focus-visible {
 
     .floru-client-hero {
         flex-direction: column;
-        gap: 24px;
+        gap: 20px;
         text-align: center;
     }
 
@@ -2116,7 +2343,27 @@ a:focus-visible {
         justify-content: center;
     }
 
+    .floru-client-page-hero {
+        padding: 20px 0 32px;
+    }
+
+    .floru-client-video-section {
+        padding: 40px 0;
+    }
+
+    .floru-client-highlights-section {
+        padding: 32px 0 40px;
+    }
+
+    .floru-client-content-section {
+        padding: 40px 0;
+    }
+
     .floru-client-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .floru-client-body {
         grid-template-columns: 1fr;
     }
 

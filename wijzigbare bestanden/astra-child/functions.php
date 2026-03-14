@@ -48,7 +48,7 @@ function floru_body_classes( $classes ) {
         'templates/template-team.php',
         'templates/template-clients.php',
         'templates/template-contact.php',
-    ) ) ) {
+    ) ) || is_singular( 'floru_client' ) ) {
         $classes[] = 'ast-page-builder-template';
     }
 

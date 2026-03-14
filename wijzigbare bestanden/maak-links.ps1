@@ -48,6 +48,7 @@ function New-SyncedDirectoryLink {
 New-SyncedFileLink -Source (Join-Path $sourceRoot 'style.css') -Target (Join-Path $targetRoot 'style.css')
 New-SyncedFileLink -Source (Join-Path $sourceRoot 'functions.php') -Target (Join-Path $targetRoot 'functions.php')
 New-SyncedFileLink -Source (Join-Path $sourceRoot 'footer.php') -Target (Join-Path $targetRoot 'footer.php')
+New-SyncedFileLink -Source (Join-Path $sourceRoot 'single-floru_client.php') -Target (Join-Path $targetRoot 'single-floru_client.php')
 
 New-SyncedDirectoryLink -Source (Join-Path $sourceRoot 'assets') -Target (Join-Path $targetRoot 'assets')
 New-SyncedDirectoryLink -Source (Join-Path $sourceRoot 'inc') -Target (Join-Path $targetRoot 'inc')
