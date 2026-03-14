@@ -118,8 +118,6 @@ if ( isset( $_POST['floru_contact_submit'] ) && wp_verify_nonce( $_POST['floru_c
                     </div>
                 </div>
                 <?php endif; ?>
-
-                <?php endif; ?>
             </div>
 
             <!-- Contact Form Area -->

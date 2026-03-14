@@ -491,22 +491,22 @@ function floru_team_details_save( $post_id ) {
 }
 
 /**
- * Client meta boxes: Logo, Website, Display Order — clean UI matching Team Members.
+ * Client meta boxes: clean UI — remove unnecessary boxes, hide Astra settings.
  */
-add_action( 'add_meta_boxes', 'floru_client_meta_boxes' );
+add_action( 'add_meta_boxes', 'floru_client_meta_boxes', 99 );
 function floru_client_meta_boxes() {
     remove_meta_box( 'postimagediv', 'floru_client', 'side' );
     remove_meta_box( 'pageparentdiv', 'floru_client', 'side' );
-
-    add_meta_box(
-        'floru_client_details',
-        'Website & Weergavevolgorde',
-        'floru_client_details_render',
-        'floru_client',
-        'normal',
-        'default'
-    );
+    remove_meta_box( 'astra_settings_meta_box', 'floru_client', 'side' );
 }
+
+/**
+ * Exclude floru_client from Astra meta registration entirely.
+ */
+add_filter( 'astra_excluded_meta_post_types', function( $types ) {
+    $types[] = 'floru_client';
+    return $types;
+} );
 
 /**
  * Disable Gutenberg for Clients — classic editor is cleaner for this CPT.
@@ -534,7 +534,15 @@ function floru_client_admin_scripts( $hook ) {
 }
 
 /**
- * Inject Client profile section after the title — complete 10/10 editor experience.
+ * Inject Client editor sections after the title — clean editorial flow.
+ *
+ * Structure:
+ *   1. Basisinformatie (Logo, Ondertitel, Website, Branche)
+ *   2. Overzichtskaart (samenvatting-uitleg)
+ *   3. Detailpagina (Highlights + Beschrijving)
+ *   4. Media (Video's — optioneel)
+ *   5. Publicatie (Weergavevolgorde)
+ *   + Compacte kaart-preview (zijpaneel)
  */
 add_action( 'edit_form_after_title', 'floru_client_profile_section' );
 function floru_client_profile_section( $post ) {
@@ -552,119 +560,46 @@ function floru_client_profile_section( $post ) {
     $highlights    = get_post_meta( $post->ID, '_floru_client_highlights', true );
     $thumbnail_id  = get_post_thumbnail_id( $post->ID );
     $thumbnail_url = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'medium' ) : '';
+    $content_raw   = $post->post_content;
+    $summary_auto  = wp_trim_words( wp_strip_all_tags( $content_raw ), 24, '…' );
     ?>
 
-    <!-- ===== VISUAL PAGE MAP — shows where each field appears ===== -->
-    <div class="floru-cp-pagemap" id="floru-cp-pagemap">
-        <div class="floru-cp-pagemap__header">
-            <span class="dashicons dashicons-layout"></span>
-            <strong>Pagina-indeling overzicht</strong>
-            <span class="floru-cp-pagemap__toggle" id="floru-cp-pagemap-toggle">Tonen / Verbergen</span>
-        </div>
-        <div class="floru-cp-pagemap__body" id="floru-cp-pagemap-body">
-            <p class="floru-cp-pagemap__intro">Dit schema laat precies zien waar elk veld op de publieke pagina's verschijnt. Klik op een zone om naar dat veld te springen.</p>
-            <div class="floru-cp-pagemap__columns">
-                <!-- Overview Card -->
-                <div class="floru-cp-pagemap__card">
-                    <div class="floru-cp-pagemap__card-label">Overzichtskaart</div>
-                    <div class="floru-cp-pagemap__card-art">
-                        <div class="floru-cp-map-zone" data-target="floru-cp-logo-preview"><span class="floru-cp-map-nr">1</span> Logo</div>
-                        <div class="floru-cp-map-zone" data-target="title"><span class="floru-cp-map-nr">2</span> Naam (Titel)</div>
-                        <div class="floru-cp-map-zone floru-cp-map-zone--muted" data-target="content"><span class="floru-cp-map-nr">6</span> Korte samenvatting (auto)</div>
-                        <div class="floru-cp-map-zone floru-cp-map-zone--link">Bekijk details &rarr;</div>
-                    </div>
-                </div>
-                <!-- Detail Page -->
-                <div class="floru-cp-pagemap__card floru-cp-pagemap__card--wide">
-                    <div class="floru-cp-pagemap__card-label">Detailpagina</div>
-                    <div class="floru-cp-pagemap__card-art floru-cp-pagemap__card-art--detail">
-                        <div class="floru-cp-map-row">
-                            <div class="floru-cp-map-zone" data-target="floru-cp-logo-preview"><span class="floru-cp-map-nr">1</span> Logo</div>
-                            <div class="floru-cp-map-stack">
-                                <div class="floru-cp-map-zone" data-target="title"><span class="floru-cp-map-nr">2</span> Naam (Titel)</div>
-                                <div class="floru-cp-map-zone" data-target="floru_client_tagline"><span class="floru-cp-map-nr">3</span> Ondertitel</div>
-                                <div class="floru-cp-map-row--inline">
-                                    <div class="floru-cp-map-zone floru-cp-map-zone--sm" data-target="floru_client_industry"><span class="floru-cp-map-nr">4</span> Branche</div>
-                                    <div class="floru-cp-map-zone floru-cp-map-zone--sm" data-target="floru_client_link"><span class="floru-cp-map-nr">5</span> Website</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="floru-cp-map-zone" data-target="floru_client_highlights"><span class="floru-cp-map-nr">7</span> Belangrijkste punten (badges)</div>
-                        <div class="floru-cp-map-zone floru-cp-map-zone--lg" data-target="content"><span class="floru-cp-map-nr">6</span> Volledige beschrijving</div>
-                        <div class="floru-cp-map-zone" data-target="floru_client_video"><span class="floru-cp-map-nr">8</span> Ingesloten video's</div>
-                    </div>
-                </div>
-                <!-- Sidebar -->
-                <div class="floru-cp-pagemap__card">
-                    <div class="floru-cp-pagemap__card-label">Zijbalk (Detailpagina)</div>
-                    <div class="floru-cp-pagemap__card-art">
-                        <div class="floru-cp-map-zone floru-cp-map-zone--sm" data-target="floru_client_industry"><span class="floru-cp-map-nr">4</span> Branche</div>
-                        <div class="floru-cp-map-zone floru-cp-map-zone--sm" data-target="floru_client_link"><span class="floru-cp-map-nr">5</span> Website</div>
-                        <div class="floru-cp-map-zone floru-cp-map-zone--link">Bezoek website &rarr;</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== SECTION 1: Logo & Basic Info ===== -->
+    <!-- ===== SECTION 1: Basisinformatie ===== -->
     <div class="floru-cp-section">
         <div class="floru-cp-section-header">
             <div class="floru-cp-section-number">1</div>
-            <div>
-                <div class="floru-cp-section-title">Logo & Basisinformatie</div>
-                <div class="floru-cp-section-subtitle">De kernidentiteit — wordt getoond op zowel de overzichtskaart als de detailpagina.</div>
-            </div>
+            <div class="floru-cp-section-title">Basisinformatie</div>
         </div>
         <div class="floru-cp-row">
             <div class="floru-cp-logo-col">
-                <label class="floru-cp-label">Logo</label>
-                <div class="floru-cp-badge-row">
-                    <span class="floru-cp-badge floru-cp-badge--card" title="Wordt getoond op de overzichtskaart">Overzicht</span>
-                    <span class="floru-cp-badge floru-cp-badge--detail" title="Wordt getoond op de detailpagina">Detail</span>
-                </div>
                 <div id="floru-cp-logo-preview" class="floru-cp-logo-preview <?php echo $thumbnail_url ? 'has-logo' : ''; ?>">
                     <?php if ( $thumbnail_url ) : ?>
                         <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
                     <?php else : ?>
                         <span class="floru-cp-logo-placeholder">
                             <span class="dashicons dashicons-format-image"></span>
-                            <span>Klik om logo toe te voegen</span>
+                            <span>Logo toevoegen</span>
                         </span>
                     <?php endif; ?>
                 </div>
                 <input type="hidden" id="floru_client_thumbnail_id" name="_thumbnail_id" value="<?php echo esc_attr( $thumbnail_id ? $thumbnail_id : '-1' ); ?>">
                 <div class="floru-cp-logo-actions">
-                    <button type="button" class="button" id="floru-cp-logo-btn"><?php echo $thumbnail_id ? 'Logo wijzigen' : 'Logo uploaden'; ?></button>
+                    <button type="button" class="button" id="floru-cp-logo-btn"><?php echo $thumbnail_id ? 'Wijzigen' : 'Uploaden'; ?></button>
                     <button type="button" class="button floru-cp-remove-btn" id="floru-cp-logo-remove" <?php echo ! $thumbnail_id ? 'style="display:none;"' : ''; ?>>Verwijderen</button>
                 </div>
             </div>
             <div class="floru-cp-fields-col">
                 <div class="floru-cp-field">
-                    <label class="floru-cp-label" for="floru_client_tagline">
-                        Ondertitel
-                        <span class="floru-cp-badge floru-cp-badge--detail">Detail</span>
-                    </label>
-                    <span class="floru-cp-field-desc">Wordt als cursieve ondertitel direct onder de bedrijfsnaam getoond op de detailpagina.</span>
+                    <label class="floru-cp-label" for="floru_client_tagline">Ondertitel</label>
                     <input type="text" id="floru_client_tagline" name="floru_client_tagline" value="<?php echo esc_attr( $tagline ); ?>" class="widefat" placeholder="bijv. Innovate and Act">
                 </div>
                 <div class="floru-cp-field-row">
                     <div class="floru-cp-field">
-                        <label class="floru-cp-label" for="floru_client_link">
-                            Website-adres
-                            <span class="floru-cp-badge floru-cp-badge--detail">Detail</span>
-                            <span class="floru-cp-badge floru-cp-badge--sidebar">Zijbalk</span>
-                        </label>
-                        <span class="floru-cp-field-desc">Wordt als klikbare link in de header en als "Bezoek website"-knop in de zijbalk getoond.</span>
+                        <label class="floru-cp-label" for="floru_client_link">Website</label>
                         <input type="url" id="floru_client_link" name="floru_client_link" value="<?php echo esc_url( $link ); ?>" class="widefat" placeholder="https://www.example.com">
                     </div>
                     <div class="floru-cp-field">
-                        <label class="floru-cp-label" for="floru_client_industry">
-                            Branche / Sector
-                            <span class="floru-cp-badge floru-cp-badge--detail">Detail</span>
-                            <span class="floru-cp-badge floru-cp-badge--sidebar">Zijbalk</span>
-                        </label>
-                        <span class="floru-cp-field-desc">Wordt als badge naast de websitelink en als "Branche" in de zijbalk getoond.</span>
+                        <label class="floru-cp-label" for="floru_client_industry">Branche / Sector</label>
                         <input type="text" id="floru_client_industry" name="floru_client_industry" value="<?php echo esc_attr( $industry ); ?>" class="widefat" placeholder="bijv. Defence & Security">
                     </div>
                 </div>
@@ -672,253 +607,113 @@ function floru_client_profile_section( $post ) {
         </div>
     </div>
 
-    <!-- ===== SECTION 2: Key Highlights ===== -->
-    <div class="floru-cp-section">
+    <!-- ===== SECTION 2: Detailpagina ===== -->
+    <div class="floru-cp-section floru-cp-section--detail">
         <div class="floru-cp-section-header">
             <div class="floru-cp-section-number">2</div>
-            <div>
-                <div class="floru-cp-section-title">
-                    Belangrijkste punten
-                    <span class="floru-cp-badge floru-cp-badge--detail">Detail</span>
-                </div>
-                <div class="floru-cp-section-subtitle">Worden als highlight-badges boven de beschrijving op de detailpagina getoond. Eén punt per regel.</div>
-            </div>
+            <div class="floru-cp-section-title">Detailpagina</div>
         </div>
         <div class="floru-cp-field">
-            <textarea id="floru_client_highlights" name="floru_client_highlights" rows="4" class="widefat" placeholder="bijv.&#10;Wereldleider in sensorsystemen&#10;20+ landen bediend&#10;Force protection specialist"><?php echo esc_textarea( $highlights ); ?></textarea>
-            <span class="floru-cp-field-desc floru-cp-field-desc--below">
-                <span class="dashicons dashicons-info-outline floru-cp-info-icon"></span>
-                Elke regel wordt een aparte badge met een vinkje-icoon. Laat leeg om deze sectie te verbergen.
-            </span>
+            <label class="floru-cp-label" for="floru_client_highlights">Highlights</label>
+            <span class="floru-cp-field-hint">Eén per regel — worden als badges getoond. Laat leeg om te verbergen.</span>
+            <textarea id="floru_client_highlights" name="floru_client_highlights" rows="3" class="widefat" placeholder="bijv.&#10;Wereldleider in sensorsystemen&#10;20+ landen bediend"><?php echo esc_textarea( $highlights ); ?></textarea>
+        </div>
+        <div class="floru-cp-field floru-cp-field--desc">
+            <label class="floru-cp-label">Beschrijving</label>
+            <span class="floru-cp-field-hint">De eerste regels verschijnen ook als samenvatting op de overzichtskaart.</span>
         </div>
     </div>
 
-    <!-- ===== SECTION 3: Videos ===== -->
-    <div class="floru-cp-section">
-        <div class="floru-cp-section-header">
-            <div class="floru-cp-section-number">3</div>
-            <div>
-                <div class="floru-cp-section-title">
-                    Ingesloten video's
-                    <span class="floru-cp-badge floru-cp-badge--detail">Detail</span>
-                </div>
-                <div class="floru-cp-section-subtitle">Wordt onder de beschrijving op de detailpagina getoond. Plak een YouTube- of Vimeo-URL — de video wordt automatisch ingesloten.</div>
-            </div>
+    <!-- ===== SECTION 3: Extra's (injected after editor via JS) ===== -->
+    <div class="floru-cp-section floru-cp-section--collapsed floru-cp-section--extras" id="floru-cp-extras-section" style="display:none;">
+        <div class="floru-cp-section-header floru-cp-section-header--collapsible" id="floru-cp-extras-toggle">
+            <div class="floru-cp-section-number floru-cp-section-number--muted">3</div>
+            <div class="floru-cp-section-title">Extra's <span class="floru-cp-optional">video's & weergave</span></div>
+            <span class="floru-cp-collapse-icon dashicons dashicons-arrow-down-alt2"></span>
         </div>
-        <div class="floru-cp-field-row">
-            <div class="floru-cp-field">
-                <label class="floru-cp-label" for="floru_client_video">Video 1</label>
-                <input type="url" id="floru_client_video" name="floru_client_video" value="<?php echo esc_url( $video_url ); ?>" class="widefat" placeholder="https://www.youtube.com/watch?v=...">
-            </div>
-            <div class="floru-cp-field">
-                <label class="floru-cp-label" for="floru_client_video_2">Video 2 <span class="floru-cp-hint">— optioneel</span></label>
-                <input type="url" id="floru_client_video_2" name="floru_client_video_2" value="<?php echo esc_url( $video_url_2 ); ?>" class="widefat" placeholder="https://www.youtube.com/watch?v=...">
+        <div class="floru-cp-section-body" id="floru-cp-extras-body">
+            <div class="floru-cp-field-row">
+                <div class="floru-cp-field">
+                    <label class="floru-cp-label" for="floru_client_video">Video 1</label>
+                    <input type="url" id="floru_client_video" name="floru_client_video" value="<?php echo esc_url( $video_url ); ?>" class="widefat" placeholder="YouTube- of Vimeo-URL">
+                </div>
+                <div class="floru-cp-field">
+                    <label class="floru-cp-label" for="floru_client_video_2">Video 2</label>
+                    <input type="url" id="floru_client_video_2" name="floru_client_video_2" value="<?php echo esc_url( $video_url_2 ); ?>" class="widefat" placeholder="YouTube- of Vimeo-URL">
+                </div>
+                <div class="floru-cp-field" style="flex:0 0 100px;">
+                    <label class="floru-cp-label" for="floru_client_order">Volgorde</label>
+                    <input type="number" id="floru_client_order" name="menu_order" value="<?php echo esc_attr( $post->menu_order ); ?>" min="0" step="1" class="widefat">
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== SECTION 4: Description header ===== -->
-    <div class="floru-cp-section floru-cp-section--desc-header">
-        <div class="floru-cp-section-header">
-            <div class="floru-cp-section-number">4</div>
-            <div>
-                <div class="floru-cp-section-title">
-                    Volledige beschrijving
-                    <span class="floru-cp-badge floru-cp-badge--card">Overzicht</span>
-                    <span class="floru-cp-badge floru-cp-badge--detail">Detail</span>
-                </div>
-                <div class="floru-cp-section-subtitle">Het belangrijkste inhoudsveld. Op de <strong>overzichtskaart</strong> worden de eerste regels als korte samenvatting getoond. Op de <strong>detailpagina</strong> wordt de volledige inhoud weergegeven met opmaak, afbeeldingen en koppen.</div>
+    <!-- ===== Compact card preview (side panel) ===== -->
+    <div id="floru-cp-preview-panel" class="floru-cp-preview-panel" style="display:none;">
+        <div class="floru-cp-preview-label">Overzichtskaart preview</div>
+        <div class="floru-cp-preview-card">
+            <div class="floru-cp-preview-logo" id="floru-cp-preview-logo">
+                <?php if ( $thumbnail_url ) : ?>
+                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
+                <?php else : ?>
+                    <span class="dashicons dashicons-format-image"></span>
+                <?php endif; ?>
             </div>
+            <div class="floru-cp-preview-name" id="floru-cp-preview-name"><?php echo esc_html( $post->post_title ?: 'Bedrijfsnaam' ); ?></div>
+            <div class="floru-cp-preview-summary" id="floru-cp-preview-summary"><?php echo esc_html( $summary_auto ?: 'Samenvatting…' ); ?></div>
         </div>
     </div>
 
     <style>
-        /* ===== PAGE MAP ===== */
-        .floru-cp-pagemap {
-            background: linear-gradient(135deg, #f0f6fc 0%, #f6f7f7 100%);
-            border: 1px solid #c3c4c7;
-            border-radius: 6px;
-            margin: 14px 0 0;
-            overflow: hidden;
-        }
-        .floru-cp-pagemap__header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 18px;
-            background: #fff;
-            border-bottom: 1px solid #dcdcde;
-            cursor: pointer;
-        }
-        .floru-cp-pagemap__header .dashicons {
-            color: #2271b1;
-            font-size: 18px;
-            width: 18px;
-            height: 18px;
-        }
-        .floru-cp-pagemap__header strong {
-            font-size: 13px;
-            color: #1d2327;
-        }
-        .floru-cp-pagemap__toggle {
-            margin-left: auto;
-            font-size: 11px;
-            color: #2271b1;
-            cursor: pointer;
-        }
-        .floru-cp-pagemap__toggle:hover {
-            text-decoration: underline;
-        }
-        .floru-cp-pagemap__body {
-            padding: 18px;
-        }
-        .floru-cp-pagemap__intro {
-            font-size: 12px;
-            color: #50575e;
-            margin: 0 0 16px;
-        }
-        .floru-cp-pagemap__columns {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        .floru-cp-pagemap__card {
-            flex: 1;
-            min-width: 160px;
-            background: #fff;
-            border: 1px solid #dcdcde;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .floru-cp-pagemap__card--wide {
-            flex: 2;
-            min-width: 280px;
-        }
-        .floru-cp-pagemap__card-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #50575e;
-            padding: 8px 12px;
-            background: #f6f7f7;
-            border-bottom: 1px solid #f0f0f1;
-        }
-        .floru-cp-pagemap__card-art {
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .floru-cp-map-zone {
-            font-size: 11px;
-            color: #1d2327;
-            background: #f0f6fc;
-            border: 1px dashed #72aee6;
-            border-radius: 3px;
-            padding: 5px 8px;
-            cursor: pointer;
-            transition: background 0.15s, border-color 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .floru-cp-map-zone:hover {
-            background: #dceefb;
-            border-color: #2271b1;
-        }
-        .floru-cp-map-zone--muted {
-            background: #f6f7f7;
-            border-color: #c3c4c7;
-            color: #787c82;
-        }
-        .floru-cp-map-zone--sm {
-            font-size: 10px;
-            padding: 3px 6px;
-        }
-        .floru-cp-map-zone--lg {
-            min-height: 36px;
-        }
-        .floru-cp-map-zone--link {
-            background: none;
-            border: none;
-            color: #c3902f;
-            font-size: 10px;
-            font-weight: 600;
-            cursor: default;
-            padding: 2px 8px;
-        }
-        .floru-cp-map-nr {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #2271b1;
-            color: #fff;
-            font-size: 9px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .floru-cp-map-row {
-            display: flex;
-            gap: 8px;
-        }
-        .floru-cp-map-row > .floru-cp-map-zone {
-            flex: 0 0 60px;
-            text-align: center;
-            justify-content: center;
-            min-height: 50px;
-        }
-        .floru-cp-map-stack {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .floru-cp-map-row--inline {
-            display: flex;
-            gap: 4px;
-        }
-        .floru-cp-map-row--inline .floru-cp-map-zone {
-            flex: 1;
-        }
-
-        /* ===== SECTIONS ===== */
+        /* ===== SECTIONS — Compact, premium ===== */
         .floru-cp-section {
             background: #fff;
             border: 1px solid #dcdcde;
             border-radius: 6px;
-            padding: 20px 24px;
-            margin: 14px 0 0;
+            padding: 14px 18px;
+            margin: 8px 0 0;
         }
-        .floru-cp-section--desc-header {
-            margin-bottom: 0;
+        .floru-cp-section--detail {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .floru-cp-field--desc {
+            margin: 10px -18px 0;
+            padding: 10px 18px 0;
+            border-top: 1px solid #f0f0f1;
         }
         .floru-cp-section-header {
             display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            margin-bottom: 16px;
-            padding-bottom: 14px;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
             border-bottom: 1px solid #f0f0f1;
+        }
+        .floru-cp-section-header:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
         .floru-cp-section-number {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            width: 28px;
-            height: 28px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #2271b1;
             color: #fff;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 700;
+        }
+        .floru-cp-section-number--muted {
+            background: #c3c4c7;
         }
         .floru-cp-section-title {
             font-weight: 600;
@@ -926,118 +721,63 @@ function floru_client_profile_section( $post ) {
             color: #1d2327;
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .floru-cp-section-subtitle {
-            font-size: 12px;
-            color: #787c82;
-            margin-top: 3px;
-            line-height: 1.5;
-        }
-
-        /* ===== BADGES: where-does-this-appear ===== */
-        .floru-cp-badge {
-            display: inline-block;
-            font-size: 9px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 2px 6px;
-            border-radius: 3px;
-            vertical-align: middle;
-            line-height: 1.4;
-        }
-        .floru-cp-badge--card {
-            background: #fef3cd;
-            color: #856404;
-        }
-        .floru-cp-badge--detail {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-        .floru-cp-badge--sidebar {
-            background: #e2e3e5;
-            color: #383d41;
-        }
-        .floru-cp-badge-row {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 6px;
-        }
-
-        /* ===== FIELD DESCRIPTIONS ===== */
-        .floru-cp-field-desc {
-            display: block;
-            font-size: 11px;
-            color: #787c82;
-            margin-bottom: 6px;
-            line-height: 1.4;
-        }
-        .floru-cp-field-desc--below {
-            margin-bottom: 0;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .floru-cp-info-icon {
-            font-size: 14px !important;
-            width: 14px !important;
-            height: 14px !important;
-            color: #a7aaad;
-        }
-
-        /* ===== BASE FIELD STYLES ===== */
-        .floru-cp-row {
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
-        }
-        .floru-cp-logo-col {
-            flex: 0 0 170px;
-        }
-        .floru-cp-fields-col {
-            flex: 1;
-            min-width: 0;
-        }
-        .floru-cp-label {
-            display: flex;
-            align-items: center;
             gap: 6px;
+        }
+        .floru-cp-optional {
+            font-weight: 400;
+            font-size: 11px;
+            color: #a7aaad;
+            font-style: italic;
+        }
+
+        /* ===== FIELD STYLES ===== */
+        .floru-cp-label {
+            display: block;
             font-weight: 600;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             color: #50575e;
-            flex-wrap: wrap;
         }
-        .floru-cp-hint {
-            font-weight: 400;
-            text-transform: none;
-            letter-spacing: 0;
+        .floru-cp-field-hint {
+            display: block;
+            font-size: 11px;
             color: #a7aaad;
+            margin-bottom: 4px;
+            line-height: 1.35;
         }
         .floru-cp-field {
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
         .floru-cp-field:last-child {
             margin-bottom: 0;
         }
         .floru-cp-field-row {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
         .floru-cp-field-row .floru-cp-field {
             flex: 1;
         }
+        .floru-cp-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .floru-cp-logo-col {
+            flex: 0 0 140px;
+        }
+        .floru-cp-fields-col {
+            flex: 1;
+            min-width: 0;
+        }
 
         /* ===== LOGO PREVIEW ===== */
         .floru-cp-logo-preview {
-            width: 170px;
-            height: 126px;
-            border-radius: 8px;
+            width: 140px;
+            height: 100px;
+            border-radius: 6px;
             border: 2px dashed #c3c4c7;
             overflow: hidden;
             display: flex;
@@ -1045,56 +785,52 @@ function floru_client_profile_section( $post ) {
             justify-content: center;
             background: #f6f7f7;
             cursor: pointer;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s;
         }
         .floru-cp-logo-preview:hover {
             border-color: #2271b1;
-            box-shadow: 0 0 0 1px #2271b1;
         }
         .floru-cp-logo-preview.has-logo {
             border-style: solid;
             border-color: #dcdcde;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             background: #fff;
         }
         .floru-cp-logo-preview img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            padding: 10px;
+            padding: 8px;
         }
         .floru-cp-logo-placeholder {
             text-align: center;
             color: #a7aaad;
-            transition: color 0.2s;
         }
         .floru-cp-logo-preview:hover .floru-cp-logo-placeholder {
             color: #2271b1;
         }
         .floru-cp-logo-placeholder .dashicons {
             display: block;
-            font-size: 32px;
-            width: 32px;
-            height: 32px;
-            margin: 0 auto 6px;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 2px;
         }
         .floru-cp-logo-placeholder span:last-child {
-            font-size: 11px;
-            font-weight: 500;
+            font-size: 10px;
         }
         .floru-cp-logo-actions {
-            margin-top: 8px;
+            margin-top: 4px;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
         .floru-cp-logo-actions .button {
             background: none;
             border: none;
             box-shadow: none;
-            font-size: 12px;
+            font-size: 11px;
             min-height: auto;
             line-height: 1;
             padding: 2px 0;
@@ -1112,10 +848,34 @@ function floru_client_profile_section( $post ) {
         }
         .floru-cp-remove-btn {
             color: #b32d2e !important;
-            font-size: 11px !important;
         }
         .floru-cp-remove-btn:hover {
             color: #8a1c1c !important;
+        }
+
+        /* ===== COLLAPSIBLE SECTIONS ===== */
+        .floru-cp-section-header--collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        .floru-cp-collapse-icon {
+            margin-left: auto;
+            color: #a7aaad;
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+        .floru-cp-section--collapsed .floru-cp-collapse-icon {
+            transform: rotate(-90deg);
+        }
+        .floru-cp-section--collapsed .floru-cp-section-body {
+            display: none;
+        }
+        .floru-cp-section--collapsed .floru-cp-section-header {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         /* ===== CONTENT EDITOR CONNECTOR ===== */
@@ -1124,27 +884,66 @@ function floru_client_profile_section( $post ) {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
-        .post-type-floru_client .floru-cp-section--desc-header + #postdivrich {
+        .post-type-floru_client .floru-cp-section--detail + #postdivrich {
             border-top: 1px solid #dcdcde;
         }
 
-        /* ===== BOTTOM META BOX ===== */
-        #floru_client_details .inside {
-            padding: 12px;
+        /* ===== CARD PREVIEW PANEL (sidebar) ===== */
+        .floru-cp-preview-panel {
+            background: #f6f7f7;
+            border: 1px solid #dcdcde;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
         }
-        .floru-cp-bottom-row {
+        .floru-cp-preview-label {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a7aaad;
+            margin-bottom: 5px;
+        }
+        .floru-cp-preview-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 10px 8px 8px;
+            text-align: center;
+            background: #fff;
+        }
+        .floru-cp-preview-logo {
+            width: 48px;
+            height: 30px;
+            margin: 0 auto 4px;
             display: flex;
-            gap: 20px;
-            align-items: flex-end;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .floru-cp-bottom-row .floru-cp-field {
-            margin-bottom: 0;
+        .floru-cp-preview-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
-        .floru-cp-bottom-row .floru-cp-field:first-child {
-            flex: 1;
+        .floru-cp-preview-logo .dashicons {
+            font-size: 16px;
+            color: #c3c4c7;
         }
-        .floru-cp-bottom-row .floru-cp-field:last-child {
-            flex: 0 0 100px;
+        .floru-cp-preview-name {
+            font-weight: 600;
+            font-size: 11px;
+            color: #1d2327;
+            margin-bottom: 1px;
+            line-height: 1.3;
+        }
+        .floru-cp-preview-summary {
+            font-size: 9px;
+            color: #a7aaad;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -1162,25 +961,22 @@ function floru_client_profile_section( $post ) {
             .floru-cp-fields-col {
                 width: 100%;
             }
-            .floru-cp-bottom-row {
-                flex-direction: column;
-            }
-            .floru-cp-bottom-row .floru-cp-field:last-child {
-                flex: none;
-                width: 100%;
-            }
-            .floru-cp-pagemap__columns {
-                flex-direction: column;
-            }
-            .floru-cp-section-header {
-                flex-direction: column;
-                gap: 8px;
-            }
         }
     </style>
 
     <script>
     jQuery(function($) {
+        /* ----- Move extras section after the editor ----- */
+        var $editor = $('#postdivrich');
+        if ($editor.length) {
+            $('#floru-cp-extras-section').insertAfter($editor).show();
+        }
+
+        /* ----- Move preview panel to top of sidebar ----- */
+        if ($('#side-sortables').length) {
+            $('#floru-cp-preview-panel').prependTo('#side-sortables').show();
+        }
+
         /* ----- Logo media picker ----- */
         var frame;
         function openMedia() {
@@ -1196,8 +992,9 @@ function floru_client_profile_section( $post ) {
                 var url = attachment.sizes && attachment.sizes.medium ? attachment.sizes.medium.url : attachment.url;
                 $('#floru_client_thumbnail_id').val(attachment.id);
                 $('#floru-cp-logo-preview').addClass('has-logo').html('<img src="' + url + '" alt="">');
-                $('#floru-cp-logo-btn').text('Logo wijzigen');
+                $('#floru-cp-logo-btn').text('Wijzigen');
                 $('#floru-cp-logo-remove').show();
+                $('#floru-cp-preview-logo').html('<img src="' + url + '" alt="">');
             });
             frame.open();
         }
@@ -1211,45 +1008,25 @@ function floru_client_profile_section( $post ) {
             $('#floru-cp-logo-preview').removeClass('has-logo').html(
                 '<span class="floru-cp-logo-placeholder">' +
                 '<span class="dashicons dashicons-format-image"></span>' +
-                '<span>Klik om logo toe te voegen</span></span>'
+                '<span>Logo toevoegen</span></span>'
             );
-            $('#floru-cp-logo-btn').text('Logo uploaden');
+            $('#floru-cp-logo-btn').text('Uploaden');
             $(this).hide();
+            $('#floru-cp-preview-logo').html('<span class="dashicons dashicons-format-image"></span>');
         });
 
-        /* ----- Page map toggle ----- */
-        var mapBody = $('#floru-cp-pagemap-body');
-        var mapState = localStorage.getItem('floru_pagemap_open');
-        if (mapState === 'closed') {
-            mapBody.hide();
-        }
-        $('.floru-cp-pagemap__header').on('click', function() {
-            mapBody.slideToggle(200);
-            localStorage.setItem('floru_pagemap_open', mapBody.is(':visible') ? 'open' : 'closed');
+        /* ----- Collapsible extras section ----- */
+        $('#floru-cp-extras-toggle').on('click', function() {
+            $(this).closest('.floru-cp-section').toggleClass('floru-cp-section--collapsed');
         });
 
-        /* ----- Click zone to jump to field ----- */
-        $(document).on('click', '.floru-cp-map-zone[data-target]', function() {
-            var target = $(this).data('target');
-            var el;
-            if (target === 'title') {
-                el = $('#title');
-            } else if (target === 'content') {
-                el = $('#postdivrich');
-            } else {
-                el = $('#' + target);
-            }
-            if (el.length) {
-                $('html, body').animate({ scrollTop: el.offset().top - 80 }, 300);
-                el.css('box-shadow', '0 0 0 3px rgba(34,113,177,0.35)');
-                setTimeout(function() {
-                    el.css('box-shadow', '');
-                }, 1500);
-                if (el.is('input, textarea')) {
-                    el.focus();
-                }
-            }
+        /* ----- Live preview updates ----- */
+        $('#title').on('input', function() {
+            $('#floru-cp-preview-name').text($(this).val() || 'Bedrijfsnaam');
         });
+
+        /* ----- Hide old meta boxes that might still be registered ----- */
+        $('#floru_client_details, #astra_settings_meta_box').hide();
     });
     </script>
     <?php
@@ -1267,14 +1044,8 @@ function floru_client_title_placeholder( $title, $post ) {
 }
 
 function floru_client_details_render( $post ) {
-    ?>
-    <div class="floru-cp-bottom-row">
-        <div class="floru-cp-field">
-            <label class="floru-cp-label" for="floru_client_order">Weergavevolgorde</label>
-            <input type="number" id="floru_client_order" name="menu_order" value="<?php echo esc_attr( $post->menu_order ); ?>" min="0" step="1" style="width:100%;">
-        </div>
-    </div>
-    <?php
+    // Kept for backward compat — fields moved into main flow.
+    // This meta box is no longer registered but function remains safe.
 }
 
 /**
@@ -1414,12 +1185,16 @@ function floru_client_admin_css() {
     if ( $screen->id === 'floru_client' ) {
         echo '<style>
             .post-type-floru_client #titlewrap { margin-bottom: 0; }
-            .post-type-floru_client #post-body-content { margin-bottom: 12px; }
+            .post-type-floru_client #post-body-content { margin-bottom: 8px; }
             .post-type-floru_client #postdivrich { margin-top: 0; }
             .post-type-floru_client .floru-cp-section--desc-header { margin-bottom: -1px; position: relative; z-index: 1; }
-            /* Hide default excerpt & custom fields for cleaner UI */
+            /* Hide excerpt, custom fields, Astra settings, old details box */
             .post-type-floru_client #postexcerpt,
-            .post-type-floru_client #postcustom { display: none; }
+            .post-type-floru_client #postcustom,
+            .post-type-floru_client #astra_settings_meta_box,
+            .post-type-floru_client #floru_client_details { display: none !important; }
+            /* Tighter editor chrome */
+            .post-type-floru_client #wp-content-editor-tools { padding-top: 0; }
         </style>';
     }
 }

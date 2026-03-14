@@ -171,6 +171,9 @@ require_once get_stylesheet_directory() . '/inc/customizer-defaults.php';
 // Include custom post types (Team, Clients)
 require_once get_stylesheet_directory() . '/inc/custom-post-types.php';
 
+// Include Floru admin pages (sidebar menu, Gutenberg disable, premium page editor)
+require_once get_stylesheet_directory() . '/inc/floru-admin-pages.php';
+
 // Include page meta boxes (editable fields for all page templates)
 require_once get_stylesheet_directory() . '/inc/page-meta-boxes.php';
 
