@@ -47,6 +47,80 @@
     --floru-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Smooth scrolling (respects reduced-motion via media query at bottom) */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ==========================================================================
+   SKIP-TO-CONTENT LINK
+   ========================================================================== */
+
+.floru-skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--floru-accent);
+    color: var(--floru-white);
+    padding: 8px 24px;
+    border-radius: 0 0 6px 6px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    z-index: 100000;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.floru-skip-link:focus {
+    top: 0;
+}
+
+/* ==========================================================================
+   COOKIE CONSENT BANNER
+   ========================================================================== */
+
+.floru-cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--floru-navy-dark);
+    color: var(--floru-white);
+    z-index: 99999;
+    padding: 16px 24px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.floru-cookie-consent__inner {
+    max-width: var(--floru-container-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.floru-cookie-consent__inner p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+}
+
+.floru-cookie-consent__actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .floru-cookie-consent__inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
 /* ==========================================================================
    GLOBAL RESET & BASE STYLES
    ========================================================================== */
@@ -217,7 +291,8 @@ a:hover {
     color: var(--floru-navy);
 }
 
-.floru-btn--primary:hover {
+.floru-btn--primary:hover,
+.floru-btn--primary:focus-visible {
     background-color: #D4A54A;
     color: var(--floru-navy);
     transform: translateY(-1px);
@@ -230,7 +305,8 @@ a:hover {
     border: 1.5px solid var(--floru-navy);
 }
 
-.floru-btn--outline:hover {
+.floru-btn--outline:hover,
+.floru-btn--outline:focus-visible {
     background-color: var(--floru-navy);
     color: var(--floru-white);
 }
@@ -305,13 +381,73 @@ a:hover {
 }
 
 .main-header-menu .menu-item > a:hover,
-.ast-builder-menu .menu-item > .menu-link:hover {
+.main-header-menu .menu-item > a:focus-visible,
+.ast-builder-menu .menu-item > .menu-link:hover,
+.ast-builder-menu .menu-item > .menu-link:focus-visible {
     color: var(--floru-accent) !important;
 }
 
 .main-header-menu .current-menu-item > a,
 .ast-builder-menu .current-menu-item > .menu-link {
     color: var(--floru-accent) !important;
+}
+
+/* Subtle underline animation on nav hover */
+.ast-builder-menu .menu-item > .menu-link {
+    position: relative !important;
+}
+
+.ast-builder-menu .menu-item > .menu-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    background-color: var(--floru-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ast-builder-menu .menu-item > .menu-link:hover::after,
+.ast-builder-menu .current-menu-item > .menu-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Scroll-to-top button — brand-styled */
+#ast-scroll-top {
+    background-color: var(--floru-navy) !important;
+    color: var(--floru-white) !important;
+    border-radius: 12px !important;
+    width: 52px !important;
+    height: 52px !important;
+    right: 18px !important;
+    bottom: calc(18px + env(safe-area-inset-bottom)) !important;
+    box-shadow: 0 4px 16px rgba(27, 42, 74, 0.25) !important;
+    transition: all 0.25s ease !important;
+}
+
+#ast-scroll-top:hover {
+    background-color: var(--floru-accent) !important;
+    box-shadow: 0 6px 20px rgba(201, 145, 59, 0.3) !important;
+    transform: translateY(-2px);
+}
+
+/* Mobile header — ensure it's visible on small viewports */
+.ast-header-break-point #ast-mobile-header .ast-primary-header-bar {
+    display: grid !important;
+}
+
+/* Header CONTACT button polish */
+.ast-builder-layout-element .ast-button-wrap .ast-custom-button {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.ast-builder-layout-element .ast-button-wrap .ast-custom-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 145, 59, 0.35);
 }
 
 /* ==========================================================================
@@ -402,6 +538,12 @@ a:hover {
     position: relative;
     width: 340px;
     height: 340px;
+    animation: floru-hero-rotate 60s linear infinite;
+}
+
+@keyframes floru-hero-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
 
 .floru-hero__graphic-line {
@@ -480,7 +622,9 @@ a:hover {
 .floru-intro__visual img {
     display: block;
     width: 100%;
-    border-radius: 2px;
+    border-radius: 6px;
+    background-color: var(--floru-off-white);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
 }
 
 /* ==========================================================================
@@ -490,6 +634,18 @@ a:hover {
 .floru-stats-band {
     background-color: var(--floru-navy);
     padding: 48px 0;
+    position: relative;
+}
+
+.floru-stats-band::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: var(--floru-accent);
 }
 
 .floru-stats-band__grid {
@@ -555,10 +711,12 @@ a:hover {
     text-decoration: none;
     color: inherit;
     overflow: hidden;
+    border-top: 3px solid transparent;
 }
 
 .floru-service-card:hover {
     border-color: rgba(201, 145, 59, 0.35);
+    border-top-color: var(--floru-accent);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.07);
     transform: translateY(-3px);
     color: inherit;
@@ -833,10 +991,9 @@ a:hover {
 
 .floru-clients-band {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
+    gap: 16px;
 }
 
 .floru-clients-band__label {
@@ -855,24 +1012,41 @@ a:hover {
 }
 
 .floru-clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    align-items: center;
+    justify-items: center;
+    gap: 24px 32px;
+    width: 100%;
+}
+
+.floru-clients-grid > a {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 32px 40px;
+    width: 100%;
+    min-height: 78px;
+    padding: 10px 12px;
+    border: 1px solid var(--floru-border-light);
+    border-radius: 12px;
+    background: var(--floru-white);
+    transition: border-color var(--floru-transition), box-shadow var(--floru-transition);
+}
+
+.floru-clients-grid > a:hover {
+    border-color: rgba(201, 145, 59, 0.45);
+    box-shadow: 0 4px 14px rgba(15, 27, 51, 0.06);
 }
 
 .floru-client-logo {
-    max-height: 36px;
-    width: auto;
-    opacity: 0.5;
-    filter: grayscale(100%);
+    max-width: 100%;
+    object-fit: contain;
+    opacity: 0.7;
     transition: all var(--floru-transition);
 }
 
 .floru-client-logo:hover {
     opacity: 1;
-    filter: grayscale(0%);
 }
 
 /* Client Detail Cards */
@@ -1168,31 +1342,39 @@ a:hover {
     object-fit: cover;
 }
 
-/* Mute/unmute toggle */
+/* Mute/unmute toggle — hidden by default; JS adds .has-audio to .floru-video when audio is detected */
 .floru-video__mute-toggle {
     position: absolute;
-    bottom: 16px;
-    right: 16px;
+    bottom: 20px;
+    right: 20px;
     z-index: 2;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(8px);
+    height: 36px;
+    padding: 0 14px 0 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(27, 42, 74, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: #fff;
     cursor: pointer;
-    display: flex;
+    display: none;
     align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease, transform 0.15s ease;
-    opacity: 0.7;
+    gap: 6px;
+    font-family: var(--floru-font);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.floru-video.has-audio .floru-video__mute-toggle {
+    display: inline-flex;
 }
 
 .floru-video__mute-toggle:hover {
-    background: rgba(0, 0, 0, 0.75);
-    opacity: 1;
-    transform: scale(1.08);
+    background: rgba(27, 42, 74, 0.9);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 .floru-video__mute-toggle .floru-icon-unmuted {
@@ -1205,6 +1387,11 @@ a:hover {
 
 .floru-video.is-unmuted .floru-video__mute-toggle .floru-icon-unmuted {
     display: block;
+}
+
+.floru-video__mute-toggle .floru-icon-muted,
+.floru-video__mute-toggle .floru-icon-unmuted {
+    flex-shrink: 0;
 }
 
 /* Video section variants */
@@ -1244,9 +1431,59 @@ a:hover {
     margin-bottom: 14px;
 }
 
-/* Crop talking-head videos tighter on the speaker */
-.floru-client-video-section[data-slug="stratego-work"] .floru-video video {
-    transform: scale(1.3) translateY(-5%);
+/* Per-client video adjustments (if needed) */
+
+/* Client image gallery (for pages without video) */
+.floru-client-gallery-section {
+    background: var(--floru-navy-dark);
+    padding: 56px 0;
+    position: relative;
+}
+
+.floru-client-gallery-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--floru-gold);
+    border-radius: 2px;
+}
+
+.floru-client-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    max-width: 840px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+}
+
+.floru-client-gallery__item {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a1628 0%, #1a2a44 50%, #0f1b33 100%);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.floru-client-gallery__item--0 {
+    grid-row: 1 / -1;
+}
+
+.floru-client-gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.floru-client-gallery__item:hover img {
+    transform: scale(1.03);
 }
 
 /* Content section */
@@ -1426,6 +1663,19 @@ a:hover {
 .floru-cta {
     background-color: var(--floru-navy);
     padding: 64px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle decorative accent in CTA */
+.floru-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--floru-accent) 50%, transparent);
 }
 
 .floru-cta__inner {
@@ -1477,7 +1727,8 @@ a:hover {
     transition: color var(--floru-transition);
 }
 
-.site-footer a:hover {
+.site-footer a:hover,
+.site-footer a:focus-visible {
     color: var(--floru-accent) !important;
 }
 
@@ -1508,7 +1759,8 @@ a:hover {
     transition: color 0.2s ease;
 }
 
-.floru-footer a:hover {
+.floru-footer a:hover,
+.floru-footer a:focus-visible {
     color: var(--floru-accent);
 }
 
@@ -1582,6 +1834,18 @@ a:hover {
     background-color: var(--floru-navy-dark);
     padding: 100px 0 60px;
     text-align: center;
+    position: relative;
+}
+
+.floru-page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--floru-accent), transparent);
 }
 
 .floru-page-header h1 {
@@ -1688,6 +1952,20 @@ a:hover {
     background-color: var(--floru-off-white);
     font-style: italic;
     color: var(--floru-charcoal);
+}
+
+/* Smooth underline animation on content links */
+.entry-content a {
+    text-decoration: none;
+    background-image: linear-gradient(var(--floru-accent), var(--floru-accent));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.entry-content a:hover {
+    background-size: 100% 1px;
 }
 
 /* ==========================================================================
@@ -1887,19 +2165,9 @@ a:focus-visible {
     outline-offset: 2px;
 }
 
-.floru-team-card__link:focus-visible {
-    outline: 2px solid var(--floru-accent);
-    outline-offset: 2px;
-}
-
 .main-header-menu .menu-item > a:focus-visible,
 .ast-builder-menu .menu-item > .menu-link:focus-visible {
     outline: 2px solid var(--floru-accent) !important;
-    outline-offset: 2px;
-}
-
-.floru-footer ul li a:focus-visible {
-    outline: 2px solid var(--floru-accent);
     outline-offset: 2px;
 }
 
@@ -2160,13 +2428,249 @@ a:focus-visible {
 }
 
 /* ==========================================================================
+   MOBILE MENU — Full-screen overlay system
+   ========================================================================== */
+
+/* ---- Sticky mobile header ---- */
+.ast-header-break-point #ast-mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 120;
+}
+
+.ast-header-break-point .ast-primary-header-bar {
+    min-height: 72px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    background-color: var(--floru-white) !important;
+    border-bottom: 1px solid rgba(27, 42, 74, 0.08) !important;
+    box-shadow: 0 1px 0 rgba(15, 27, 51, 0.04) !important;
+}
+
+.ast-header-break-point .site-branding {
+    padding: 14px 0 !important;
+}
+
+.ast-header-break-point .site-branding img {
+    max-height: 44px !important;
+}
+
+/* ---- Hamburger toggle — larger tap target ---- */
+.ast-header-break-point .ast-button-wrap .menu-toggle,
+.ast-header-break-point .ast-mobile-menu-trigger-minimal {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 8px !important;
+    border-radius: 10px !important;
+    background: rgba(27, 42, 74, 0.08) !important;
+    color: var(--floru-navy) !important;
+    border: 1px solid rgba(27, 42, 74, 0.12) !important;
+    box-shadow: 0 1px 4px rgba(15, 27, 51, 0.06) !important;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.ast-header-break-point [data-section="section-header-mobile-trigger"] .ast-button-wrap .ast-mobile-menu-trigger-minimal {
+    border: 1px solid rgba(27, 42, 74, 0.12) !important;
+}
+
+/* Larger SVG icons inside the trigger */
+.ast-header-break-point .menu-toggle .ast-mobile-svg,
+.ast-header-break-point .menu-toggle .ast-close-svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.ast-header-break-point .menu-toggle .ast-mobile-svg line,
+.ast-header-break-point .menu-toggle .ast-mobile-svg path,
+.ast-header-break-point .menu-toggle .ast-close-svg line,
+.ast-header-break-point .menu-toggle .ast-close-svg path {
+    stroke-width: 2.35 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+}
+
+/* Highlight trigger when menu is open */
+body.ast-main-header-nav-open .ast-header-break-point .ast-button-wrap .menu-toggle,
+body.ast-main-header-nav-open .ast-header-break-point .ast-mobile-menu-trigger-minimal {
+    background: var(--floru-navy) !important;
+    color: #FFFFFF !important;
+    border-color: var(--floru-navy) !important;
+    box-shadow: 0 6px 16px rgba(15, 27, 51, 0.24) !important;
+}
+
+body.ast-main-header-nav-open .ast-header-break-point .menu-toggle .ast-close-svg line,
+body.ast-main-header-nav-open .ast-header-break-point .menu-toggle .ast-close-svg path {
+    stroke: #FFFFFF !important;
+}
+
+/* ---- Fixed overlay panel ---- */
+.ast-header-break-point .ast-mobile-header-content,
+.ast-header-break-point .ast-desktop-header-content {
+    position: fixed !important;
+    top: 72px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    padding: 18px !important;
+    background: rgba(15, 27, 51, 0.18) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    z-index: 110 !important;
+}
+
+/* ---- Scroll lock when menu is open ---- */
+body.ast-main-header-nav-open {
+    overflow: hidden !important;
+    height: 100dvh !important;
+}
+
+/* ---- Hide scroll-to-top when menu open ---- */
+body.ast-main-header-nav-open #ast-scroll-top {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(10px) !important;
+}
+
+/* ---- Disable Astra underline hover on mobile ---- */
+.ast-header-break-point .ast-menu-hover-style-underline > .menu-item > .menu-link::after,
+.ast-header-break-point .ast-menu-hover-style-underline > .menu-item.current-menu-item > .menu-link::after,
+.ast-header-break-point .ast-menu-hover-style-underline > .menu-item:hover > .menu-link::after {
+    display: none !important;
+}
+
+/* ---- Card wrapper for nav list ---- */
+.ast-header-break-point .ast-mobile-header-content .ast-builder-menu-mobile {
+    background: var(--floru-white) !important;
+    border: 1px solid var(--floru-border) !important;
+    border-radius: 20px !important;
+    padding: 10px !important;
+    width: 100% !important;
+    max-width: 560px;
+    margin: 0 auto;
+    box-shadow: 0 16px 48px rgba(15, 27, 51, 0.07) !important;
+}
+
+/* ---- Menu items — pill-style rows ---- */
+.ast-header-break-point .ast-mobile-header-content .menu-item {
+    margin: 2px 0 !important;
+}
+
+.ast-header-break-point .ast-mobile-header-content .menu-item > .menu-link,
+.ast-header-break-point .ast-mobile-header-content .menu-item > .ast-menu-toggle,
+.ast-header-break-point .ast-mobile-popup-content .menu-item > .menu-link {
+    font-family: var(--floru-font-body) !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--floru-charcoal) !important;
+    padding: 14px 18px !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-radius: 12px !important;
+    transition: color 0.2s ease, background-color 0.2s ease !important;
+    display: block !important;
+    line-height: 1.35 !important;
+}
+
+.ast-header-break-point .ast-mobile-header-content .menu-item:last-child > .menu-link {
+    border-bottom: none !important;
+}
+
+.ast-header-break-point .ast-mobile-header-content .menu-item > .menu-link:hover,
+.ast-header-break-point .ast-mobile-popup-content .menu-item > .menu-link:hover {
+    color: var(--floru-accent) !important;
+    background-color: var(--floru-off-white) !important;
+}
+
+/* ---- Current / active item — soft highlight, no border ---- */
+.ast-header-break-point .ast-mobile-header-content .current-menu-item > .menu-link,
+.ast-header-break-point .ast-mobile-popup-content .current-menu-item > .menu-link {
+    color: var(--floru-accent) !important;
+    background-color: rgba(201, 145, 59, 0.08) !important;
+    border-left: none !important;
+}
+
+/* ---- CONTACT CTA in mobile menu ---- */
+.floru-mobile-contact-item {
+    margin-top: 8px !important;
+    padding: 2px 0 0 !important;
+    list-style: none !important;
+    border-bottom: none !important;
+}
+
+.floru-mobile-contact-item > .floru-mobile-contact-link.menu-link,
+a.floru-mobile-contact-link.menu-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 52px !important;
+    background: var(--floru-accent) !important;
+    color: #FFFFFF !important;
+    text-align: center !important;
+    padding: 14px 24px !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    font-size: 0.8125rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    box-shadow: 0 8px 24px rgba(201, 145, 59, 0.18) !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.floru-mobile-contact-item > .floru-mobile-contact-link.menu-link:hover,
+a.floru-mobile-contact-link.menu-link:hover {
+    background: var(--floru-accent-dark) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 6px 16px rgba(201, 145, 59, 0.28) !important;
+}
+
+/* Override current-item style when the contact CTA is active */
+.ast-header-break-point .ast-mobile-header-content .floru-mobile-contact-item.current-menu-item > .menu-link {
+    border-left: none !important;
+    background: var(--floru-accent) !important;
+    color: #FFFFFF !important;
+    border-radius: 14px !important;
+}
+
+/* ---- Off-canvas popup fallback (if enabled via Customizer) ---- */
+.ast-mobile-popup-drawer .ast-mobile-popup-overlay {
+    background: rgba(15, 27, 51, 0.5) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+}
+
+.ast-mobile-popup-drawer .ast-mobile-popup-inner {
+    background: var(--floru-white) !important;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12) !important;
+    max-width: 320px !important;
+}
+
+.ast-mobile-popup-drawer .menu-toggle-close {
+    color: var(--floru-navy) !important;
+    padding: 12px !important;
+}
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 
+/* ---- Tablet landscape & small desktop (≤ 1024px) ---- */
 @media (max-width: 1024px) {
+    :root {
+        --floru-section-padding: 56px;
+    }
+
     .floru-hero__inner {
         grid-template-columns: 1fr;
-        padding: 100px 24px 80px;
+        padding: 96px 24px 72px;
     }
 
     .floru-hero__visual {
@@ -2217,34 +2721,232 @@ a:focus-visible {
         text-align: center;
         gap: 32px;
     }
+
+    .floru-client-cards {
+        gap: 24px;
+    }
 }
 
+/* ---- Tablet portrait (≤ 768px) ---- */
 @media (max-width: 768px) {
+    :root {
+        --floru-section-padding: 44px;
+    }
+
+    .floru-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Hero */
     .floru-hero__inner {
-        padding: 80px 24px 64px;
+        padding: 72px 20px 56px;
     }
 
     .floru-hero h1 {
-        font-size: 2rem;
+        font-size: 1.875rem;
+        line-height: 1.2;
     }
 
+    .floru-hero p {
+        font-size: 0.9375rem;
+    }
+
+    .floru-hero__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .floru-hero__actions .floru-btn {
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Page header */
+    .floru-page-header {
+        padding: 64px 0 40px;
+    }
+
+    .floru-page-header h1 {
+        font-size: 1.625rem;
+        line-height: 1.2;
+    }
+
+    .floru-page-header p {
+        font-size: 0.9375rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Section headers & labels */
+    .floru-section-header {
+        margin-bottom: 32px;
+    }
+
+    .floru-section-label {
+        font-size: 0.6875rem;
+    }
+
+    /* Intro / About */
     .floru-intro {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
     }
 
-    .floru-services-grid {
-        grid-template-columns: 1fr;
+    .floru-intro-text {
+        font-size: 0.9375rem;
+        line-height: 1.7;
     }
 
     .floru-about-grid {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 32px;
     }
 
+    .floru-about-grid .floru-intro__image-wrapper {
+        order: -1;
+    }
+
+    /* Services */
+    .floru-services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .floru-service-card {
+        padding: 28px 24px;
+    }
+
+    /* Stats band */
+    .floru-stats-band {
+        padding: 36px 0;
+    }
+
+    .floru-stats-band__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .floru-stats-band__number {
+        font-size: 1.75rem;
+    }
+
+    .floru-stats-band__label {
+        font-size: 0.625rem;
+    }
+
+    .floru-stats-band__item:not(:last-child)::after {
+        top: 15%;
+        right: 0;
+        width: 1px;
+        height: 70%;
+        left: auto;
+        bottom: auto;
+    }
+
+    /* Trust */
+    .floru-trust-item {
+        gap: 16px;
+    }
+
+    /* Team */
+    .floru-team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .floru-team-card__body {
+        padding: 14px 14px 18px;
+    }
+
+    .floru-team-card__body h3 {
+        font-size: 0.9375rem;
+    }
+
+    .floru-team-card__role {
+        font-size: 0.75rem;
+    }
+
+    /* Clients */
+    .floru-clients-band {
+        text-align: center;
+    }
+
+    .floru-clients-band__divider {
+        display: none;
+    }
+
+    .floru-clients-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px 24px;
+    }
+
+    .floru-client-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .floru-client-card {
+        padding: 20px;
+    }
+
+    /* Client detail */
+    .floru-client-hero {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .floru-client-hero__title {
+        font-size: 1.375rem;
+    }
+
+    .floru-client-hero__meta {
+        justify-content: center;
+    }
+
+    .floru-client-page-hero {
+        padding: 16px 0 24px;
+    }
+
+    .floru-client-video-section {
+        padding: 32px 0;
+    }
+
+    .floru-client-gallery-section {
+        padding: 32px 0;
+    }
+
+    .floru-client-gallery {
+        gap: 8px;
+    }
+
+    .floru-client-highlights-section {
+        padding: 24px 0 28px;
+    }
+
+    .floru-client-content-section {
+        padding: 32px 0;
+    }
+
+    .floru-client-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .floru-client-body {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .floru-client-sidebar-card {
+        position: static;
+    }
+
+    /* Contact form */
     .floru-contact-grid {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 36px;
     }
 
     .floru-form__row {
@@ -2263,12 +2965,152 @@ a:focus-visible {
     }
 
     .floru-card--form {
-        padding: 32px 24px;
+        padding: 24px 20px;
+    }
+
+    /* Footer */
+    .floru-footer__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .floru-footer__brand {
+        grid-column: 1 / -1;
+    }
+
+    .floru-footer {
+        padding: 44px 0 28px;
+    }
+
+    .floru-footer__bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    /* CTA */
+    .floru-cta {
+        padding: 44px 20px;
+    }
+
+    .floru-cta__text h2 {
+        font-size: 1.25rem;
+    }
+
+    .floru-cta__text p {
+        font-size: 0.875rem;
+    }
+
+    /* News */
+    .floru-news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* ==== 10/10 mobile polish — tablet ==== */
+
+    /* Left-align section headers for editorial feel */
+    .floru-section-header {
+        text-align: left;
+    }
+
+    .floru-section-header h2 {
+        font-size: 1.375rem;
+    }
+
+    /* Buttons: softer radius, comfortable height */
+    .floru-btn {
+        border-radius: 12px;
+        min-height: 48px;
+        font-size: 0.8125rem;
+    }
+
+    /* Service cards: rounder, gentle shadow */
+    .floru-service-card {
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
+    }
+
+    /* Trust items: card-like on tablet */
+    .floru-trust-item {
+        background: var(--floru-white);
+        padding: 20px;
+        border-radius: 14px;
+        border: 1px solid var(--floru-border-light);
+    }
+
+    /* Client cards: rounder */
+    .floru-client-card {
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
+    }
+
+    /* Team cards: rounder */
+    .floru-team-card {
+        border-radius: 14px;
+    }
+}
+
+/* ---- Phone (≤ 480px) ---- */
+@media (max-width: 480px) {
+    :root {
+        --floru-section-padding: 32px;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    .floru-container {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    /* Hero */
+    .floru-hero__inner {
+        padding: 56px 18px 40px;
+    }
+
+    .floru-hero h1 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .floru-hero p {
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+    }
+
+    /* Page header */
+    .floru-page-header {
+        padding: 42px 0 24px;
+    }
+
+    .floru-page-header h1 {
+        font-size: 1.375rem;
+    }
+
+    .floru-page-header p {
+        font-size: 0.8125rem;
+    }
+
+    /* Intro text */
+    .floru-intro-text {
+        font-size: 0.875rem;
+        line-height: 1.65;
+    }
+
+    /* Stats — single column on phone */
+    .floru-stats-band {
+        padding: 28px 0;
     }
 
     .floru-stats-band__grid {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 20px;
+    }
+
+    .floru-stats-band__number {
+        font-size: 2.25rem;
     }
 
     .floru-stats-band__item:not(:last-child)::after {
@@ -2280,107 +3122,373 @@ a:focus-visible {
         height: 1px;
     }
 
-    .floru-footer__grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-
-    .floru-footer__bottom {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-    }
-
-    .floru-news-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .floru-team-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .floru-hero__actions {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .floru-section-header {
-        margin-bottom: 40px;
-    }
-
-    .floru-footer__bottom {
+    /* Trust — card-style on phone */
+    .floru-trust-item {
         flex-direction: column;
         gap: 12px;
-        text-align: center;
+        background: var(--floru-white);
+        padding: 18px;
+        border-radius: 14px;
+        border: 1px solid var(--floru-border-light);
     }
 
-    .floru-clients-band {
-        flex-direction: column;
+    .floru-trust-grid .floru-trust-item {
+        padding: 18px;
+        border-radius: 14px;
+        border: 1px solid var(--floru-border-light);
+    }
+
+    /* Team — single column on phone */
+    .floru-team-grid {
+        grid-template-columns: 1fr;
         gap: 16px;
-        text-align: center;
     }
 
-    .floru-clients-band__divider {
-        display: none;
+    .floru-team-card__body {
+        padding: 14px 16px 18px;
     }
 
+    /* Client logo grid — 2 columns on phone */
     .floru-clients-grid {
-        justify-content: center;
-        gap: 24px 32px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
     }
 
-    .floru-client-cards {
-        grid-template-columns: 1fr;
+    .floru-clients-grid > a {
+        min-height: 72px;
+        padding: 10px;
+        border-radius: 10px;
     }
 
-    .floru-client-hero {
+    .floru-client-logo {
+        max-height: 40px;
+    }
+
+    /* Client cards */
+    .floru-client-card {
         flex-direction: column;
-        gap: 20px;
-        text-align: center;
+        gap: 12px;
+        padding: 18px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
     }
 
-    .floru-client-hero__meta {
-        justify-content: center;
+    .floru-client-card__logo {
+        flex: none;
+        align-self: flex-start;
     }
 
-    .floru-client-page-hero {
-        padding: 20px 0 32px;
+    .floru-client-card__logo img {
+        max-width: 80px;
+        max-height: 48px;
     }
 
-    .floru-client-video-section {
-        padding: 40px 0;
+    .floru-client-card__desc {
+        font-size: 0.8125rem;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
     }
 
-    .floru-client-highlights-section {
-        padding: 32px 0 40px;
+    /* Client detail */
+    .floru-client-hero__logo {
+        flex: 0 0 80px;
+        height: 80px;
+        padding: 10px;
     }
 
-    .floru-client-content-section {
-        padding: 40px 0;
-    }
-
-    .floru-client-detail {
-        grid-template-columns: 1fr;
-    }
-
-    .floru-client-body {
-        grid-template-columns: 1fr;
+    .floru-client-hero__title {
+        font-size: 1.25rem;
     }
 
     .floru-client-sidebar-card {
-        position: static;
+        padding: 16px;
     }
 
+    .floru-client-detail__highlights {
+        grid-template-columns: 1fr;
+    }
+
+    /* Gallery — single column on phone */
+    .floru-client-gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 8px;
+        aspect-ratio: auto;
+    }
+
+    .floru-client-gallery__item--0 {
+        grid-row: auto;
+    }
+
+    .floru-client-gallery__item {
+        aspect-ratio: 16 / 9;
+    }
+
+    /* Service cards — softer */
     .floru-service-card {
-        padding: 36px 28px;
+        padding: 24px 20px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
     }
 
-    .floru-team-card__portrait {
-        width: 100px;
-        height: 100px;
+    /* Section headers — left-aligned, smaller */
+    .floru-section-header {
+        margin-bottom: 24px;
+        text-align: left;
+    }
+
+    .floru-section-header h2 {
+        font-size: 1.25rem;
+    }
+
+    /* Buttons — touch-friendly */
+    .floru-btn {
+        padding: 12px 24px;
+        font-size: 0.8125rem;
+        border-radius: 12px;
+        min-height: 48px;
+        width: auto;
+        justify-content: center;
+    }
+
+    .floru-hero__actions .floru-btn,
+    .floru-cta .floru-btn,
+    .floru-form__footer .floru-btn,
+    .floru-btn--full {
+        width: 100%;
+    }
+
+    .floru-btn--lg {
+        padding: 14px 28px;
+        font-size: 0.8125rem;
+        min-height: 52px;
+    }
+
+    /* Footer — single column on phone */
+    .floru-footer__grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .floru-footer {
+        padding: 36px 0 24px;
+    }
+
+    .floru-footer__col h4 {
+        font-size: 0.75rem;
+        margin-bottom: 12px;
+    }
+
+    /* Team cards — softer */
+    .floru-team-card {
+        border-radius: 14px;
+    }
+
+    /* CTA */
+    .floru-cta {
+        padding: 36px 18px;
+    }
+
+    .floru-cta__text h2 {
+        font-size: 1.125rem;
+    }
+
+    .floru-cta__text p {
+        font-size: 0.8125rem;
+    }
+
+    /* Form */
+    .floru-card--form {
+        padding: 20px 16px;
+    }
+
+    /* Video */
+    .floru-video {
+        border-radius: 12px;
+    }
+
+    /* Compact sections get even tighter */
+    .floru-section--compact {
+        padding-top: 28px;
+        padding-bottom: 28px;
     }
 }
 
-@media (max-width: 480px) {
+/* ==========================================================================
+   SCROLL ANIMATIONS
+   ========================================================================== */
+
+[data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-animate].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-animate="fade-in"] {
+    transform: none;
+}
+
+[data-animate="scale-in"] {
+    transform: scale(0.95);
+}
+
+[data-animate="scale-in"].is-visible {
+    transform: scale(1);
+}
+
+[data-animate="slide-left"] {
+    transform: translateX(-30px);
+}
+
+[data-animate="slide-left"].is-visible {
+    transform: translateX(0);
+}
+
+[data-animate="slide-right"] {
+    transform: translateX(30px);
+}
+
+[data-animate="slide-right"].is-visible {
+    transform: translateX(0);
+}
+
+/* Stagger children */
+[data-animate-stagger] > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: calc(var(--stagger-index, 0) * 0.1s);
+}
+
+[data-animate-stagger].is-visible > *,
+.is-visible [data-animate-stagger] > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Team photo hover — subtle scale only, no grayscale */
+
+/* Team LinkedIn icon */
+.floru-team-card__linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--floru-accent);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 8px;
+    transition: color var(--floru-transition);
+}
+
+.floru-team-card__linkedin:hover {
+    color: var(--floru-accent-dark);
+}
+
+.floru-team-card__linkedin svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Center last incomplete row in team grid */
+.floru-team-grid {
+    justify-content: center;
+}
+
+/* ==========================================================================
+   TEXT SELECTION
+   ========================================================================== */
+
+::selection {
+    background-color: var(--floru-accent);
+    color: var(--floru-white);
+}
+
+::-moz-selection {
+    background-color: var(--floru-accent);
+    color: var(--floru-white);
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    [data-animate] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    [data-animate-stagger] > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* ==========================================================================
+   DARK MODE — disabled: the site uses an intentional dark/light design
+   that should stay consistent regardless of OS theme preference.
+   ========================================================================== */
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
     body {
-        font
+        color: #000;
+        background: #fff;
+        font-size: 12pt;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+
+    .floru-hero,
+    .floru-cta,
+    .floru-stats-band,
+    .site-header,
+    .floru-footer,
+    .floru-cookie-consent,
+    #ast-scroll-top {
+        display: none !important;
+    }
+
+    .floru-section {
+        padding: 20px 0;
+    }
+
+    h1, h2, h3, h4 {
+        page-break-after: avoid;
+        color: #000;
+    }
+
+    img {
+        max-width: 100% !important;
+        filter: none !important;
+    }
+}

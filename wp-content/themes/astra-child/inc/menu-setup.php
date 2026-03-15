@@ -24,13 +24,12 @@ function floru_create_menus() {
             return;
         }
 
-        // Menu-items in het Nederlands
         $pages = array(
             'home'     => 'Home',
-            'about'    => 'Over ons',
-            'services' => 'Diensten',
-            'our-team' => 'Ons team',
-            'clients'  => 'Opdrachtgevers',
+            'about'    => 'About',
+            'services' => 'Services',
+            'team'     => 'Team',
+            'clients'  => 'Clients',
             'contact'  => 'Contact',
         );
 

@@ -92,13 +92,31 @@ $display_name    = $website ? wp_parse_url( $website, PHP_URL_HOST ) : '';
                 <source src="<?php echo esc_url( $video_web . $slug . '.mp4' ); ?>" type="video/mp4">
             </video>
             <button class="floru-video__mute-toggle" type="button" aria-label="Toggle sound">
-                <svg class="floru-icon-muted" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-                <svg class="floru-icon-unmuted" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                <svg class="floru-icon-muted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                <svg class="floru-icon-unmuted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                <span class="floru-mute-label">Sound</span>
             </button>
         </div>
     </div>
 </section>
-<?php endif; ?>
+<?php else :
+    $gallery_images = floru_get_client_gallery_images( $slug );
+    if ( $gallery_images ) : ?>
+<section class="floru-client-gallery-section">
+    <div class="floru-container">
+        <div class="floru-client-gallery">
+            <?php foreach ( $gallery_images as $idx => $img ) : ?>
+            <figure class="floru-client-gallery__item floru-client-gallery__item--<?php echo (int) $idx; ?>">
+                <img src="<?php echo esc_url( $img['url'] ); ?>"
+                     alt="<?php echo esc_attr( $img['alt'] ); ?>"
+                     loading="lazy"
+                     decoding="async">
+            </figure>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; endif; ?>
 
 <!-- ========== DESCRIPTION + SIDEBAR ========== -->
 <section class="floru-client-content-section">
@@ -122,6 +140,9 @@ $display_name    = $website ? wp_parse_url( $website, PHP_URL_HOST ) : '';
                         <?php if ( $has_video_1 ) : ?>
                         <dt>Media</dt>
                         <dd><?php echo $has_video_2 ? '2 videos' : '1 video'; ?></dd>
+                        <?php elseif ( floru_get_client_gallery_images( $slug ) ) : ?>
+                        <dt>Media</dt>
+                        <dd>Photo gallery</dd>
                         <?php endif; ?>
                         <?php if ( $website ) : ?>
                         <dt>Website</dt>
@@ -146,8 +167,9 @@ $display_name    = $website ? wp_parse_url( $website, PHP_URL_HOST ) : '';
                 <source src="<?php echo esc_url( $video_web . $slug . '-2.mp4' ); ?>" type="video/mp4">
             </video>
             <button class="floru-video__mute-toggle" type="button" aria-label="Toggle sound">
-                <svg class="floru-icon-muted" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-                <svg class="floru-icon-unmuted" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                <svg class="floru-icon-muted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                <svg class="floru-icon-unmuted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                <span class="floru-mute-label">Sound</span>
             </button>
         </div>
     </div>
@@ -177,11 +199,30 @@ $display_name    = $website ? wp_parse_url( $website, PHP_URL_HOST ) : '';
 
 <?php get_footer(); ?>
 <script>
-document.querySelectorAll('.floru-video__mute-toggle').forEach(function(btn){
+document.querySelectorAll('.floru-video').forEach(function(wrap){
+    var v=wrap.querySelector('video');
+    var btn=wrap.querySelector('.floru-video__mute-toggle');
+    if(!v||!btn) return;
+
+    /* Detect audio track once enough data is loaded */
+    function checkAudio(){
+        if(v.readyState>=2){
+            var hasAudio=(typeof v.webkitAudioDecodedByteCount!=='undefined')
+                ? v.webkitAudioDecodedByteCount>0
+                : (typeof v.mozHasAudio!=='undefined')
+                    ? v.mozHasAudio
+                    : (v.audioTracks && v.audioTracks.length>0);
+            if(hasAudio) wrap.classList.add('has-audio');
+        }
+    }
+    v.addEventListener('loadeddata',checkAudio);
+    /* Re-check after a short playback window (some browsers need frames decoded) */
+    setTimeout(checkAudio, 1500);
+    checkAudio();
+
     btn.addEventListener('click',function(){
-        var v=this.closest('.floru-video').querySelector('video');
         v.muted=!v.muted;
-        this.closest('.floru-video').classList.toggle('is-unmuted',!v.muted);
+        wrap.classList.toggle('is-unmuted',!v.muted);
     });
 });
 </script>

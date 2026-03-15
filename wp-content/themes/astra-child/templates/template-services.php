@@ -14,7 +14,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 ?>
 
 <!-- ========== PAGE HEADER ========== -->
-<section class="floru-page-header">
+<section class="floru-page-header" data-animate="fade-in">
     <div class="floru-container">
         <span class="floru-section-label"><?php echo esc_html( $m( '_floru_ph_label', 'Our Services' ) ); ?></span>
         <h1><?php echo esc_html( $m( '_floru_ph_heading', 'How We Support Your Success' ) ); ?></h1>
@@ -56,11 +56,17 @@ for ( $i = 1; $i <= 3; $i++ ) :
     $reversed = ( $i === 2 );
 
     if ( ! $image ) {
-        $image = get_stylesheet_directory_uri() . '/assets/images/placeholder.svg';
+        $svc_ver = '2';
+        $svc_images = array(
+            1 => get_stylesheet_directory_uri() . '/assets/images/illustration-business-dev.svg?v=' . $svc_ver,
+            2 => get_stylesheet_directory_uri() . '/assets/images/illustration-stakeholder.svg?v=' . $svc_ver,
+            3 => get_stylesheet_directory_uri() . '/assets/images/illustration-tender.svg?v=' . $svc_ver,
+        );
+        $image = $svc_images[ $i ];
     }
     if ( $title ) :
 ?>
-<section class="floru-section <?php echo esc_attr( $bg ); ?>">
+<section class="floru-section <?php echo esc_attr( $bg ); ?>" data-animate>
     <div class="floru-container">
         <div class="floru-about-grid">
             <?php if ( $reversed ) : ?>
@@ -89,7 +95,7 @@ for ( $i = 1; $i <= 3; $i++ ) :
 <?php endif; endfor; ?>
 
 <!-- ========== CTA ========== -->
-<section class="floru-section floru-section--navy floru-cta">
+<section class="floru-section floru-section--navy floru-cta" data-animate="fade-in">
     <div class="floru-container">
         <h2><?php echo esc_html( $m( '_floru_pcta_heading', 'Let Us Help You Succeed' ) ); ?></h2>
         <p><?php echo esc_html( $m( '_floru_pcta_description', 'Every client and project is unique. Contact us to discuss how our services can be tailored to your objectives.' ) ); ?></p>

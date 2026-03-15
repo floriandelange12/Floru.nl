@@ -59,7 +59,7 @@ if ( isset( $_POST['floru_contact_submit'] ) && wp_verify_nonce( $_POST['floru_c
 ?>
 
 <!-- ========== PAGE HEADER ========== -->
-<section class="floru-page-header">
+<section class="floru-page-header" data-animate="fade-in">
     <div class="floru-container">
         <span class="floru-section-label"><?php echo esc_html( $m( '_floru_ph_label', 'Contact' ) ); ?></span>
         <h1><?php echo esc_html( $m( '_floru_ph_heading', 'Get in Touch' ) ); ?></h1>
@@ -68,7 +68,7 @@ if ( isset( $_POST['floru_contact_submit'] ) && wp_verify_nonce( $_POST['floru_c
 </section>
 
 <!-- ========== CONTACT GRID ========== -->
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
         <div class="floru-contact-grid">
 
@@ -201,7 +201,7 @@ if ( isset( $_POST['floru_contact_submit'] ) && wp_verify_nonce( $_POST['floru_c
 </section>
 
 <!-- ========== CTA ========== -->
-<section class="floru-cta">
+<section class="floru-cta" data-animate="fade-in">
     <div class="floru-container">
         <div class="floru-cta__inner">
             <div class="floru-cta__text">

@@ -54,16 +54,6 @@ add_action( 'admin_menu', 'floru_register_pages_menu' );
 function floru_register_pages_menu() {
     $definitions = floru_get_page_definitions();
 
-    // Find the first Floru page to use as the default landing.
-    $first_page = null;
-    foreach ( $definitions as $tpl => $info ) {
-        $page = floru_find_page_by_template( $tpl );
-        if ( $page ) {
-            $first_page = $page;
-            break;
-        }
-    }
-
     // Parent menu — redirects to the first page's edit screen.
     $parent_slug = 'floru-pages';
     add_menu_page(
@@ -221,12 +211,9 @@ function floru_page_editor_css() {
     $template = get_post_meta( $post->ID, '_wp_page_template', true );
 
     // Templates without a content editor (all fields are in meta boxes).
-    $hide_editor = array(
-        'templates/template-home.php',
-        'templates/template-services.php',
-        'templates/template-team.php',
-        'templates/template-clients.php',
-        'templates/template-contact.php',
+    $hide_editor = array_diff(
+        floru_get_template_slugs(),
+        array( 'templates/template-about.php' )
     );
     ?>
     <style>

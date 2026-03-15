@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <rect width="800" height="600" fill="#F0F2F5"/>
+  <defs>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1" fill="#1B2A4A" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#dots)"/>
+  <!-- Timeline / path representing experience -->
+  <path d="M100 480 C200 480 200 350 300 350 C400 350 400 200 500 200 C600 200 600 300 700 280" stroke="#C9913B" stroke-width="3" fill="none" stroke-dasharray="8,4" opacity="0.6"/>
+  <!-- Milestone circles -->
+  <circle cx="100" cy="480" r="10" fill="#1B2A4A" opacity="0.3"/>
+  <circle cx="300" cy="350" r="12" fill="#1B2A4A" opacity="0.5"/>
+  <circle cx="500" cy="200" r="14" fill="#C9913B" opacity="0.7"/>
+  <circle cx="700" cy="280" r="16" fill="#C9913B"/>
+  <!-- Building / institution -->
+  <rect x="200" y="130" width="120" height="90" rx="2" fill="#1B2A4A" opacity="0.12"/>
+  <rect x="210" y="140" width="25" height="30" rx="1" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="245" y="140" width="25" height="30" rx="1" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="280" y="140" width="25" height="30" rx="1" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="230" y="185" width="30" height="35" rx="1" fill="#C9913B" opacity="0.25"/>
+  <path d="M200 130 L260 100 L320 130" fill="#1B2A4A" opacity="0.15"/>
+  <!-- Document stack -->
+  <rect x="480" y="350" width="80" height="100" rx="3" fill="#FFFFFF" stroke="#E2E6EC" stroke-width="1"/>
+  <rect x="486" y="356" width="68" height="88" rx="2" fill="#FFFFFF"/>
+  <line x1="496" y1="372" x2="544" y2="372" stroke="#1B2A4A" stroke-width="1.5" opacity="0.2"/>
+  <line x1="496" y1="384" x2="540" y2="384" stroke="#1B2A4A" stroke-width="1.5" opacity="0.2"/>
+  <line x1="496" y1="396" x2="535" y2="396" stroke="#1B2A4A" stroke-width="1.5" opacity="0.2"/>
+  <line x1="496" y1="408" x2="530" y2="408" stroke="#C9913B" stroke-width="1.5" opacity="0.4"/>
+  <!-- Checkmark seal -->
+  <circle cx="540" cy="430" r="14" fill="#C9913B" opacity="0.15"/>
+  <path d="M532 430 L538 436 L550 424" stroke="#C9913B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Globe element -->
+  <circle cx="620" cy="150" r="50" fill="none" stroke="#1B2A4A" stroke-width="1.5" opacity="0.12"/>
+  <ellipse cx="620" cy="150" rx="25" ry="50" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.1"/>
+  <line x1="570" y1="150" x2="670" y2="150" stroke="#1B2A4A" stroke-width="1" opacity="0.1"/>
+  <line x1="570" y1="130" x2="670" y2="130" stroke="#1B2A4A" stroke-width="0.5" opacity="0.08"/>
+  <line x1="570" y1="170" x2="670" y2="170" stroke="#1B2A4A" stroke-width="0.5" opacity="0.08"/>
+  <!-- Decorative corners -->
+  <path d="M60 60 L100 60 L100 100" stroke="#C9913B" stroke-width="2" opacity="0.25" fill="none"/>
+  <path d="M740 540 L700 540 L700 500" stroke="#1B2A4A" stroke-width="2" opacity="0.15" fill="none"/>
+  <!-- Person silhouette - leader -->
+  <circle cx="400" cy="260" r="22" fill="#1B2A4A" opacity="0.2"/>
+  <rect x="380" y="288" width="40" height="52" rx="8" fill="#1B2A4A" opacity="0.2"/>
+  <!-- Arrow up - growth -->
+  <path d="M660 350 L660 290" stroke="#C9913B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M648 302 L660 290 L672 302" stroke="#C9913B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

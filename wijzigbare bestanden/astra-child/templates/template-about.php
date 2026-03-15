@@ -44,7 +44,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                     <?php if ( has_post_thumbnail( $pid ) ) : ?>
                         <?php echo get_the_post_thumbnail( $pid, 'large', array( 'class' => 'floru-img-block', 'loading' => 'lazy' ) ); ?>
                     <?php else : ?>
-                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/placeholder.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" class="floru-img-block">
+                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/illustration-experience.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" class="floru-img-block">
                     <?php endif; ?>
                 </div>
             </div>

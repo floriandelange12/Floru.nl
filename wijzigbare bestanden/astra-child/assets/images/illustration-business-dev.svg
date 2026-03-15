@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <rect width="800" height="600" fill="#F0F2F5"/>
+  <defs>
+    <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E2E6EC" stroke-width="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#grid2)" opacity="0.4"/>
+  <!-- Radar / market analysis chart -->
+  <circle cx="300" cy="280" r="120" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.08"/>
+  <circle cx="300" cy="280" r="90" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.1"/>
+  <circle cx="300" cy="280" r="60" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.12"/>
+  <circle cx="300" cy="280" r="30" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.15"/>
+  <!-- Radar axes -->
+  <line x1="300" y1="160" x2="300" y2="400" stroke="#1B2A4A" stroke-width="0.5" opacity="0.1"/>
+  <line x1="180" y1="280" x2="420" y2="280" stroke="#1B2A4A" stroke-width="0.5" opacity="0.1"/>
+  <line x1="215" y1="195" x2="385" y2="365" stroke="#1B2A4A" stroke-width="0.5" opacity="0.1"/>
+  <line x1="385" y1="195" x2="215" y2="365" stroke="#1B2A4A" stroke-width="0.5" opacity="0.1"/>
+  <!-- Data polygon -->
+  <polygon points="300,185 370,240 360,340 250,360 210,260" fill="#C9913B" opacity="0.12" stroke="#C9913B" stroke-width="2" stroke-opacity="0.5"/>
+  <!-- Data points -->
+  <circle cx="300" cy="185" r="5" fill="#C9913B"/>
+  <circle cx="370" cy="240" r="5" fill="#C9913B"/>
+  <circle cx="360" cy="340" r="5" fill="#C9913B"/>
+  <circle cx="250" cy="360" r="5" fill="#C9913B"/>
+  <circle cx="210" cy="260" r="5" fill="#C9913B"/>
+  <!-- Growth chart on right -->
+  <rect x="500" y="180" width="220" height="160" rx="6" fill="#FFFFFF" stroke="#E2E6EC" stroke-width="1"/>
+  <!-- Chart bars -->
+  <rect x="530" y="280" width="24" height="45" rx="2" fill="#1B2A4A" opacity="0.15"/>
+  <rect x="564" y="260" width="24" height="65" rx="2" fill="#1B2A4A" opacity="0.25"/>
+  <rect x="598" y="235" width="24" height="90" rx="2" fill="#C9913B" opacity="0.4"/>
+  <rect x="632" y="215" width="24" height="110" rx="2" fill="#C9913B" opacity="0.6"/>
+  <rect x="666" y="200" width="24" height="125" rx="2" fill="#C9913B"/>
+  <!-- Trend line -->
+  <polyline points="542,275 576,255 610,230 644,210 678,195" stroke="#1B2A4A" stroke-width="2" fill="none" opacity="0.4"/>
+  <!-- Compass / direction element -->
+  <circle cx="600" cy="440" r="45" fill="none" stroke="#1B2A4A" stroke-width="1.5" opacity="0.12"/>
+  <line x1="600" y1="400" x2="600" y2="480" stroke="#1B2A4A" stroke-width="1" opacity="0.15"/>
+  <line x1="560" y1="440" x2="640" y2="440" stroke="#1B2A4A" stroke-width="1" opacity="0.15"/>
+  <polygon points="600,405 595,425 605,425" fill="#C9913B" opacity="0.5"/>
+  <!-- Target / bullseye -->
+  <circle cx="160" cy="450" r="35" fill="none" stroke="#C9913B" stroke-width="1.5" opacity="0.2"/>
+  <circle cx="160" cy="450" r="22" fill="none" stroke="#C9913B" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="160" cy="450" r="8" fill="#C9913B" opacity="0.4"/>
+  <!-- Decorative -->
+  <path d="M70 70 L110 70 L110 110" stroke="#C9913B" stroke-width="2" opacity="0.2" fill="none"/>
+  <path d="M730 530 L690 530 L690 490" stroke="#1B2A4A" stroke-width="2" opacity="0.12" fill="none"/>
+</svg>

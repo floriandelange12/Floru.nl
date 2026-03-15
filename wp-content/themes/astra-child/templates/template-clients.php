@@ -14,7 +14,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 ?>
 
 <!-- ========== PAGE HEADER ========== -->
-<section class="floru-page-header">
+<section class="floru-page-header" data-animate="fade-in">
     <div class="floru-container">
         <span class="floru-section-label"><?php echo esc_html( $m( '_floru_ph_label', 'Our Clients' ) ); ?></span>
         <h1><?php echo esc_html( $m( '_floru_ph_heading', 'Clients & References' ) ); ?></h1>
@@ -23,7 +23,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== CLIENTS INTRO ========== -->
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container floru-container--narrow floru-text-center">
         <?php
         $content = get_the_content();
@@ -48,7 +48,7 @@ $clients = new WP_Query( array(
 
 <?php if ( $clients->have_posts() ) : ?>
 <!-- ========== LOGO BAND ========== -->
-<section class="floru-section floru-section--gray floru-section--compact">
+<section class="floru-section floru-section--gray floru-section--compact" data-animate="fade-in">
     <div class="floru-container">
         <div class="floru-clients-grid">
             <?php
@@ -63,9 +63,9 @@ $clients = new WP_Query( array(
 </section>
 
 <!-- ========== CLIENT DETAIL CARDS ========== -->
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
-        <div class="floru-client-cards">
+        <div class="floru-client-cards" data-animate-stagger>
             <?php
             while ( $clients->have_posts() ) : $clients->the_post();
                 $detail_url  = get_permalink();
@@ -107,7 +107,7 @@ $clients = new WP_Query( array(
 <?php endif; ?>
 
 <!-- ========== CTA ========== -->
-<section class="floru-section floru-section--navy floru-cta">
+<section class="floru-section floru-section--navy floru-cta" data-animate="fade-in">
     <div class="floru-container">
         <h2><?php echo esc_html( $m( '_floru_pcta_heading', 'Interested in Working With Us?' ) ); ?></h2>
         <p><?php echo esc_html( $m( '_floru_pcta_description', 'We would be happy to discuss our experience and how we can support your goals. References are available upon request.' ) ); ?></p>

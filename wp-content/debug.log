@@ -1,0 +1,442 @@
+[14-Mar-2026 20:05:54 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:05:57 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\admin-ajax.php(22): require_once('C:\\Users\\flori\\...')
+#15 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:05:57 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-recovery-mode-email-service.php on line 367
+[14-Mar-2026 20:05:57 UTC] PHP Warning:  Trying to access array offset on value of type bool in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-recovery-mode-email-service.php on line 368
+[14-Mar-2026 20:05:59 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\admin.php(35): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\user-edit.php(10): require_once('C:\\Users\\flori\\...')
+#16 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\profile.php(18): require_once('C:\\Users\\flori\\...')
+#17 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:06:01 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:06:57 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\admin-ajax.php(22): require_once('C:\\Users\\flori\\...')
+#15 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:06:58 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:02 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:03 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:06 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:06 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:40 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:40 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:07:58 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\admin-ajax.php(22): require_once('C:\\Users\\flori\\...')
+#15 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:08:15 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:08:15 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:08:21 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:08:22 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:08:58 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:08:58 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:09:10 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\admin-ajax.php(22): require_once('C:\\Users\\flori\\...')
+#15 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:09:34 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-blog-header.php(13): require_once('C:\\Users\\flori\\...')
+#15 C:\Users\flori\Local Sites\florunl\app\public\index.php(17): require('C:\\Users\\flori\\...')
+#16 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[14-Mar-2026 20:10:10 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function floru_override_astra_strings(), 1 passed in C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php on line 341 and exactly 3 expected in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php:297
+Stack trace:
+#0 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): floru_override_astra_strings(Array)
+#1 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-theme-strings.php(30): apply_filters('astra_default_s...', Array)
+#3 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\modules\related-posts\class-astra-related-posts-loader.php(108): astra_default_strings('string-blog-met...', false)
+#4 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Related_Posts_Loader->theme_defaults(Array)
+#5 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#6 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(150): apply_filters('astra_theme_def...', Array)
+#7 C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra\inc\core\class-astra-theme-options.php(953): Astra_Theme_Options::defaults()
+#8 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(341): Astra_Theme_Options::refresh('')
+#9 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters(NULL, Array)
+#10 C:\Users\flori\Local Sites\florunl\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#11 C:\Users\flori\Local Sites\florunl\app\public\wp-settings.php(720): do_action('after_setup_the...')
+#12 C:\Users\flori\Local Sites\florunl\app\public\wp-config.php(105): require_once('C:\\Users\\flori\\...')
+#13 C:\Users\flori\Local Sites\florunl\app\public\wp-load.php(50): require_once('C:\\Users\\flori\\...')
+#14 C:\Users\flori\Local Sites\florunl\app\public\wp-admin\admin-ajax.php(22): require_once('C:\\Users\\flori\\...')
+#15 {main}
+  thrown in C:\Users\flori\Local Sites\florunl\app\public\wp-content\themes\astra-child\functions.php on line 297
+[15-Mar-2026 08:52:56 UTC] Automatic updates starting...
+[15-Mar-2026 08:52:58 UTC] Automatic updates complete.
+[15-Mar-2026 12:45:10 UTC] Automatic updates starting...
+[15-Mar-2026 12:45:11 UTC] Automatic updates complete.

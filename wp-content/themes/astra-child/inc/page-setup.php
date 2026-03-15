@@ -1,8 +1,7 @@
 <?php
 /**
  * Floru Page Setup
- * Creates the required pages and assigns templates on first activation.
- * Run once and then remove or disable.
+ * Creates the required pages on first setup and keeps template assignments in sync.
  *
  * @package Astra-Child-Floru
  */

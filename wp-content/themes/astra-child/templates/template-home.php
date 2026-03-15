@@ -12,7 +12,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 };
 ?>
 
-<section class="floru-hero">
+<section class="floru-hero" data-animate="fade-in">
     <div class="floru-hero__inner">
         <div class="floru-hero__text">
             <span class="floru-hero__label"><?php echo esc_html( $m( '_floru_hero_label', 'Defence & Security Consultancy' ) ); ?></span>
@@ -44,7 +44,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
     </div>
 </section>
 
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
         <div class="floru-intro">
             <div class="floru-intro__text">
@@ -66,7 +66,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                     $intro_img = get_the_post_thumbnail_url( $pid, 'large' );
                 }
                 if ( ! $intro_img ) {
-                    $intro_img = get_stylesheet_directory_uri() . '/assets/images/placeholder.svg';
+                    $intro_img = get_stylesheet_directory_uri() . '/assets/images/illustration-consulting.svg';
                 }
                 ?>
                 <img src="<?php echo esc_url( $intro_img ); ?>" alt="<?php echo esc_attr( $m( '_floru_intro_heading', 'Floru consultancy' ) ); ?>" loading="lazy">
@@ -75,7 +75,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
     </div>
 </section>
 
-<section class="floru-stats-band">
+<section class="floru-stats-band" data-animate="fade-in">
     <div class="floru-container">
         <div class="floru-stats-band__grid">
             <?php for ( $i = 1; $i <= 3; $i++ ) :
@@ -100,14 +100,14 @@ $m = function( $key, $default = '' ) use ( $pid ) {
     </div>
 </section>
 
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
         <div class="floru-section-header">
             <span class="floru-section-label"><?php echo esc_html( $m( '_floru_hsvc_label', 'What We Do' ) ); ?></span>
             <h2><?php echo esc_html( $m( '_floru_hsvc_heading', 'Three Pillars of Support' ) ); ?></h2>
             <p><?php echo esc_html( $m( '_floru_hsvc_description', 'Strategic advisory, relationship management, and hands-on tender expertise — combined to give our clients a decisive edge.' ) ); ?></p>
         </div>
-        <div class="floru-services-grid">
+        <div class="floru-services-grid" data-animate-stagger data-animate>
             <?php
             $svc_defaults = array(
                 1 => array( 'Business Development', 'Market opportunity identification, procurement pipeline mapping, and go-to-market strategies tailored to the European defence landscape.', 'trending-up', home_url( '/services/' ) ),
@@ -134,7 +134,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
     </div>
 </section>
 
-<section class="floru-section floru-section--gray">
+<section class="floru-section floru-section--gray" data-animate>
     <div class="floru-container">
         <div class="floru-trust-layout">
             <div class="floru-trust-layout__header">
@@ -171,7 +171,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
     </div>
 </section>
 
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
         <div class="floru-section-header">
             <span class="floru-section-label"><?php echo esc_html( $m( '_floru_hteam_label', 'Our Team' ) ); ?></span>
@@ -250,7 +250,7 @@ $clients = new WP_Query( array(
     'order'          => 'ASC',
     ) );
 if ( $clients->have_posts() ) : ?>
-<section class="floru-section floru-section--gray floru-section--compact">
+<section class="floru-section floru-section--gray floru-section--compact" data-animate="fade-in">
     <div class="floru-container">
         <div class="floru-clients-band">
             <p class="floru-clients-band__label"><?php echo esc_html( $m( '_floru_hclients_label', 'Trusted by international defence companies including' ) ); ?></p>
@@ -258,14 +258,25 @@ if ( $clients->have_posts() ) : ?>
             <div class="floru-clients-grid">
                 <?php while ( $clients->have_posts() ) : $clients->the_post();
                     $client_link = get_post_meta( get_the_ID(), '_floru_client_link', true );
-                    $logo_url    = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
-                    if ( ! $logo_url ) continue;
+                    $thumb_id    = get_post_thumbnail_id( get_the_ID() );
+                    $thumb_src   = wp_get_attachment_image_src( $thumb_id, 'medium' );
+                    if ( ! $thumb_src ) continue;
+                    $logo_url = $thumb_src[0];
+                    $orig_w   = $thumb_src[1];
+                    $orig_h   = max( $thumb_src[2], 1 );
+                    $ratio    = $orig_w / $orig_h;
+                    // Equal visual area (~2400px²): h = sqrt(area/ratio), then clamp.
+                    $h = round( sqrt( 2400 / max( $ratio, 0.5 ) ) );
+                    $h = max( 28, min( 42, $h ) );
+                    $w = round( $h * $ratio );
+                    $w = max( 40, min( 110, $w ) );
+                    $style = 'width:' . $w . 'px;height:' . $h . 'px;';
                     if ( $client_link ) : ?>
                         <a href="<?php echo esc_url( $client_link ); ?>" target="_blank" rel="noopener noreferrer">
-                            <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="floru-client-logo">
+                            <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="floru-client-logo" style="<?php echo esc_attr( $style ); ?>">
                         </a>
                     <?php else : ?>
-                        <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="floru-client-logo">
+                        <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="floru-client-logo" style="<?php echo esc_attr( $style ); ?>">
                     <?php endif; ?>
                 <?php endwhile; wp_reset_postdata(); ?>
             </div>
@@ -274,7 +285,7 @@ if ( $clients->have_posts() ) : ?>
 </section>
 <?php endif; ?>
 
-<section class="floru-cta">
+<section class="floru-cta" data-animate="fade-in">
     <div class="floru-container">
         <div class="floru-cta__inner">
             <div class="floru-cta__text">

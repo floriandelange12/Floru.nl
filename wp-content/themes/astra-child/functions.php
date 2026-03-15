@@ -25,12 +25,64 @@ function floru_enqueue_styles() {
         wp_get_theme()->get( 'Version' )
     );
 
-    // Google Fonts – Inter
-    wp_enqueue_style(
-        'floru-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+    // Prefer a child-theme Inter file (InterVariable.woff2 from Inter 4.1),
+    // with a bundled local fallback from Twenty Twenty-Four.
+    $child_font    = wp_normalize_path( get_stylesheet_directory() . '/assets/fonts/InterVariable.woff2' );
+    $fallback_font = wp_normalize_path( ABSPATH . 'wp-content/themes/twentytwentyfour/assets/fonts/inter/Inter-VariableFont_slnt,wght.woff2' );
+
+    // Auto-copy: if the child-theme font is missing, copy it from the Inter 4.1
+    // download or from Twenty Twenty-Four (one-time operation).
+    if ( ! file_exists( $child_font ) ) {
+        $sources = array(
+            wp_normalize_path( ABSPATH . 'inter-4.1/inter-4.1/docs/font-files/InterVariable.woff2' ),
+            $fallback_font,
+        );
+        foreach ( $sources as $source ) {
+            if ( file_exists( $source ) && @copy( $source, $child_font ) ) {
+                break;
+            }
+        }
+    }
+
+    if ( file_exists( $child_font ) || file_exists( $fallback_font ) ) {
+        wp_enqueue_style(
+            'floru-google-fonts',
+            get_stylesheet_directory_uri() . '/assets/fonts/inter.css',
+            array(),
+            wp_get_theme()->get( 'Version' )
+        );
+    } else {
+        wp_enqueue_style(
+            'floru-google-fonts',
+            'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+            array(),
+            null
+        );
+    }
+
+    // Floru main JS — scroll animations, counter, smooth scroll
+    wp_enqueue_script(
+        'floru-main',
+        get_stylesheet_directory_uri() . '/assets/js/main.js',
         array(),
-        null
+        wp_get_theme()->get( 'Version' ),
+        true
+    );
+}
+
+/**
+ * Shared list of Floru page templates.
+ *
+ * @return string[]
+ */
+function floru_get_template_slugs() {
+    return array(
+        'templates/template-home.php',
+        'templates/template-about.php',
+        'templates/template-services.php',
+        'templates/template-team.php',
+        'templates/template-clients.php',
+        'templates/template-contact.php',
     );
 }
 
@@ -41,14 +93,7 @@ function floru_body_classes( $classes ) {
 
     // Tell Astra to use page-builder mode (full-width, no flex sidebar layout)
     // so our template sections stack vertically instead of as flex items.
-    if ( is_page_template( array(
-        'templates/template-home.php',
-        'templates/template-about.php',
-        'templates/template-services.php',
-        'templates/template-team.php',
-        'templates/template-clients.php',
-        'templates/template-contact.php',
-    ) ) || is_singular( 'floru_client' ) ) {
+    if ( is_page_template( floru_get_template_slugs() ) || is_singular( 'floru_client' ) ) {
         $classes[] = 'ast-page-builder-template';
     }
 
@@ -134,14 +179,7 @@ function floru_icon( $name ) {
  */
 add_filter( 'astra_the_title_enabled', 'floru_disable_default_title' );
 function floru_disable_default_title( $enabled ) {
-    if ( is_page_template( array(
-        'templates/template-home.php',
-        'templates/template-about.php',
-        'templates/template-services.php',
-        'templates/template-team.php',
-        'templates/template-clients.php',
-        'templates/template-contact.php',
-    ) ) ) {
+    if ( is_page_template( floru_get_template_slugs() ) ) {
         return false;
     }
     return $enabled;
@@ -152,14 +190,7 @@ function floru_disable_default_title( $enabled ) {
  */
 add_filter( 'astra_featured_image_enabled', 'floru_disable_featured_image' );
 function floru_disable_featured_image( $enabled ) {
-    if ( is_page_template( array(
-        'templates/template-home.php',
-        'templates/template-about.php',
-        'templates/template-services.php',
-        'templates/template-team.php',
-        'templates/template-clients.php',
-        'templates/template-contact.php',
-    ) ) ) {
+    if ( is_page_template( floru_get_template_slugs() ) ) {
         return false;
     }
     return $enabled;
@@ -188,3 +219,256 @@ require_once get_stylesheet_directory() . '/inc/page-setup.php';
 
 // Include menu setup (auto-creates navigation menu on first load)
 require_once get_stylesheet_directory() . '/inc/menu-setup.php';
+
+/**
+ * JSON-LD Organization structured data.
+ */
+add_action( 'wp_head', 'floru_structured_data' );
+function floru_structured_data() {
+    if ( ! is_front_page() && ! is_page_template( floru_get_template_slugs() ) ) {
+        return;
+    }
+    $logo = '';
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    if ( $custom_logo_id ) {
+        $logo = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+    }
+    $data = array(
+        '@context'    => 'https://schema.org',
+        '@type'       => 'Organization',
+        'name'        => 'Floru Consultancy',
+        'description' => 'Strategic consultancy in defence and security. We help international companies navigate government markets, build relationships, and win tenders.',
+        'url'         => home_url( '/' ),
+        'email'       => 'info@floru.nl',
+        'telephone'   => '+31642587515',
+        'address'     => array(
+            '@type'           => 'PostalAddress',
+            'streetAddress'   => 'De klerkplan 10',
+            'addressLocality' => 'Zoetermeer',
+            'postalCode'      => '2728 EH',
+            'addressCountry'  => 'NL',
+        ),
+        'sameAs'      => array(),
+    );
+    if ( $logo ) {
+        $data['logo'] = $logo;
+    }
+    echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}
+
+/**
+ * Open Graph and basic SEO meta tags.
+ */
+add_action( 'wp_head', 'floru_og_meta_tags', 5 );
+function floru_og_meta_tags() {
+    $title       = wp_get_document_title();
+    $description = 'Strategic consultancy in defence and security. Floru helps international companies navigate government markets, build stakeholder relationships, and win tenders in the Netherlands and Europe.';
+    $url         = is_front_page() ? home_url( '/' ) : get_permalink();
+    $image       = '';
+
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    if ( $custom_logo_id ) {
+        $image = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+    }
+
+    echo '<meta property="og:type" content="website">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    if ( $image ) {
+        echo '<meta property="og:image" content="' . esc_url( $image ) . '">' . "\n";
+    }
+    echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+}
+
+/**
+ * Skip-to-content accessibility link.
+ */
+add_action( 'astra_body_top', 'floru_skip_to_content' );
+function floru_skip_to_content() {
+    echo '<a class="floru-skip-link" href="#content">Skip to content</a>';
+}
+
+/**
+ * Hide the duplicate Astra skip link (we use our own English one above).
+ */
+add_filter( 'astra_default_strings', 'floru_override_astra_strings' );
+function floru_override_astra_strings( $defaults ) {
+    $defaults['string-header-skip-link'] = '';
+    return $defaults;
+}
+add_action( 'wp_head', 'floru_hide_astra_skip_link' );
+function floru_hide_astra_skip_link() {
+    echo '<style>a.skip-link.screen-reader-text:empty{display:none}</style>' . "\n";
+}
+
+/**
+ * Force English for Astra UI strings that get translated to Dutch.
+ */
+add_filter( 'gettext', 'floru_force_english_astra_strings', 20, 3 );
+function floru_force_english_astra_strings( $translation, $text, $domain ) {
+    if ( 'astra' !== $domain ) {
+        return $translation;
+    }
+    if ( 'Scroll to Top' === $text ) {
+        return 'Scroll to Top';
+    }
+    if ( 'Main menu toggle' === $text ) {
+        return 'Main menu toggle';
+    }
+    if ( 'Menu Toggle' === $text ) {
+        return 'Menu Toggle';
+    }
+    return $translation;
+}
+
+/**
+ * Override the HTML lang attribute from nl-NL to en (site content is English).
+ */
+add_filter( 'language_attributes', 'floru_force_english_lang_attribute', 20 );
+function floru_force_english_lang_attribute( $output ) {
+    return str_replace( 'lang="nl-NL"', 'lang="en"', $output );
+}
+
+/**
+ * Remove "Contact" from the primary nav menu because we already
+ * have the orange CONTACT button in the header (Astra button-1).
+ */
+add_filter( 'wp_nav_menu_objects', 'floru_remove_contact_from_menu', 10, 2 );
+function floru_remove_contact_from_menu( $items, $args ) {
+    $contact_page = get_page_by_path( 'contact' );
+    if ( ! $contact_page ) {
+        return $items;
+    }
+    foreach ( $items as $key => $item ) {
+        if ( (int) $item->object_id === $contact_page->ID && $item->object === 'page' ) {
+            unset( $items[ $key ] );
+        }
+    }
+    return $items;
+}
+
+/**
+ * Append a styled CONTACT link at the bottom of the mobile nav menu.
+ * The desktop header uses a separate Astra button component, but that
+ * component is not present in the mobile header builder, so we add it here.
+ */
+add_filter( 'wp_nav_menu_items', 'floru_add_contact_to_mobile_menu', 10, 2 );
+function floru_add_contact_to_mobile_menu( $items, $args ) {
+    if ( ! empty( $args->menu_id ) && strpos( $args->menu_id, '-mobile' ) !== false ) {
+        $contact_url = home_url( '/contact/' );
+        $active      = is_page( 'contact' ) ? ' current-menu-item' : '';
+        $items      .= '<li class="menu-item floru-mobile-contact-item' . $active . '">'
+                     . '<a href="' . esc_url( $contact_url ) . '" class="menu-link floru-mobile-contact-link">Contact</a>'
+                     . '</li>';
+    }
+    return $items;
+}
+
+/**
+ * Prevent Astra from outputting frontend Google Fonts.
+ * Floru loads Inter locally and the remaining Astra font request is unnecessary.
+ *
+ * @param array $fonts Selected Astra Google fonts.
+ * @return array
+ */
+add_filter( 'astra_google_fonts_selected', 'floru_disable_astra_google_fonts', 999 );
+function floru_disable_astra_google_fonts( $fonts ) {
+    if ( is_admin() ) {
+        return $fonts;
+    }
+
+    return array();
+}
+
+/**
+ * Curated gallery images for client pages without videos.
+ * Uses Unsplash CDN (free license, attribution appreciated).
+ *
+ * @param  string $slug Client post slug.
+ * @return array  Array of image arrays with 'url', 'alt', 'credit' keys (empty if no images).
+ */
+function floru_get_client_gallery_images( $slug ) {
+    $base = 'https://images.unsplash.com/photo-';
+    $galleries = array(
+        'dujardin' => array(
+            array(
+                'id'     => '1582139329536-e7284fece509',
+                'alt'    => 'High-security vault lock mechanism',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+            array(
+                'id'     => '1732384001863-59ecbb9dd827',
+                'alt'    => 'Reinforced vault door with multiple locking bolts',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+            array(
+                'id'     => '1707960190026-e0fb6f03ceae',
+                'alt'    => 'Secured ATM terminal with physical protection',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+        ),
+        'nu-security-consultancy' => array(
+            array(
+                'id'     => '1596835090344-b57279fac184',
+                'alt'    => 'Security surveillance camera on building exterior',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+            array(
+                'id'     => '1662638600476-d563fffbb072',
+                'alt'    => 'Security operations center with monitoring screens',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+            array(
+                'id'     => '1675627453084-505806a00406',
+                'alt'    => 'Cybersecurity monitoring and threat analysis display',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+        ),
+        'x-systems' => array(
+            array(
+                'id'     => '1626984260797-5372e4c668b3',
+                'alt'    => 'Ultra-secure smartphone on dark surface',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+            array(
+                'id'     => '1559819614-c5bdc6c7191e',
+                'alt'    => 'Encrypted circuit board technology',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+            array(
+                'id'     => '1580062329559-9d512477e711',
+                'alt'    => 'Secure hardware encryption components',
+                'credit' => 'Unsplash',
+                'crop'   => '',
+            ),
+        ),
+    );
+
+    if ( ! isset( $galleries[ $slug ] ) ) {
+        return array();
+    }
+
+    $images = array();
+    foreach ( $galleries[ $slug ] as $img ) {
+        $params = 'w=800&q=80&auto=format&fit=crop';
+        if ( $img['crop'] ) {
+            $params .= '&' . $img['crop'];
+        }
+        $images[] = array(
+            'url'    => $base . $img['id'] . '?' . $params,
+            'alt'    => $img['alt'],
+            'credit' => $img['credit'],
+        );
+    }
+    return $images;
+}

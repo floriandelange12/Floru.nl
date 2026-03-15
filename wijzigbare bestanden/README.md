@@ -1,34 +1,42 @@
 # Wijzigbare bestanden
 
-Deze map is bedoeld als centrale werkmap voor de bestanden die je in deze site hoort aan te passen.
+Deze map is de export- en werkmap voor het child theme.
 
-## Wat hier gebeurt
+## Wat hier standaard in staat
 
-De map `astra-child/` in deze map wordt niet gevuld met gewone kopieën, maar met gekoppelde verwijzingen naar de originele bestanden in `wp-content/themes/astra-child/`:
-- mappen worden aangemaakt als junctions
-- losse bestanden worden aangemaakt als hardlinks
+Standaard bevat `astra-child/` een volledige kopie van het actieve child theme uit:
+- `wp-content/themes/astra-child/`
 
-Daardoor blijven wijzigingen twee kanten op hetzelfde:
-- wijzig je iets in `wijzigbare bestanden/astra-child/`, dan wijzig je meteen het originele bestand
-- wijzig je iets in het originele bestand, dan zie je dat ook hier terug
+Daardoor kun je deze map direct gebruiken om bestanden te bekijken, te delen of in een ZIP te stoppen.
 
-## Eerst uitvoeren
+## Live gekoppeld werken
 
-Start bij voorkeur dit bestand:
+Wil je liever in een gekoppelde werkmap werken, zodat wijzigingen direct doorlopen naar het actieve theme?
+Gebruik dan een van deze scripts:
 - `maak-links.cmd`
-
-Alleen als dat niet werkt, gebruik dan:
 - `maak-links.ps1`
 
-Na het uitvoeren krijg je deze werkmap:
+Die vervangen `wijzigbare bestanden/astra-child/` door:
+- hardlinks voor losse bestanden
+- junctions voor mappen
+
+## Inhoud van de werkmap
+
+Na kopieren of linken hoort deze map minimaal te bevatten:
 - `wijzigbare bestanden/astra-child/style.css`
 - `wijzigbare bestanden/astra-child/functions.php`
 - `wijzigbare bestanden/astra-child/footer.php`
+- `wijzigbare bestanden/astra-child/single-floru_client.php`
 - `wijzigbare bestanden/astra-child/assets/`
 - `wijzigbare bestanden/astra-child/inc/`
 - `wijzigbare bestanden/astra-child/template-parts/`
 - `wijzigbare bestanden/astra-child/templates/`
 
+## ZIP export
+
+Het bestand `astra-child.zip` hoort een complete export van het child theme te zijn.
+Gebruik `wp-content/themes/astra-child/` als bron van waarheid en bouw de ZIP opnieuw nadat daar wijzigingen zijn gedaan.
+
 ## Belangrijk
 
-Bewerk nog steeds alleen het child theme. WordPress core, `wp-admin/`, `wp-includes/` en het parent theme `wp-content/themes/astra/` horen hier niet in thuis.
+Bewerk alleen het child theme. WordPress core, `wp-admin/`, `wp-includes/` en het parent theme `wp-content/themes/astra/` horen hier niet in thuis.

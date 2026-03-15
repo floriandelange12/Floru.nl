@@ -14,7 +14,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 ?>
 
 <!-- ========== PAGE HEADER ========== -->
-<section class="floru-page-header">
+<section class="floru-page-header" data-animate="fade-in">
     <div class="floru-container">
         <span class="floru-section-label"><?php echo esc_html( $m( '_floru_ph_label', 'About Floru' ) ); ?></span>
         <h1><?php echo esc_html( $m( '_floru_ph_heading', 'Our Modus Operandi' ) ); ?></h1>
@@ -23,7 +23,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== ABOUT INTRO ========== -->
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
         <div class="floru-about-grid">
             <div>
@@ -44,7 +44,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                     <?php if ( has_post_thumbnail( $pid ) ) : ?>
                         <?php echo get_the_post_thumbnail( $pid, 'large', array( 'class' => 'floru-img-block', 'loading' => 'lazy' ) ); ?>
                     <?php else : ?>
-                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/placeholder.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" class="floru-img-block">
+                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/illustration-experience.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" class="floru-img-block">
                     <?php endif; ?>
                 </div>
             </div>
@@ -53,7 +53,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== APPROACH STEPS ========== -->
-<section class="floru-section floru-section--gray">
+<section class="floru-section floru-section--gray" data-animate>
     <div class="floru-container floru-container--narrow">
         <div class="floru-section-header">
             <span class="floru-section-label"><?php echo esc_html( $m( '_floru_approach_label', 'How We Work' ) ); ?></span>
@@ -84,7 +84,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== VALUES ========== -->
-<section class="floru-section">
+<section class="floru-section" data-animate>
     <div class="floru-container">
         <div class="floru-section-header">
             <span class="floru-section-label"><?php echo esc_html( $m( '_floru_values_label', 'What Guides Us' ) ); ?></span>
@@ -119,7 +119,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== CTA ========== -->
-<section class="floru-section floru-section--navy floru-cta">
+<section class="floru-section floru-section--navy floru-cta" data-animate="fade-in">
     <div class="floru-container">
         <h2><?php echo esc_html( $m( '_floru_pcta_heading', 'Interested in Working Together?' ) ); ?></h2>
         <p><?php echo esc_html( $m( '_floru_pcta_description', 'We welcome the opportunity to discuss how we can support your objectives in the European defence market.' ) ); ?></p>

@@ -56,7 +56,13 @@ for ( $i = 1; $i <= 3; $i++ ) :
     $reversed = ( $i === 2 );
 
     if ( ! $image ) {
-        $image = get_stylesheet_directory_uri() . '/assets/images/placeholder.svg';
+        $svc_ver = '2';
+        $svc_images = array(
+            1 => get_stylesheet_directory_uri() . '/assets/images/illustration-business-dev.svg?v=' . $svc_ver,
+            2 => get_stylesheet_directory_uri() . '/assets/images/illustration-stakeholder.svg?v=' . $svc_ver,
+            3 => get_stylesheet_directory_uri() . '/assets/images/illustration-tender.svg?v=' . $svc_ver,
+        );
+        $image = $svc_images[ $i ];
     }
     if ( $title ) :
 ?>
