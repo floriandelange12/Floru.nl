@@ -440,3 +440,52 @@ Stack trace:
 [15-Mar-2026 08:52:58 UTC] Automatic updates complete.
 [15-Mar-2026 12:45:10 UTC] Automatic updates starting...
 [15-Mar-2026 12:45:11 UTC] Automatic updates complete.
+[15-Mar-2026 21:37:08 UTC] [floru-fix] handler called. id=123 POST={"action":"delete-post","id":"123","_wpnonce":"f8bfb4cc7b"}
+[15-Mar-2026 21:37:08 UTC] [floru-fix] nonce sent=f8bfb4cc7b action=delete-post_123 valid=1
+[15-Mar-2026 21:37:08 UTC] [floru-fix] current_user_can(delete_post, 123)=true user=1
+[15-Mar-2026 21:37:08 UTC] [floru-fix] about to delete attachment #123 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/Jaap-Willemse.jpg
+[15-Mar-2026 21:37:08 UTC] [floru-fix] wp_delete_attachment result=true
+[15-Mar-2026 21:38:38 UTC] [floru-fix] handler called. id=123 POST={"action":"delete-post","id":"123","_wpnonce":"f8bfb4cc7b"}
+[15-Mar-2026 21:38:38 UTC] [floru-fix] not an attachment or not found, handing off.
+[15-Mar-2026 21:38:47 UTC] [floru-fix] handler called. id=116 POST={"action":"delete-post","id":"116","_wpnonce":"1a58d0a385"}
+[15-Mar-2026 21:38:47 UTC] [floru-fix] nonce sent=1a58d0a385 action=delete-post_116 valid=1
+[15-Mar-2026 21:38:47 UTC] [floru-fix] current_user_can(delete_post, 116)=true user=1
+[15-Mar-2026 21:38:47 UTC] [floru-fix] about to delete attachment #116 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/1742243427961.jpg
+[15-Mar-2026 21:38:47 UTC] [floru-fix] wp_delete_attachment result=true
+[15-Mar-2026 21:39:00 UTC] [floru-fix] handler called. id=136 POST={"action":"delete-post","id":"136","_wpnonce":"7e2ed0bc83"}
+[15-Mar-2026 21:39:00 UTC] [floru-fix] nonce sent=7e2ed0bc83 action=delete-post_136 valid=1
+[15-Mar-2026 21:39:00 UTC] [floru-fix] current_user_can(delete_post, 136)=true user=1
+[15-Mar-2026 21:39:00 UTC] [floru-fix] about to delete attachment #136 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/Bertin-Exensor.png
+[15-Mar-2026 21:39:00 UTC] [floru-fix] wp_delete_attachment result=true
+[16-Mar-2026 00:32:16 UTC] [floru-fix] handler called. id=167 POST={"action":"delete-post","id":"167","_wpnonce":"dcf7df4f1e"}
+[16-Mar-2026 00:32:16 UTC] [floru-fix] nonce sent=dcf7df4f1e action=delete-post_167 valid=2
+[16-Mar-2026 00:32:16 UTC] [floru-fix] current_user_can(delete_post, 167)=true user=1
+[16-Mar-2026 00:32:16 UTC] [floru-fix] about to delete attachment #167 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/CNIM-logo-1.png
+[16-Mar-2026 00:32:16 UTC] [floru-fix] wp_delete_attachment result=true
+[16-Mar-2026 00:32:51 UTC] [floru-fix] handler called. id=165 POST={"action":"delete-post","id":"165","_wpnonce":"cc6e0a2e77"}
+[16-Mar-2026 00:32:51 UTC] [floru-fix] nonce sent=cc6e0a2e77 action=delete-post_165 valid=1
+[16-Mar-2026 00:32:51 UTC] [floru-fix] current_user_can(delete_post, 165)=true user=1
+[16-Mar-2026 00:32:51 UTC] [floru-fix] about to delete attachment #165 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/Lex-2.png
+[16-Mar-2026 00:32:51 UTC] [floru-fix] wp_delete_attachment result=true
+[16-Mar-2026 00:32:55 UTC] [floru-fix] handler called. id=164 POST={"action":"delete-post","id":"164","_wpnonce":"9b9dee86a2"}
+[16-Mar-2026 00:32:55 UTC] [floru-fix] nonce sent=9b9dee86a2 action=delete-post_164 valid=1
+[16-Mar-2026 00:32:55 UTC] [floru-fix] current_user_can(delete_post, 164)=true user=1
+[16-Mar-2026 00:32:55 UTC] [floru-fix] about to delete attachment #164 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/Lex.png
+[16-Mar-2026 00:32:55 UTC] [floru-fix] wp_delete_attachment result=true
+[16-Mar-2026 00:33:04 UTC] [floru-fix] handler called. id=170 POST={"action":"delete-post","id":"170","_wpnonce":"bb0146f1b2"}
+[16-Mar-2026 00:33:04 UTC] [floru-fix] nonce sent=bb0146f1b2 action=delete-post_170 valid=1
+[16-Mar-2026 00:33:04 UTC] [floru-fix] current_user_can(delete_post, 170)=true user=1
+[16-Mar-2026 00:33:04 UTC] [floru-fix] about to delete attachment #170 file=C:\Users\flori\Local Sites\florunl\app\public/wp-content/uploads/2026/03/X-systems.png
+[16-Mar-2026 00:33:04 UTC] [floru-fix] wp_delete_attachment result=true
+[16-Mar-2026 17:14:19 UTC] Automatic updates starting...
+[16-Mar-2026 17:14:22 UTC]   Automatic theme updates starting...
+[16-Mar-2026 17:14:23 UTC]   Automatic theme updates complete.
+[16-Mar-2026 17:14:23 UTC] Automatic updates complete.
+[17-Mar-2026 14:24:42 UTC] Automatic updates starting...
+[17-Mar-2026 14:24:45 UTC]   Automatic theme updates starting...
+[17-Mar-2026 14:24:45 UTC]   Automatic theme updates complete.
+[17-Mar-2026 14:24:45 UTC] Automatic updates complete.
+[18-Apr-2026 10:47:50 UTC] Automatic updates starting...
+[18-Apr-2026 10:47:54 UTC]   Automatic theme updates starting...
+[18-Apr-2026 10:47:54 UTC]   Automatic theme updates complete.
+[18-Apr-2026 10:47:54 UTC] Automatic updates complete.

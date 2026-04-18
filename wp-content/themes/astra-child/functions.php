@@ -134,6 +134,15 @@ function floru_register_menus() {
     ) );
 }
 
+// Ensure we use GD for image editing on local Windows sites to avoid file lock issues preventing deletion.
+add_filter( 'wp_image_editors', 'floru_use_gd_editor' );
+function floru_use_gd_editor( $editors ) {
+    $gd_editor = 'WP_Image_Editor_GD';
+    $editors = array_diff( $editors, array( 'WP_Image_Editor_Imagick' ) );
+    array_unshift( $editors, $gd_editor );
+    return $editors;
+}
+
 // Custom excerpt length
 add_filter( 'excerpt_length', 'floru_excerpt_length' );
 function floru_excerpt_length( $length ) {

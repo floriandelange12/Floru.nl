@@ -416,23 +416,58 @@ a:hover {
     transform-origin: left;
 }
 
-/* Scroll-to-top button — brand-styled */
+/* Scroll-to-top button — minimal circle */
 #ast-scroll-top {
-    background-color: var(--floru-navy) !important;
-    color: var(--floru-white) !important;
-    border-radius: 12px !important;
-    width: 52px !important;
-    height: 52px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: var(--floru-white) !important;
+    color: var(--floru-navy) !important;
+    border: 1px solid var(--floru-border) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
     right: 18px !important;
     bottom: calc(18px + env(safe-area-inset-bottom)) !important;
-    box-shadow: 0 4px 16px rgba(27, 42, 74, 0.25) !important;
+    box-shadow: 0 2px 8px rgba(15, 27, 51, 0.10) !important;
     transition: all 0.25s ease !important;
+    line-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
 #ast-scroll-top:hover {
-    background-color: var(--floru-accent) !important;
-    box-shadow: 0 6px 20px rgba(201, 145, 59, 0.3) !important;
-    transform: translateY(-2px);
+    background-color: var(--floru-navy) !important;
+    color: var(--floru-white) !important;
+    border-color: var(--floru-navy) !important;
+    box-shadow: 0 4px 12px rgba(15, 27, 51, 0.18) !important;
+    transform: translateY(-1px);
+}
+
+#ast-scroll-top svg,
+#ast-scroll-top span {
+    width: 16px !important;
+    height: 16px !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Center the arrow icon wrapper */
+#ast-scroll-top .ast-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    line-height: 0 !important;
+}
+
+#ast-scroll-top .ast-icon svg.ast-arrow-svg {
+    width: 14px !important;
+    height: 14px !important;
+    transform: rotate(180deg) !important;
+    display: block !important;
 }
 
 /* Mobile header — ensure it's visible on small viewports */
@@ -2432,13 +2467,13 @@ a:focus-visible {
    ========================================================================== */
 
 /* ---- Sticky mobile header ---- */
-.ast-header-break-point #ast-mobile-header {
+html body.ast-header-break-point #ast-mobile-header {
     position: sticky;
     top: 0;
     z-index: 120;
 }
 
-.ast-header-break-point .ast-primary-header-bar {
+html body.ast-header-break-point #ast-mobile-header .ast-primary-header-bar {
     min-height: 72px !important;
     padding-left: 18px !important;
     padding-right: 18px !important;
@@ -2447,75 +2482,85 @@ a:focus-visible {
     box-shadow: 0 1px 0 rgba(15, 27, 51, 0.04) !important;
 }
 
-.ast-header-break-point .site-branding {
+html body.ast-header-break-point #ast-mobile-header .site-branding {
     padding: 14px 0 !important;
 }
 
-.ast-header-break-point .site-branding img {
+html body.ast-header-break-point #ast-mobile-header .site-branding img {
     max-height: 44px !important;
 }
 
-/* ---- Hamburger toggle — larger tap target ---- */
-.ast-header-break-point .ast-button-wrap .menu-toggle,
-.ast-header-break-point .ast-mobile-menu-trigger-minimal {
+/* ---- Hamburger toggle — minimal & clean ---- */
+html body.ast-header-break-point #ast-mobile-header .ast-button-wrap .menu-toggle,
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-menu-trigger-minimal {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
     min-width: 44px !important;
     min-height: 44px !important;
-    padding: 8px !important;
-    border-radius: 10px !important;
-    background: rgba(27, 42, 74, 0.08) !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
     color: var(--floru-navy) !important;
-    border: 1px solid rgba(27, 42, 74, 0.12) !important;
-    box-shadow: 0 1px 4px rgba(15, 27, 51, 0.06) !important;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+    border: none !important;
+    box-shadow: none !important;
+    transition: color 0.2s ease, opacity 0.2s ease !important;
+    line-height: null !important; /* Reset */
 }
 
-.ast-header-break-point [data-section="section-header-mobile-trigger"] .ast-button-wrap .ast-mobile-menu-trigger-minimal {
-    border: 1px solid rgba(27, 42, 74, 0.12) !important;
+/* SVG icons inside the trigger */
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ast-mobile-svg,
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ast-close-svg {
+    width: 22px !important;
+    height: 22px !important;
 }
 
-/* Larger SVG icons inside the trigger */
-.ast-header-break-point .menu-toggle .ast-mobile-svg,
-.ast-header-break-point .menu-toggle .ast-close-svg {
-    width: 20px !important;
-    height: 20px !important;
+/* Center the icon wrapper stack inside the button */
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .mobile-menu-toggle-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    line-height: null !important;
 }
 
-.ast-header-break-point .menu-toggle .ast-mobile-svg line,
-.ast-header-break-point .menu-toggle .ast-mobile-svg path,
-.ast-header-break-point .menu-toggle .ast-close-svg line,
-.ast-header-break-point .menu-toggle .ast-close-svg path {
-    stroke-width: 2.35 !important;
-    stroke-linecap: round !important;
-    stroke-linejoin: round !important;
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ahfb-svg-iconset {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Revert to standard lines (no thick stroke overrides) for hamburger & close */
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ast-mobile-svg line,
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ast-mobile-svg path,
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ast-close-svg line,
+html body.ast-header-break-point #ast-mobile-header .menu-toggle .ast-close-svg path {
+    stroke: currentColor !important;
 }
 
 /* Highlight trigger when menu is open */
-body.ast-main-header-nav-open .ast-header-break-point .ast-button-wrap .menu-toggle,
-body.ast-main-header-nav-open .ast-header-break-point .ast-mobile-menu-trigger-minimal {
-    background: var(--floru-navy) !important;
-    color: #FFFFFF !important;
-    border-color: var(--floru-navy) !important;
-    box-shadow: 0 6px 16px rgba(15, 27, 51, 0.24) !important;
+html body.ast-main-header-nav-open.ast-header-break-point #ast-mobile-header .ast-button-wrap .menu-toggle,
+html body.ast-main-header-nav-open.ast-header-break-point #ast-mobile-header .ast-mobile-menu-trigger-minimal {
+    background: transparent !important;
+    color: var(--floru-navy) !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-body.ast-main-header-nav-open .ast-header-break-point .menu-toggle .ast-close-svg line,
-body.ast-main-header-nav-open .ast-header-break-point .menu-toggle .ast-close-svg path {
-    stroke: #FFFFFF !important;
-}
-
-/* ---- Fixed overlay panel ---- */
-.ast-header-break-point .ast-mobile-header-content,
-.ast-header-break-point .ast-desktop-header-content {
+/* ---- Fixed overlay panel - Solid White ---- */
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content {
     position: fixed !important;
     top: 72px !important;
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
-    padding: 18px !important;
-    background: rgba(15, 27, 51, 0.18) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+    padding: 32px 24px !important;
+    background: var(--floru-white) !important; /* Full white background */
     border-bottom: none !important;
+    border-top: 1px solid var(--floru-border-light) !important; /* Subtle separator from header */
     box-shadow: none !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
@@ -2537,107 +2582,108 @@ body.ast-main-header-nav-open #ast-scroll-top {
 }
 
 /* ---- Disable Astra underline hover on mobile ---- */
-.ast-header-break-point .ast-menu-hover-style-underline > .menu-item > .menu-link::after,
-.ast-header-break-point .ast-menu-hover-style-underline > .menu-item.current-menu-item > .menu-link::after,
-.ast-header-break-point .ast-menu-hover-style-underline > .menu-item:hover > .menu-link::after {
+html body.ast-header-break-point #ast-mobile-header .ast-menu-hover-style-underline > .menu-item > .menu-link::after,
+html body.ast-header-break-point #ast-mobile-header .ast-menu-hover-style-underline > .menu-item.current-menu-item > .menu-link::after,
+html body.ast-header-break-point #ast-mobile-header .ast-menu-hover-style-underline > .menu-item:hover > .menu-link::after {
     display: none !important;
 }
 
-/* ---- Card wrapper for nav list ---- */
-.ast-header-break-point .ast-mobile-header-content .ast-builder-menu-mobile {
-    background: var(--floru-white) !important;
-    border: 1px solid var(--floru-border) !important;
-    border-radius: 20px !important;
-    padding: 10px !important;
+/* ---- Card wrapper for nav list (Removed card style, just list) ---- */
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .ast-builder-menu,
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .main-header-bar-navigation,
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .main-navigation {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content ul.main-header-menu {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
     width: 100% !important;
-    max-width: 560px;
-    margin: 0 auto;
-    box-shadow: 0 16px 48px rgba(15, 27, 51, 0.07) !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    display: block !important;
 }
 
 /* ---- Menu items — pill-style rows ---- */
-.ast-header-break-point .ast-mobile-header-content .menu-item {
-    margin: 2px 0 !important;
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .menu-item {
+    margin: 4px 0 !important;
+    border: none !important;
+    padding: 0 !important;
 }
 
-.ast-header-break-point .ast-mobile-header-content .menu-item > .menu-link,
-.ast-header-break-point .ast-mobile-header-content .menu-item > .ast-menu-toggle,
-.ast-header-break-point .ast-mobile-popup-content .menu-item > .menu-link {
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .menu-item > .menu-link,
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .menu-item > .ast-menu-toggle {
     font-family: var(--floru-font-body) !important;
-    font-size: 0.875rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.08em !important;
+    font-size: 0.9375rem !important; /* 15px */
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
     text-transform: uppercase !important;
     color: var(--floru-charcoal) !important;
-    padding: 14px 18px !important;
+    padding: 16px 20px !important;
     border-bottom: none !important;
     border-left: none !important;
     border-radius: 12px !important;
     transition: color 0.2s ease, background-color 0.2s ease !important;
     display: block !important;
     line-height: 1.35 !important;
+    text-align: center !important;
 }
 
-.ast-header-break-point .ast-mobile-header-content .menu-item:last-child > .menu-link {
-    border-bottom: none !important;
-}
-
-.ast-header-break-point .ast-mobile-header-content .menu-item > .menu-link:hover,
-.ast-header-break-point .ast-mobile-popup-content .menu-item > .menu-link:hover {
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .menu-item > .menu-link:hover {
     color: var(--floru-accent) !important;
     background-color: var(--floru-off-white) !important;
 }
 
 /* ---- Current / active item — soft highlight, no border ---- */
-.ast-header-break-point .ast-mobile-header-content .current-menu-item > .menu-link,
-.ast-header-break-point .ast-mobile-popup-content .current-menu-item > .menu-link {
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .current-menu-item > .menu-link {
     color: var(--floru-accent) !important;
     background-color: rgba(201, 145, 59, 0.08) !important;
     border-left: none !important;
 }
 
 /* ---- CONTACT CTA in mobile menu ---- */
-.floru-mobile-contact-item {
-    margin-top: 8px !important;
-    padding: 2px 0 0 !important;
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .floru-mobile-contact-item {
+    margin-top: 16px !important;
+    padding: 12px 0 0 !important;
+    border-top: 1px solid var(--floru-border-light) !important; /* Subtle separator line before CTA */
     list-style: none !important;
-    border-bottom: none !important;
 }
 
-.floru-mobile-contact-item > .floru-mobile-contact-link.menu-link,
-a.floru-mobile-contact-link.menu-link {
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .floru-mobile-contact-item > .floru-mobile-contact-link.menu-link {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-height: 52px !important;
+    min-height: 54px !important;
     background: var(--floru-accent) !important;
     color: #FFFFFF !important;
     text-align: center !important;
     padding: 14px 24px !important;
     border-radius: 14px !important;
     font-weight: 700 !important;
-    font-size: 0.8125rem !important;
+    font-size: 0.8125rem !important; /* 13px */
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
-    border-bottom: none !important;
-    border-left: none !important;
-    box-shadow: 0 8px 24px rgba(201, 145, 59, 0.18) !important;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(201, 145, 59, 0.25) !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
 }
 
-.floru-mobile-contact-item > .floru-mobile-contact-link.menu-link:hover,
-a.floru-mobile-contact-link.menu-link:hover {
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .floru-mobile-contact-item > .floru-mobile-contact-link.menu-link:hover {
     background: var(--floru-accent-dark) !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 6px 16px rgba(201, 145, 59, 0.28) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(201, 145, 59, 0.35) !important;
 }
 
 /* Override current-item style when the contact CTA is active */
-.ast-header-break-point .ast-mobile-header-content .floru-mobile-contact-item.current-menu-item > .menu-link {
-    border-left: none !important;
+html body.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .floru-mobile-contact-item.current-menu-item > .menu-link {
     background: var(--floru-accent) !important;
     color: #FFFFFF !important;
-    border-radius: 14px !important;
 }
 
 /* ---- Off-canvas popup fallback (if enabled via Customizer) ---- */
@@ -2743,6 +2789,11 @@ a.floru-mobile-contact-link.menu-link:hover {
         padding: 72px 20px 56px;
     }
 
+    .floru-hero__text {
+        text-align: center;
+        margin: 0 auto;
+    }
+
     .floru-hero h1 {
         font-size: 1.875rem;
         line-height: 1.2;
@@ -2750,6 +2801,8 @@ a.floru-mobile-contact-link.menu-link:hover {
 
     .floru-hero p {
         font-size: 0.9375rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .floru-hero__actions {
@@ -2792,6 +2845,14 @@ a.floru-mobile-contact-link.menu-link:hover {
     .floru-intro {
         grid-template-columns: 1fr;
         gap: 32px;
+    }
+
+    .floru-intro__text {
+        text-align: center;
+    }
+
+    .floru-intro__text .floru-btn {
+        margin: 0 auto;
     }
 
     .floru-intro-text {
@@ -3008,9 +3069,16 @@ a.floru-mobile-contact-link.menu-link:hover {
 
     /* ==== 10/10 mobile polish — tablet ==== */
 
-    /* Left-align section headers for editorial feel */
+    /* Center-align section headers for clean mobile look */
     .floru-section-header {
-        text-align: left;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .floru-section-header p {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .floru-section-header h2 {
@@ -3028,14 +3096,28 @@ a.floru-mobile-contact-link.menu-link:hover {
     .floru-service-card {
         border-radius: 16px;
         box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
+        text-align: center;
+        align-items: center;
     }
 
     /* Trust items: card-like on tablet */
-    .floru-trust-item {
+    .floru-trust-layout__items {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: 1fr;
+        gap: 16px;
+    }
+
+    .floru-trust-item,
+    .floru-trust-item:first-child,
+    .floru-trust-item:last-child {
         background: var(--floru-white);
-        padding: 20px;
+        padding: 20px !important;
         border-radius: 14px;
-        border: 1px solid var(--floru-border-light);
+        border: 1px solid var(--floru-border-light) !important;
+        text-align: center;
+        align-items: center;
+        height: 100%;
     }
 
     /* Client cards: rounder */
@@ -3047,6 +3129,7 @@ a.floru-mobile-contact-link.menu-link:hover {
     /* Team cards: rounder */
     .floru-team-card {
         border-radius: 14px;
+        text-align: center;
     }
 }
 
@@ -3078,6 +3161,8 @@ a.floru-mobile-contact-link.menu-link:hover {
     .floru-hero p {
         font-size: 0.875rem;
         margin-bottom: 24px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     /* Page header */
@@ -3122,14 +3207,27 @@ a.floru-mobile-contact-link.menu-link:hover {
         height: 1px;
     }
 
+    .floru-trust-layout__items {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: 1fr;
+        gap: 16px;
+    }
+
     /* Trust — card-style on phone */
-    .floru-trust-item {
+    .floru-trust-item,
+    .floru-trust-item:first-child,
+    .floru-trust-item:last-child {
         flex-direction: column;
         gap: 12px;
         background: var(--floru-white);
-        padding: 18px;
+        padding: 18px !important;
         border-radius: 14px;
-        border: 1px solid var(--floru-border-light);
+        border: 1px solid var(--floru-border-light) !important;
+        text-align: center;
+        align-items: center;
+        height: 100%;
+        justify-content: flex-start;
     }
 
     .floru-trust-grid .floru-trust-item {
@@ -3148,47 +3246,68 @@ a.floru-mobile-contact-link.menu-link:hover {
         padding: 14px 16px 18px;
     }
 
-    /* Client logo grid — 2 columns on phone */
-    .floru-clients-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
+    /* Client logo grid — HIDDEN on phone (too cluttered) */
+    .floru-clients-band {
+        display: none !important;
     }
 
-    .floru-clients-grid > a {
-        min-height: 72px;
-        padding: 10px;
-        border-radius: 10px;
+    /* Also hide standalone logo grid on clients page */
+    .floru-section--gray .floru-clients-grid {
+        display: none !important;
     }
 
-    .floru-client-logo {
-        max-height: 40px;
+    .floru-section--gray:has(.floru-clients-grid) {
+        display: none !important;
     }
 
-    /* Client cards */
+    /* Client cards — clean mobile layout */
     .floru-client-card {
-        flex-direction: column;
-        gap: 12px;
-        padding: 18px;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px;
         border-radius: 16px;
-        box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
+        border: 1px solid var(--floru-border);
+        box-shadow: 0 2px 8px rgba(15, 27, 51, 0.05);
     }
 
     .floru-client-card__logo {
-        flex: none;
+        flex: 0 0 64px;
         align-self: flex-start;
     }
 
     .floru-client-card__logo img {
-        max-width: 80px;
-        max-height: 48px;
+        max-width: 64px;
+        max-height: 40px;
+    }
+
+    .floru-client-card__body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .floru-client-card__name {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .floru-client-card__industry {
+        font-size: 0.625rem;
+        margin-bottom: 8px;
     }
 
     .floru-client-card__desc {
         font-size: 0.8125rem;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         overflow: hidden;
+        line-height: 1.55;
+    }
+
+    .floru-client-card__link {
+        margin-top: 10px;
+        font-size: 0.75rem;
     }
 
     /* Client detail */
@@ -3231,12 +3350,16 @@ a.floru-mobile-contact-link.menu-link:hover {
         padding: 24px 20px;
         border-radius: 16px;
         box-shadow: 0 2px 12px rgba(15, 27, 51, 0.06);
+        text-align: center;
+        align-items: center;
     }
 
-    /* Section headers — left-aligned, smaller */
+    /* Section headers — centered, smaller */
     .floru-section-header {
         margin-bottom: 24px;
-        text-align: left;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .floru-section-header h2 {
