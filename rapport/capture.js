@@ -122,6 +122,7 @@ function ensureDir(dir) {
 async function dismissOverlays(page) {
   // Try to close cookie banners, popups, etc.
   const dismissSelectors = [
+    '#floraCookieAccept',
     '.floru-cookie-consent__btn--accept',
     '.cookie-notice-accept',
     '.elementor-popup-modal .dialog-close-button',
@@ -160,6 +161,26 @@ async function autoScroll(page) {
   await page.waitForTimeout(500);
 }
 
+async function forceReveal(page) {
+  await page.addStyleTag({
+    content: `
+      [data-animate],
+      [data-animate-stagger] > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+      }
+    `,
+  });
+
+  await page.evaluate(() => {
+    document.querySelectorAll('[data-animate], [data-animate-stagger]').forEach((el) => {
+      el.classList.add('is-visible');
+    });
+  });
+}
+
 // ── Main capture logic ──────────────────────────────────────────────────────
 
 async function captureSite(browser, siteKey, site) {
@@ -175,6 +196,13 @@ async function captureSite(browser, siteKey, site) {
       userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+      try {
+        window.localStorage.setItem('floru_cookie_consent', 'accepted');
+      } catch {
+        // Ignore storage restrictions on third-party origins.
+      }
+    });
 
     for (const pg of PAGES) {
       const pagePath = pg.paths[siteKey];
@@ -217,8 +245,11 @@ async function captureSite(browser, siteKey, site) {
       // Auto-scroll to trigger lazy images and animations
       await autoScroll(page);
 
+      // Force animated sections/cards into their visible state for stable report captures.
+      await forceReveal(page);
+
       // Wait for images
-      await page.waitForTimeout(1500);
+      await page.waitForTimeout(900);
 
       // ── Full-page screenshot ──
       const dir = path.join(SCREENSHOT_DIR, siteKey, vp.id);
@@ -292,7 +323,7 @@ async function captureSite(browser, siteKey, site) {
     for (const vp of VIEWPORTS) {
       const dir = path.join(SCREENSHOT_DIR, siteKey, vp.id);
       if (fs.existsSync(dir)) {
-        const files = fs.readdirSync(dir).filter(f => f.endsWith('.png'));
+        const files = fs.readdirSync(dir).filter(f => f.endsWith('.jpg'));
         console.log(`  ${siteKey}/${vp.id}: ${files.length} screenshots`);
       }
     }

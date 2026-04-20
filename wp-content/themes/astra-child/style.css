@@ -8638,11 +8638,6 @@ p {
 .page-template-template-team .floru-team-intro__grid:not(.floru-team-intro__grid--single) {
     grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
     gap: 34px 48px;
-            font-size: clamp(1.72rem, 2.9vw, 2.55rem) !important;
-}
-
-.page-template-template-team .floru-team-intro__grid {
-            max-width: 214px !important;
 }
 
 .page-template-template-team .floru-team-intro__inner {
@@ -12338,18 +12333,42 @@ body.ast-main-header-nav-open .floru-cookie-consent {
     .page-template-template-team .floru-team-roster {
         grid-template-columns: 1fr;
     }
+
+    .page-template-template-team .floru-team-profile,
+    .page-template-template-team .floru-team-profile--featured {
+        grid-template-columns: 1fr;
+    }
+
+    .page-template-template-team .floru-team-profile__media,
+    .page-template-template-team .floru-team-profile__placeholder,
+    .page-template-template-team .floru-team-profile--featured .floru-team-profile__media,
+    .page-template-template-team .floru-team-profile--featured .floru-team-profile__placeholder {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 5 / 4;
+    }
 }
 
 @media (max-width: 560px) {
     .page-template-template-team .floru-team-intro__inner,
     .page-template-template-team .floru-team-intro__text,
     .page-template-template-team .floru-team-roster__header,
-    .page-template-template-team .floru-team-roster__title-block,
+    .page-template-template-team .floru-team-roster__title-block {
+        text-align: center;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .page-template-template-team .floru-team-roster__lead {
-        text-align: left;
-        justify-items: start;
-        margin-left: 0;
-        margin-right: 0;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-template-template-team .floru-team-profile__body,
+    .page-template-template-team .floru-team-profile--featured .floru-team-profile__body {
+        padding: 20px 18px 18px;
     }
 }
 
@@ -12361,5 +12380,161 @@ body.ast-main-header-nav-open .floru-cookie-consent {
     .home .floru-clients-grid,
     .page-template-template-clients .floru-clients-grid {
         grid-template-columns: repeat(var(--floru-clients-grid-columns-tablet, 5), minmax(0, 1fr));
+    }
+}
+
+/* ======================================================================
+   MOBILE COMPOSITION POLISH
+   ====================================================================== */
+
+@media (max-width: 768px) {
+    .page-template-template-clients .floru-section-header--clients-logos,
+    .page-template-template-clients .floru-section-header--clients-profiles {
+        width: min(100%, 31rem);
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 auto 24px !important;
+        text-align: center;
+    }
+
+    .page-template-template-clients .floru-section-header--clients-logos h2,
+    .page-template-template-clients .floru-section-header--clients-profiles h2,
+    .page-template-template-clients .floru-section-header--clients-logos p,
+    .page-template-template-clients .floru-section-header--clients-profiles p,
+    .page-template-template-clients .floru-clients-intro__lead,
+    .page-template-template-clients .floru-clients-intro__note,
+    .page-template-template-clients .floru-clients-intro__evidence,
+    .page-template-template-clients .floru-clients-intro__sectors {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-template-template-clients .floru-section-header--clients-logos h2,
+    .page-template-template-clients .floru-section-header--clients-profiles h2 {
+        max-width: 22ch;
+    }
+
+    .page-template-template-clients .floru-section-header--clients-logos p,
+    .page-template-template-clients .floru-section-header--clients-profiles p {
+        max-width: 32ch;
+    }
+}
+
+@media (max-width: 560px) {
+    .page-template-template-clients .floru-client-card {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+        width: min(100%, 32rem);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-template-template-clients .floru-client-card__body {
+        justify-items: center;
+        text-align: center;
+    }
+
+    .page-template-template-clients .floru-client-card__desc,
+    .page-template-template-clients .floru-client-card__desc p {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .page-template-template-clients .floru-client-card__link {
+        justify-content: center;
+    }
+
+    .page-template-template-services .floru-service-panel__content,
+    .page-template-template-services .floru-service-panel__details,
+    .page-template-template-services .floru-service-panel__rail {
+        width: min(100%, 32rem);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-template-template-services .floru-service-panel__content::before {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .single-floru_client .floru-client-page-hero .floru-breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .single-floru_client .floru-client-hero,
+    .single-floru_client .floru-client-highlights-section__intro,
+    .single-floru_client .floru-client-media-shell__header,
+    .single-floru_client .floru-client-sidebar-card--cta {
+        text-align: center;
+    }
+
+    .single-floru_client .floru-client-hero,
+    .single-floru_client .floru-client-highlights-section__intro,
+    .single-floru_client .floru-client-media-shell__header {
+        align-items: center;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .single-floru_client .floru-client-hero__info,
+    .single-floru_client .floru-client-hero__summary {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .single-floru_client .floru-client-hero__meta {
+        justify-content: center;
+    }
+
+    .floru-footer__grid {
+        justify-items: center;
+        text-align: center;
+    }
+
+    .floru-footer__brand,
+    .floru-footer__nav-group,
+    .floru-footer__contact {
+        width: min(100%, 30rem);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .floru-footer__brand p,
+    .floru-footer__brand-note,
+    .floru-footer__contact-note {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .floru-footer__contact-list li {
+        justify-content: center;
+        text-align: left;
+    }
+
+    .floru-footer__bottom,
+    .floru-footer__bottom-meta,
+    .floru-footer__language {
+        justify-content: center;
+        text-align: center;
+        margin-left: 0;
+    }
+
+    [data-animate] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    [data-animate-stagger] > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 }
