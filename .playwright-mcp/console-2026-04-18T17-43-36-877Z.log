@@ -1,0 +1,3 @@
+[      -9ms] [ERROR] Failed to load resource: the server responded with a status of 999 () @ https://www.linkedin.com/in/marina-eppen-35870b57/:0
+[     537ms] [LOG] Error @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[     832ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "username"): (More info: https://goo.gl/9p2vKq) %o @ https://www.linkedin.com/authwall?trk=gf&trkInfo=AQGyR4Vt4cMr5AAAAZ2hsNVwha6XJ17dI2HmlDFnAytOrFQewGU6bq8I2vLe_C5YG1r-1GQP9blQk_ePah36YDBpg3zaKX07IuScS5-O98Hlc9q9gYOAHDl4bUER40WE9f6zhkk=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fmarina-eppen-35870b57%2F:0

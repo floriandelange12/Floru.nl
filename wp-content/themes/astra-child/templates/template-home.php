@@ -10,6 +10,37 @@ $pid = get_the_ID();
 $m = function( $key, $default = '' ) use ( $pid ) {
     return floru_get_meta( $pid, $key, $default );
 };
+
+$balanced_logo_columns = static function( $count, $max_columns = 6 ) {
+    $count       = max( 0, (int) $count );
+    $max_columns = max( 1, min( $count ?: 1, (int) $max_columns ) );
+
+    if ( $count <= 1 ) {
+        return $max_columns;
+    }
+
+    $best_columns    = 1;
+    $best_fill_ratio = -1;
+    $best_rows       = PHP_INT_MAX;
+
+    for ( $columns = 2; $columns <= $max_columns; $columns++ ) {
+        $rows           = (int) ceil( $count / $columns );
+        $last_row_count = $count - ( ( $rows - 1 ) * $columns );
+        $fill_ratio     = $last_row_count / $columns;
+
+        if (
+            $fill_ratio > $best_fill_ratio ||
+            ( abs( $fill_ratio - $best_fill_ratio ) < 0.0001 && $rows < $best_rows ) ||
+            ( abs( $fill_ratio - $best_fill_ratio ) < 0.0001 && $rows === $best_rows && $columns > $best_columns )
+        ) {
+            $best_columns    = $columns;
+            $best_fill_ratio = $fill_ratio;
+            $best_rows       = $rows;
+        }
+    }
+
+    return $best_columns;
+};
 ?>
 
 <section class="floru-hero" data-animate="fade-in">
@@ -46,6 +77,26 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 
 <section class="floru-section" data-animate>
     <div class="floru-container">
+        <?php
+        $intro_img = $m( '_floru_intro_image' );
+        if ( ! $intro_img && has_post_thumbnail( $pid ) ) {
+            $intro_img = get_the_post_thumbnail_url( $pid, 'large' );
+        }
+        $intro_has_custom_visual = (bool) $intro_img;
+        $intro_visual_src        = $intro_has_custom_visual
+            ? $intro_img
+            : get_stylesheet_directory_uri() . '/assets/images/floru-institutions.jpg';
+        $intro_visual_alt        = $intro_has_custom_visual
+            ? $m( '_floru_intro_heading', 'Floru consultancy' )
+            : __( 'European institutional alignment', 'astra-child-floru' );
+        $intro_support_items = array(
+            __( 'Market-entry direction', 'astra-child-floru' ),
+            __( 'Stakeholder positioning', 'astra-child-floru' ),
+            __( 'Tender discipline', 'astra-child-floru' ),
+        );
+        $intro_support_note = __( 'Small senior team. Direct involvement where decision quality matters most.', 'astra-child-floru' );
+
+        ?>
         <div class="floru-intro">
             <div class="floru-intro__text">
                 <span class="floru-section-label"><?php echo esc_html( $m( '_floru_intro_label', 'Who We Are' ) ); ?></span>
@@ -59,17 +110,23 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                     <a href="<?php echo esc_url( $intro_btn_url ); ?>" class="floru-btn floru-btn--outline floru-btn--sm"><?php echo esc_html( $intro_btn_text ); ?></a>
                 <?php endif; ?>
             </div>
-            <div class="floru-intro__visual">
-                <?php
-                $intro_img = $m( '_floru_intro_image' );
-                if ( ! $intro_img && has_post_thumbnail( $pid ) ) {
-                    $intro_img = get_the_post_thumbnail_url( $pid, 'large' );
-                }
-                if ( ! $intro_img ) {
-                    $intro_img = get_stylesheet_directory_uri() . '/assets/images/illustration-consulting.svg';
-                }
-                ?>
-                <img src="<?php echo esc_url( $intro_img ); ?>" alt="<?php echo esc_attr( $m( '_floru_intro_heading', 'Floru consultancy' ) ); ?>" loading="lazy">
+            <div class="floru-intro__support">
+                <figure class="floru-context-frame floru-context-frame--home<?php echo $intro_has_custom_visual ? '' : ' floru-context-frame--photo'; ?>">
+                    <div class="floru-context-frame__media">
+                        <img src="<?php echo esc_url( $intro_visual_src ); ?>" alt="<?php echo esc_attr( $intro_visual_alt ); ?>" loading="lazy" class="floru-img-block">
+                    </div>
+                </figure>
+
+                <aside class="floru-context-panel floru-context-panel--home">
+                    <span class="floru-context-panel__eyebrow"><?php esc_html_e( 'Where Floru adds value', 'astra-child-floru' ); ?></span>
+                    <h3 class="floru-context-panel__title"><?php esc_html_e( 'Strategic support shaped for institutional buying cycles.', 'astra-child-floru' ); ?></h3>
+                    <ul class="floru-context-panel__list" aria-label="<?php echo esc_attr__( 'Core support themes', 'astra-child-floru' ); ?>">
+                        <?php foreach ( $intro_support_items as $intro_support_item ) : ?>
+                            <li><?php echo esc_html( $intro_support_item ); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <p class="floru-context-panel__note"><?php echo esc_html( $intro_support_note ); ?></p>
+                </aside>
             </div>
         </div>
     </div>
@@ -127,7 +184,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                 </div>
                 <h3><?php echo esc_html( $title ); ?></h3>
                 <p><?php echo esc_html( $desc ); ?></p>
-                <span class="floru-service-card__link">Learn more <span aria-hidden="true">&rarr;</span></span>
+                <span class="floru-service-card__link"><?php echo esc_html( floru_t( 'Learn more' ) ); ?> <span aria-hidden="true">&rarr;</span></span>
             </a>
             <?php endfor; ?>
         </div>
@@ -161,7 +218,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                         <?php echo floru_icon( $icon ); ?>
                     </div>
                     <div class="floru-trust-item__text">
-                        <h4><?php echo esc_html( $title ); ?></h4>
+                            <h3><?php echo esc_html( $title ); ?></h3>
                         <p><?php echo esc_html( $desc ); ?></p>
                     </div>
                 </div>
@@ -181,59 +238,123 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 
         <div class="floru-team-grid">
             <?php
+            $team_url = floru_get_team_url();
+            $team_cards = array();
+
             $team_members = new WP_Query( array(
                 'post_type'      => 'floru_team',
-                'posts_per_page' => 3,
+                'posts_per_page' => -1,
                 'orderby'        => 'menu_order',
                 'order'          => 'ASC',
             ) );
             if ( $team_members->have_posts() ) :
                 while ( $team_members->have_posts() ) : $team_members->the_post();
-                    $role         = get_post_meta( get_the_ID(), '_floru_team_role', true );
-                    $profile_link = get_post_meta( get_the_ID(), '_floru_team_profile_link', true );
-                    $team_page    = get_page_by_path( 'team' );
-                    $team_url     = $team_page ? get_permalink( $team_page ) : home_url( '/team/' );
-            ?>
-            <div class="floru-team-card">
-                <div class="floru-team-card__editorial-image">
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <?php the_post_thumbnail( 'large' ); ?>
-                    <?php else : ?>
-                        <div class="floru-team-card__empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-                    <?php endif; ?>
-                </div>
-                <div class="floru-team-card__body">
-                    <h3><?php the_title(); ?></h3>
-                    <?php if ( $role ) : ?>
-                        <span class="floru-team-card__role"><?php echo esc_html( $role ); ?></span>
-                    <?php endif; ?>
-                    <?php if ( has_excerpt() ) : ?>
-                        <p><?php echo esc_html( get_the_excerpt() ); ?></p>
-                    <?php endif; ?>
-                    <a href="<?php echo esc_url( $profile_link ? $profile_link : $team_url ); ?>" class="floru-team-card__link" aria-label="View profile of <?php the_title_attribute(); ?>">View Profile &rarr;</a>
-                </div>
-            </div>
-            <?php
+                    $member_id    = get_the_ID();
+                    $name         = floru_get_translated_post_title_raw( $member_id );
+                    $role         = floru_get_translated_post_meta( $member_id, '_floru_team_role' );
+                    $profile_link = get_post_meta( $member_id, '_floru_team_profile_link', true );
+                    $excerpt      = has_excerpt( $member_id ) ? floru_get_translated_post_excerpt_raw( $member_id ) : '';
+                    if ( ! $excerpt ) {
+                        $raw = wp_strip_all_tags( strip_shortcodes( floru_get_translated_post_content_raw( $member_id ) ) );
+                        if ( $raw ) {
+                            $excerpt = wp_trim_words( $raw, 24, '&hellip;' );
+                        }
+                    }
+                    $member_slug = get_post_field( 'post_name', $member_id );
+                    $portrait    = has_post_thumbnail( $member_id ) ? get_the_post_thumbnail(
+                        $member_id,
+                        'floru-team-portrait',
+                        array(
+                            'loading'  => 'lazy',
+                            'decoding' => 'async',
+                            'sizes'    => '(min-width: 1280px) 360px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw',
+                            'alt'      => sprintf( /* translators: %s = team member name */ esc_attr__( 'Portret van %s', 'astra-child-floru' ), $name ),
+                        )
+                    ) : '';
+
+                    $team_cards[] = array(
+                        'slug'         => $member_slug,
+                        'name'         => $name,
+                        'role'         => $role,
+                        'excerpt'      => $excerpt,
+                        'profile_link' => $profile_link,
+                        'card_url'     => $profile_link ? $profile_link : trailingslashit( $team_url ) . '#team-' . $member_slug,
+                        'portrait'     => $portrait,
+                    );
                 endwhile;
                 wp_reset_postdata();
+
+                if ( function_exists( 'floru_prioritize_team_collection' ) ) {
+                    $team_cards = floru_prioritize_team_collection(
+                        $team_cards,
+                        static function( $card ) {
+                            return array(
+                                'slug' => isset( $card['slug'] ) ? $card['slug'] : '',
+                                'name' => isset( $card['name'] ) ? $card['name'] : '',
+                            );
+                        }
+                    );
+                }
+
+                $team_cards = array_slice( $team_cards, 0, 3 );
+
+                foreach ( $team_cards as $card ) :
+            ?>
+            <article class="floru-team-card">
+                <figure class="floru-team-card__media">
+                    <?php if ( $card['portrait'] ) : ?>
+                        <?php echo wp_kses_post( $card['portrait'] ); ?>
+                    <?php else : ?>
+                        <div class="floru-team-card__placeholder" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                        </div>
+                    <?php endif; ?>
+                </figure>
+                <div class="floru-team-card__body">
+                    <header class="floru-team-card__header">
+                        <?php if ( $card['role'] ) : ?>
+                            <span class="floru-team-card__role"><?php echo esc_html( $card['role'] ); ?></span>
+                        <?php endif; ?>
+                        <h3 class="floru-team-card__name"><?php echo esc_html( $card['name'] ); ?></h3>
+                    </header>
+                    <?php if ( $card['excerpt'] ) : ?>
+                        <p class="floru-team-card__bio"><?php echo esc_html( $card['excerpt'] ); ?></p>
+                    <?php endif; ?>
+                    <footer class="floru-team-card__footer">
+                        <a class="floru-team-card__action"
+                           href="<?php echo esc_url( $card['card_url'] ); ?>"
+                           <?php if ( $card['profile_link'] ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
+                           aria-label="<?php echo esc_attr( sprintf( /* translators: %s = team member name */ __( 'Bekijk profiel van %s', 'astra-child-floru' ), $card['name'] ) ); ?>">
+                            <span class="floru-team-card__action-label"><?php $card['profile_link'] ? esc_html_e( 'Profiel op LinkedIn', 'astra-child-floru' ) : esc_html_e( 'Bekijk profiel', 'astra-child-floru' ); ?></span>
+                            <span class="floru-team-card__action-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                    </footer>
+                </div>
+            </article>
+            <?php
+                endforeach;
             else :
             ?>
-            <div class="floru-team-card">
-                <div class="floru-team-card__editorial-image">
-                    <div class="floru-team-card__empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-                </div>
+            <article class="floru-team-card">
+                <figure class="floru-team-card__media">
+                    <div class="floru-team-card__placeholder" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                    </div>
+                </figure>
                 <div class="floru-team-card__body">
-                    <h3>Team Member</h3>
-                    <span class="floru-team-card__role">Consultant</span>
-                    <p>Add team members in WordPress admin under Team Members.</p>
+                    <header class="floru-team-card__header">
+                        <span class="floru-team-card__role"><?php echo esc_html( floru_t( 'Consultant' ) ); ?></span>
+                        <h3 class="floru-team-card__name"><?php echo esc_html( floru_t( 'Team Member' ) ); ?></h3>
+                    </header>
+                    <p class="floru-team-card__bio"><?php echo esc_html( floru_t( 'Add team members in WordPress admin under Team Members.' ) ); ?></p>
                 </div>
-            </div>
+            </article>
             <?php endif; ?>
         </div>
 
         <?php
         $team_btn_text = $m( '_floru_hteam_btn_text', 'Meet the Full Team' );
-        $team_btn_url  = $m( '_floru_hteam_btn_url', home_url( '/team/' ) );
+        $team_btn_url  = floru_normalize_team_url( $m( '_floru_hteam_btn_url', $team_url ) );
         if ( $team_btn_text ) : ?>
         <div class="floru-text-center floru-mt-40">
             <a href="<?php echo esc_url( $team_btn_url ); ?>" class="floru-btn floru-btn--outline"><?php echo esc_html( $team_btn_text ); ?></a>
@@ -249,36 +370,54 @@ $clients = new WP_Query( array(
     'orderby'        => 'menu_order',
     'order'          => 'ASC',
     ) );
-if ( $clients->have_posts() ) : ?>
+$home_client_logos = array();
+
+if ( ! empty( $clients->posts ) ) {
+    foreach ( $clients->posts as $client_post ) {
+        $client_link = get_post_meta( $client_post->ID, '_floru_client_link', true );
+        $thumb_id    = get_post_thumbnail_id( $client_post->ID );
+        $thumb_src   = wp_get_attachment_image_src( $thumb_id, 'medium' );
+
+        if ( ! $thumb_src ) {
+            continue;
+        }
+
+        $logo_url = $thumb_src[0];
+        $orig_w   = $thumb_src[1];
+        $orig_h   = max( $thumb_src[2], 1 );
+        $ratio    = $orig_w / $orig_h;
+        $h        = round( sqrt( 2400 / max( $ratio, 0.5 ) ) );
+        $h        = max( 28, min( 42, $h ) );
+        $w        = round( $h * $ratio );
+        $w        = max( 40, min( 110, $w ) );
+
+        $home_client_logos[] = array(
+            'link'     => $client_link,
+            'logo_url' => $logo_url,
+            'title'    => floru_get_translated_post_title_raw( $client_post->ID ),
+            'style'    => 'width:' . $w . 'px;height:' . $h . 'px;',
+        );
+    }
+}
+
+$home_client_logo_columns = $balanced_logo_columns( count( $home_client_logos ) );
+
+if ( ! empty( $home_client_logos ) ) : ?>
 <section class="floru-section floru-section--gray floru-section--compact" data-animate="fade-in">
     <div class="floru-container">
         <div class="floru-clients-band">
-            <p class="floru-clients-band__label"><?php echo esc_html( $m( '_floru_hclients_label', 'Trusted by international defence companies including' ) ); ?></p>
+            <p class="floru-clients-band__label"><?php echo esc_html( floru_t( $m( '_floru_hclients_label', 'Trusted by international defence companies including' ) ) ); ?></p>
             <span class="floru-clients-band__divider" aria-hidden="true"></span>
-            <div class="floru-clients-grid">
-                <?php while ( $clients->have_posts() ) : $clients->the_post();
-                    $client_link = get_post_meta( get_the_ID(), '_floru_client_link', true );
-                    $thumb_id    = get_post_thumbnail_id( get_the_ID() );
-                    $thumb_src   = wp_get_attachment_image_src( $thumb_id, 'medium' );
-                    if ( ! $thumb_src ) continue;
-                    $logo_url = $thumb_src[0];
-                    $orig_w   = $thumb_src[1];
-                    $orig_h   = max( $thumb_src[2], 1 );
-                    $ratio    = $orig_w / $orig_h;
-                    // Equal visual area (~2400px²): h = sqrt(area/ratio), then clamp.
-                    $h = round( sqrt( 2400 / max( $ratio, 0.5 ) ) );
-                    $h = max( 28, min( 42, $h ) );
-                    $w = round( $h * $ratio );
-                    $w = max( 40, min( 110, $w ) );
-                    $style = 'width:' . $w . 'px;height:' . $h . 'px;';
-                    if ( $client_link ) : ?>
-                        <a href="<?php echo esc_url( $client_link ); ?>" target="_blank" rel="noopener noreferrer">
-                            <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="floru-client-logo" style="<?php echo esc_attr( $style ); ?>">
+            <div class="floru-clients-grid" style="<?php echo esc_attr( '--floru-clients-grid-columns-tablet:' . $home_client_logo_columns . ';' ); ?>">
+                <?php foreach ( $home_client_logos as $home_client_logo ) : ?>
+                    <?php if ( $home_client_logo['link'] ) : ?>
+                        <a href="<?php echo esc_url( $home_client_logo['link'] ); ?>" target="_blank" rel="noopener noreferrer">
+                            <img src="<?php echo esc_url( $home_client_logo['logo_url'] ); ?>" alt="<?php echo esc_attr( $home_client_logo['title'] ); ?>" class="floru-client-logo" style="<?php echo esc_attr( $home_client_logo['style'] ); ?>">
                         </a>
                     <?php else : ?>
-                        <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="floru-client-logo" style="<?php echo esc_attr( $style ); ?>">
+                        <img src="<?php echo esc_url( $home_client_logo['logo_url'] ); ?>" alt="<?php echo esc_attr( $home_client_logo['title'] ); ?>" class="floru-client-logo" style="<?php echo esc_attr( $home_client_logo['style'] ); ?>">
                     <?php endif; ?>
-                <?php endwhile; wp_reset_postdata(); ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

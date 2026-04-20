@@ -28,7 +28,7 @@ function floru_create_menus() {
             'home'     => 'Home',
             'about'    => 'About',
             'services' => 'Services',
-            'team'     => 'Team',
+            'our-team' => 'Team',
             'clients'  => 'Clients',
             'contact'  => 'Contact',
         );

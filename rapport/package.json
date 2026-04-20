@@ -1,0 +1,14 @@
+{
+  "name": "floru-rapport",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vergelijkingsrapport floru.nl oud vs. nieuw",
+  "scripts": {
+    "capture": "node capture.js",
+    "build": "node build-report.js",
+    "all": "node capture.js && node build-report.js"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0"
+  }
+}

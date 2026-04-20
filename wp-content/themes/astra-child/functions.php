@@ -86,10 +86,293 @@ function floru_get_template_slugs() {
     );
 }
 
+/**
+ * Canonical slug per Floru template.
+ *
+ * @return array<string, string>
+ */
+function floru_get_template_primary_slugs() {
+    return array(
+        'templates/template-home.php'     => 'home',
+        'templates/template-about.php'    => 'about',
+        'templates/template-services.php' => 'services',
+        'templates/template-team.php'     => 'our-team',
+        'templates/template-clients.php'  => 'clients',
+        'templates/template-contact.php'  => 'contact',
+    );
+}
+
+/**
+ * Default public headings per Floru template.
+ *
+ * @return array<string, string>
+ */
+function floru_get_template_heading_defaults() {
+    return array(
+        'templates/template-home.php'     => 'Strategic Guidance for Defence and Security Markets',
+        'templates/template-about.php'    => 'Our Modus Operandi',
+        'templates/template-services.php' => 'How We Support Your Success',
+        'templates/template-team.php'     => 'Meet the Team',
+        'templates/template-clients.php'  => 'Clients & References',
+        'templates/template-contact.php'  => 'Get in Touch',
+    );
+}
+
+/**
+ * Resolve the canonical WordPress page for a Floru template.
+ *
+ * @param string $template_file Template path relative to the child theme.
+ * @return WP_Post|null
+ */
+function floru_get_canonical_page_for_template( $template_file ) {
+    $primary_slugs = floru_get_template_primary_slugs();
+
+    if ( isset( $primary_slugs[ $template_file ] ) ) {
+        $page = get_page_by_path( $primary_slugs[ $template_file ] );
+        if ( $page ) {
+            return $page;
+        }
+    }
+
+    if ( 'templates/template-team.php' === $template_file ) {
+        $legacy_page = get_page_by_path( 'team' );
+        if ( $legacy_page ) {
+            return $legacy_page;
+        }
+    }
+
+    $pages = get_pages(
+        array(
+            'meta_key'   => '_wp_page_template',
+            'meta_value' => $template_file,
+            'number'     => 1,
+        )
+    );
+
+    return ! empty( $pages ) ? $pages[0] : null;
+}
+
+/**
+ * Default public contact values used when Contact page meta is incomplete.
+ *
+ * @return array<string, string>
+ */
+function floru_get_contact_defaults() {
+    return array(
+        'email'     => 'r.pruijss@floru.nl',
+        'phone'     => '+31 6 42 58 75 15',
+        'phone_raw' => '+31642587515',
+        'address'   => 'De klerkplan 10',
+        'city'      => '2728 EH Zoetermeer',
+    );
+}
+
+/**
+ * Resolve public contact details from the canonical Contact page.
+ *
+ * Falls back to the same defaults the public Contact template exposes so
+ * shared consumers such as the footer stay aligned even when specific meta
+ * fields have not been filled in yet.
+ *
+ * @param int $page_id Optional contact page ID.
+ * @return array<string, string>
+ */
+function floru_get_contact_details( $page_id = 0 ) {
+    $defaults = floru_get_contact_defaults();
+    $page_id  = (int) $page_id;
+
+    if ( ! $page_id ) {
+        $page    = floru_get_canonical_page_for_template( 'templates/template-contact.php' );
+        $page_id = $page ? (int) $page->ID : 0;
+    }
+
+    $details = array(
+        'email'     => $page_id ? floru_get_meta( $page_id, '_floru_contact_email', $defaults['email'] ) : $defaults['email'],
+        'phone'     => $page_id ? floru_get_meta( $page_id, '_floru_contact_phone', $defaults['phone'] ) : $defaults['phone'],
+        'phone_raw' => $page_id ? floru_get_meta( $page_id, '_floru_contact_phone_raw', $defaults['phone_raw'] ) : $defaults['phone_raw'],
+        'address'   => $page_id ? floru_get_meta( $page_id, '_floru_contact_address', $defaults['address'] ) : $defaults['address'],
+        'city'      => $page_id ? floru_get_meta( $page_id, '_floru_contact_city', $defaults['city'] ) : $defaults['city'],
+    );
+
+    if ( ! $details['phone_raw'] && $details['phone'] ) {
+        $details['phone_raw'] = preg_replace( '/[^0-9+]+/', '', $details['phone'] );
+    }
+
+    return $details;
+}
+
+/**
+ * Resolve the canonical Team page URL.
+ *
+ * Historically the team page existed under both 'team' and 'our-team' slugs.
+ * Floru now treats the canonical template page as the source of truth.
+ *
+ * @return string
+ */
+function floru_get_team_url() {
+    $page = floru_get_canonical_page_for_template( 'templates/template-team.php' );
+
+    return $page ? get_permalink( $page ) : home_url( '/our-team/' );
+}
+
+/**
+ * Normalize known Team URLs to the canonical Team page.
+ *
+ * @param string $url Source URL.
+ * @return string
+ */
+function floru_normalize_team_url( $url = '' ) {
+    $team_url = floru_get_team_url();
+    $team_path = trim( (string) wp_parse_url( $url, PHP_URL_PATH ), '/' );
+
+    if ( ! $url || in_array( $team_path, array( 'team', 'our-team', 'our-our-team' ), true ) ) {
+        return $team_url;
+    }
+
+    return $url;
+}
+
+/**
+ * Build a compact initials fallback for missing team/client imagery.
+ *
+ * @param string $text  Source label.
+ * @param int    $limit Maximum initials to return.
+ * @return string
+ */
+function floru_get_initials( $text, $limit = 2 ) {
+    $text  = trim( wp_strip_all_tags( (string) $text ) );
+    $words = preg_split( '/[\s\-]+/', $text, -1, PREG_SPLIT_NO_EMPTY );
+
+    if ( empty( $words ) ) {
+        return '';
+    }
+
+    $initials = '';
+    foreach ( $words as $word ) {
+        $initials .= function_exists( 'mb_substr' ) ? mb_strtoupper( mb_substr( $word, 0, 1 ) ) : strtoupper( substr( $word, 0, 1 ) );
+        if ( strlen( $initials ) >= $limit ) {
+            break;
+        }
+    }
+
+    if ( ! $initials ) {
+        $initials = function_exists( 'mb_substr' ) ? mb_strtoupper( mb_substr( $text, 0, $limit ) ) : strtoupper( substr( $text, 0, $limit ) );
+    }
+
+    return substr( $initials, 0, $limit );
+}
+
+/**
+ * Reorder team collections for the public Floru presentation.
+ *
+ * The admin menu order remains the source of truth for content management,
+ * while the public roster promotes Ruud first and Marina second.
+ *
+ * @param array    $items    Collection of team items.
+ * @param callable $resolver Callback returning an array with optional slug/name keys.
+ * @return array
+ */
+function floru_prioritize_team_collection( array $items, callable $resolver ) {
+    if ( count( $items ) < 2 ) {
+        return $items;
+    }
+
+    $priority_map = array(
+        'ruud-de-pruyssenaere-de-la-woestijne' => 0,
+        'marina-eppen-pruyssenaere' => 1,
+    );
+
+    $decorated = array();
+
+    foreach ( $items as $index => $item ) {
+        $resolved = (array) call_user_func( $resolver, $item );
+        $slug     = isset( $resolved['slug'] ) ? sanitize_title( wp_strip_all_tags( (string) $resolved['slug'] ) ) : '';
+        $name     = isset( $resolved['name'] ) ? sanitize_title( wp_strip_all_tags( (string) $resolved['name'] ) ) : '';
+        $priority = 1000 + (int) $index;
+
+        if ( $slug && isset( $priority_map[ $slug ] ) ) {
+            $priority = $priority_map[ $slug ];
+        } elseif ( $name && isset( $priority_map[ $name ] ) ) {
+            $priority = $priority_map[ $name ];
+        }
+
+        $decorated[] = array(
+            'priority' => $priority,
+            'index'    => (int) $index,
+            'item'     => $item,
+        );
+    }
+
+    usort(
+        $decorated,
+        static function( $left, $right ) {
+            if ( $left['priority'] === $right['priority'] ) {
+                return $left['index'] <=> $right['index'];
+            }
+
+            return $left['priority'] <=> $right['priority'];
+        }
+    );
+
+    return array_column( $decorated, 'item' );
+}
+
+/**
+ * Return the meaningful Floru page heading for document titles.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function floru_get_contextual_page_title( $post_id = 0 ) {
+    $post_id = $post_id ? (int) $post_id : get_queried_object_id();
+    if ( ! $post_id ) {
+        return '';
+    }
+
+    $template = get_page_template_slug( $post_id );
+    $defaults = floru_get_template_heading_defaults();
+
+    if ( 'templates/template-home.php' === $template ) {
+        $default_title = isset( $defaults[ $template ] ) ? $defaults[ $template ] : floru_get_translated_post_title_raw( $post_id );
+
+        return floru_get_meta( $post_id, '_floru_hero_heading', $default_title );
+    }
+
+    if ( in_array( $template, floru_get_template_slugs(), true ) ) {
+        $default_title = isset( $defaults[ $template ] ) ? $defaults[ $template ] : floru_get_translated_post_title_raw( $post_id );
+
+        return floru_get_meta( $post_id, '_floru_ph_heading', $default_title );
+    }
+
+    return floru_get_translated_post_title_raw( $post_id );
+}
+
+/**
+ * Downshift stored rich-text headings when a section's hierarchy requires it.
+ *
+ * @param string $html HTML fragment.
+ * @param string $from Source heading tag.
+ * @param string $to   Target heading tag.
+ * @return string
+ */
+function floru_normalize_heading_html( $html, $from = 'h4', $to = 'h3' ) {
+    if ( ! $html || $from === $to ) {
+        return $html;
+    }
+
+    $open_pattern  = sprintf( '#<%1$s(\\b[^>]*)>#i', preg_quote( $from, '#' ) );
+    $close_pattern = sprintf( '#</%1$s>#i', preg_quote( $from, '#' ) );
+
+    $html = preg_replace( $open_pattern, '<' . $to . '$1>', $html );
+
+    return preg_replace( $close_pattern, '</' . $to . '>', $html );
+}
+
 // Add custom body classes
 add_filter( 'body_class', 'floru_body_classes' );
 function floru_body_classes( $classes ) {
     $classes[] = 'floru-site';
+    $classes[] = 'floru-lang-' . floru_get_current_language();
 
     // Tell Astra to use page-builder mode (full-width, no flex sidebar layout)
     // so our template sections stack vertically instead of as flex items.
@@ -132,6 +415,13 @@ function floru_register_menus() {
         'floru-primary'  => __( 'Floru Primary Menu', 'astra-child-floru' ),
         'floru-footer'   => __( 'Floru Footer Menu', 'astra-child-floru' ),
     ) );
+}
+
+// Register custom image sizes (consistent portrait crop for team cards)
+add_action( 'after_setup_theme', 'floru_register_image_sizes' );
+function floru_register_image_sizes() {
+    // 4:5 portrait, top-cropped so faces sit nicely in frame.
+    add_image_size( 'floru-team-portrait', 720, 900, array( 'center', 'top' ) );
 }
 
 // Ensure we use GD for image editing on local Windows sites to avoid file lock issues preventing deletion.
@@ -180,7 +470,11 @@ function floru_icon( $name ) {
         'trending-up'  => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
     );
 
-    return isset( $icons[ $name ] ) ? $icons[ $name ] : '';
+    if ( ! isset( $icons[ $name ] ) ) {
+        return '';
+    }
+
+    return preg_replace( '/^<svg\\b/', '<svg aria-hidden="true" focusable="false"', $icons[ $name ], 1 );
 }
 
 /**
@@ -204,6 +498,9 @@ function floru_disable_featured_image( $enabled ) {
     }
     return $enabled;
 }
+
+// Include frontend language handling
+require_once get_stylesheet_directory() . '/inc/language.php';
 
 // Include customizer defaults
 require_once get_stylesheet_directory() . '/inc/customizer-defaults.php';
@@ -246,7 +543,7 @@ function floru_structured_data() {
         '@context'    => 'https://schema.org',
         '@type'       => 'Organization',
         'name'        => 'Floru Consultancy',
-        'description' => 'Strategic consultancy in defence and security. We help international companies navigate government markets, build relationships, and win tenders.',
+        'description' => floru_t( 'Strategic consultancy in defence and security. We help international companies navigate complex government markets, build relationships, and win tenders.' ),
         'url'         => home_url( '/' ),
         'email'       => 'info@floru.nl',
         'telephone'   => '+31642587515',
@@ -271,7 +568,7 @@ function floru_structured_data() {
 add_action( 'wp_head', 'floru_og_meta_tags', 5 );
 function floru_og_meta_tags() {
     $title       = wp_get_document_title();
-    $description = 'Strategic consultancy in defence and security. Floru helps international companies navigate government markets, build stakeholder relationships, and win tenders in the Netherlands and Europe.';
+    $description = floru_t( 'Strategic consultancy in defence and security. Floru helps international companies navigate government markets, build stakeholder relationships, and win tenders in the Netherlands and Europe.' );
     $url         = is_front_page() ? home_url( '/' ) : get_permalink();
     $image       = '';
 
@@ -296,7 +593,7 @@ function floru_og_meta_tags() {
  */
 add_action( 'astra_body_top', 'floru_skip_to_content' );
 function floru_skip_to_content() {
-    echo '<a class="floru-skip-link" href="#content">Skip to content</a>';
+    echo '<a class="floru-skip-link" href="#content">' . esc_html( floru_t( 'Skip to content' ) ) . '</a>';
 }
 
 /**
@@ -313,31 +610,31 @@ function floru_hide_astra_skip_link() {
 }
 
 /**
- * Force English for Astra UI strings that get translated to Dutch.
+ * Normalize a few Astra UI strings through Floru's frontend language layer.
  */
 add_filter( 'gettext', 'floru_force_english_astra_strings', 20, 3 );
 function floru_force_english_astra_strings( $translation, $text, $domain ) {
     if ( 'astra' !== $domain ) {
         return $translation;
     }
-    if ( 'Scroll to Top' === $text ) {
-        return 'Scroll to Top';
-    }
-    if ( 'Main menu toggle' === $text ) {
-        return 'Main menu toggle';
-    }
-    if ( 'Menu Toggle' === $text ) {
-        return 'Menu Toggle';
+    if ( in_array( $text, array( 'Scroll to Top', 'Main menu toggle', 'Menu Toggle' ), true ) ) {
+        return floru_t( $text );
     }
     return $translation;
 }
 
 /**
- * Override the HTML lang attribute from nl-NL to en (site content is English).
+ * Expose the selected frontend language in the HTML lang attribute.
  */
 add_filter( 'language_attributes', 'floru_force_english_lang_attribute', 20 );
 function floru_force_english_lang_attribute( $output ) {
-    return str_replace( 'lang="nl-NL"', 'lang="en"', $output );
+    $locale = floru_get_current_locale();
+    $lang   = floru_get_current_language();
+
+    $output = preg_replace( '/lang="[^"]+"/i', 'lang="' . esc_attr( $locale ) . '"', $output, 1 );
+    $output = preg_replace( '/xml:lang="[^"]+"/i', 'xml:lang="' . esc_attr( $lang ) . '"', $output, 1 );
+
+    return $output;
 }
 
 /**
@@ -346,6 +643,13 @@ function floru_force_english_lang_attribute( $output ) {
  */
 add_filter( 'wp_nav_menu_objects', 'floru_remove_contact_from_menu', 10, 2 );
 function floru_remove_contact_from_menu( $items, $args ) {
+    $is_primary_menu = ! empty( $args->theme_location ) && in_array( $args->theme_location, array( 'primary', 'floru-primary' ), true );
+    $is_mobile_menu  = ! empty( $args->menu_id ) && strpos( $args->menu_id, '-mobile' ) !== false;
+
+    if ( ! $is_primary_menu && ! $is_mobile_menu ) {
+        return $items;
+    }
+
     $contact_page = get_page_by_path( 'contact' );
     if ( ! $contact_page ) {
         return $items;
@@ -359,6 +663,65 @@ function floru_remove_contact_from_menu( $items, $args ) {
 }
 
 /**
+ * Normalize Team menu links to the canonical Team page and keep the active
+ * state coherent even while legacy routes are still present in the database.
+ */
+add_filter( 'wp_nav_menu_objects', 'floru_normalize_team_menu_urls', 20, 2 );
+function floru_normalize_team_menu_urls( $items, $args ) {
+    $team_page = floru_get_canonical_page_for_template( 'templates/template-team.php' );
+    if ( ! $team_page ) {
+        return $items;
+    }
+
+    $team_url        = get_permalink( $team_page );
+    $is_team_context = is_page_template( 'templates/template-team.php' ) || is_page( $team_page->ID ) || is_page( 'team' ) || is_page( 'our-team' );
+
+    foreach ( $items as $item ) {
+        $item_template = '';
+        if ( 'page' === $item->object && ! empty( $item->object_id ) ) {
+            $item_template = get_post_meta( (int) $item->object_id, '_wp_page_template', true );
+        }
+
+        $item_path = trim( (string) wp_parse_url( $item->url, PHP_URL_PATH ), '/' );
+        if ( 'templates/template-team.php' === $item_template || in_array( $item_path, array( 'team', 'our-team', 'our-our-team' ), true ) ) {
+            $item->url = $team_url;
+
+            if ( $is_team_context ) {
+                $item->classes = array_values(
+                    array_unique(
+                        array_merge(
+                            (array) $item->classes,
+                            array( 'current-menu-item', 'current_page_item' )
+                        )
+                    )
+                );
+            }
+        }
+    }
+
+    return $items;
+}
+
+/**
+ * Redirect the legacy /team/ page to the canonical Team URL.
+ */
+add_action( 'template_redirect', 'floru_redirect_legacy_team_route' );
+function floru_redirect_legacy_team_route() {
+    if ( is_admin() || is_preview() || wp_doing_ajax() || ! is_page( 'team' ) ) {
+        return;
+    }
+
+    $team_url       = floru_get_team_url();
+    $canonical_path = trim( (string) wp_parse_url( $team_url, PHP_URL_PATH ), '/' );
+    if ( 'team' === $canonical_path ) {
+        return;
+    }
+
+    wp_safe_redirect( $team_url, 301 );
+    exit;
+}
+
+/**
  * Append a styled CONTACT link at the bottom of the mobile nav menu.
  * The desktop header uses a separate Astra button component, but that
  * component is not present in the mobile header builder, so we add it here.
@@ -369,7 +732,7 @@ function floru_add_contact_to_mobile_menu( $items, $args ) {
         $contact_url = home_url( '/contact/' );
         $active      = is_page( 'contact' ) ? ' current-menu-item' : '';
         $items      .= '<li class="menu-item floru-mobile-contact-item' . $active . '">'
-                     . '<a href="' . esc_url( $contact_url ) . '" class="menu-link floru-mobile-contact-link">Contact</a>'
+                     . '<a href="' . esc_url( $contact_url ) . '" class="menu-link floru-mobile-contact-link">' . esc_html( floru_t( 'Contact' ) ) . '</a>'
                      . '</li>';
     }
     return $items;
@@ -389,6 +752,37 @@ function floru_disable_astra_google_fonts( $fonts ) {
     }
 
     return array();
+}
+
+/**
+ * Ensure frontend document titles stay meaningful even when editor-facing page
+ * titles diverge from the public Floru headings.
+ */
+add_filter( 'pre_get_document_title', 'floru_document_title' );
+function floru_document_title( $title ) {
+    if ( is_admin() ) {
+        return $title;
+    }
+
+    $site_name = get_bloginfo( 'name' );
+    if ( ! $site_name ) {
+        $site_name = 'Floru Consultancy';
+    }
+
+    if ( is_front_page() || is_page_template( floru_get_template_slugs() ) ) {
+        $page_title = floru_get_contextual_page_title();
+        return $page_title ? $page_title . ' | ' . $site_name : $site_name;
+    }
+
+    if ( is_singular( 'floru_client' ) ) {
+        return floru_get_translated_post_title_raw( get_the_ID() ) . ' | ' . floru_t( 'Clients' ) . ' | ' . $site_name;
+    }
+
+    if ( is_404() ) {
+        return floru_t( 'Page Not Found' ) . ' | ' . $site_name;
+    }
+
+    return $title;
 }
 
 /**

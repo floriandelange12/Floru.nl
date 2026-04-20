@@ -262,7 +262,7 @@ function floru_migrate_content() {
             '_floru_hteam_heading'     => 'Senior Professionals, Personal Approach',
             '_floru_hteam_description' => 'Our consultants bring decades of experience in defence, government, international business, and procurement.',
             '_floru_hteam_btn_text'    => 'Meet the Full Team',
-            '_floru_hteam_btn_url'     => home_url( '/team/' ),
+            '_floru_hteam_btn_url'     => home_url( '/our-team/' ),
             // Clients band
             '_floru_hclients_label' => 'Trusted by international defence companies including',
             // CTA
@@ -409,7 +409,10 @@ function floru_migrate_content() {
     /* ======================================================================
        TEAM PAGE
        ====================================================================== */
-    $team_page = get_page_by_path( 'team' );
+    $team_page = get_page_by_path( 'our-team' );
+    if ( ! $team_page ) {
+        $team_page = get_page_by_path( 'team' );
+    }
     if ( $team_page ) {
         $t = $team_page->ID;
 

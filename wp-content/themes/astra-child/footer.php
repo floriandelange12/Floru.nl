@@ -34,12 +34,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <!-- Cookie Consent Banner -->
-<div class="floru-cookie-consent" id="floraCookieConsent" role="dialog" aria-label="Cookie consent" style="display:none;">
+<div class="floru-cookie-consent" id="floraCookieConsent" role="dialog" aria-label="<?php echo esc_attr( floru_t( 'Cookie consent' ) ); ?>" style="display:none;">
     <div class="floru-cookie-consent__inner">
-        <p>We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+        <p><?php echo esc_html( floru_t( 'We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies.' ) ); ?></p>
         <div class="floru-cookie-consent__actions">
-            <button type="button" class="floru-btn floru-btn--primary floru-btn--sm" id="floraCookieAccept">Accept</button>
-            <button type="button" class="floru-btn floru-btn--outline floru-btn--sm" id="floraCookieDecline">Decline</button>
+            <button type="button" class="floru-btn floru-btn--primary floru-btn--sm" id="floraCookieAccept"><?php echo esc_html( floru_t( 'Accept' ) ); ?></button>
+            <button type="button" class="floru-btn floru-btn--outline floru-btn--sm" id="floraCookieDecline"><?php echo esc_html( floru_t( 'Decline' ) ); ?></button>
         </div>
     </div>
 </div>

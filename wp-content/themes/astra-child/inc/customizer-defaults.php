@@ -62,8 +62,8 @@ function floru_set_customizer_defaults() {
     // Disable title on pages (we handle it in templates)
     $astra_settings['ast-dynamic-single-page-title'] = false;
 
-    // Header Button 1 — "CONTACT" button in top-right
-    $astra_settings['header-button1-text']            = 'CONTACT';  // Nederlands menu-knop
+    // Header Button 1 — contact button in top-right
+    $astra_settings['header-button1-text']            = 'Contact';
     $astra_settings['header-button1-link-option']     = array(
         'url'      => '/contact/',
         'new_tab'  => false,
@@ -127,7 +127,7 @@ function floru_ensure_header_settings() {
         : '';
 
     if ( $current_link !== '/contact/' ) {
-        $astra_settings['header-button1-text']        = 'CONTACT';
+        $astra_settings['header-button1-text']        = 'Contact';
         $astra_settings['header-button1-link-option'] = array(
             'url'      => '/contact/',
             'new_tab'  => false,
@@ -168,6 +168,8 @@ function floru_filter_astra_settings( $settings ) {
     if ( ! is_array( $settings ) ) {
         return $settings;
     }
+
+    $settings['header-button1-text'] = 'Contact';
 
     $mobile_left = isset( $settings['header-mobile-items']['primary']['primary_left'] )
         ? $settings['header-mobile-items']['primary']['primary_left']

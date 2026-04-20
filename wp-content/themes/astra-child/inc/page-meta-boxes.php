@@ -16,7 +16,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function floru_get_meta( $post_id, $key, $default = '' ) {
     $value = get_post_meta( $post_id, $key, true );
-    return ( $value !== '' && $value !== false ) ? $value : $default;
+    $value = ( $value !== '' && $value !== false ) ? $value : $default;
+
+    if ( function_exists( 'floru_get_current_language' ) && 'en' !== floru_get_current_language() ) {
+        $translated_value = get_post_meta( $post_id, $key . '_' . floru_get_current_language(), true );
+        if ( $translated_value !== '' && $translated_value !== false ) {
+            return $translated_value;
+        }
+
+        if ( function_exists( 'floru_get_post_translation_override' ) ) {
+            $hardcoded_override = floru_get_post_translation_override( $post_id, $key );
+            if ( '' !== $hardcoded_override ) {
+                return $hardcoded_override;
+            }
+        }
+    }
+
+    return function_exists( 'floru_translate_text' ) && is_string( $value ) ? floru_translate_text( $value ) : $value;
 }
 
 /* ==========================================================================

@@ -1,0 +1,231 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#content"
+  - link [ref=e3] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e9]:
+        - generic [ref=e12]:
+          - link [ref=e14] [cursor=pointer]:
+            - /url: http://florunl.local/
+          - generic:
+            - generic:
+              - link:
+                - /url: http://florunl.local/
+        - button "Main menu toggle" [ref=e18] [cursor=pointer]:
+          - img [ref=e21]
+    - generic [ref=e24]:
+      - generic [ref=e27]:
+        - generic [ref=e28]: Defence & Security Consultancy
+        - heading "Strategic Guidance for Defence and Security Markets" [level=1] [ref=e29]
+        - paragraph [ref=e30]: We help international defence and security companies navigate government markets, build decisive stakeholder relationships, and win critical tenders across the Netherlands and Europe.
+        - generic [ref=e31]:
+          - link "Our Approach" [ref=e32] [cursor=pointer]:
+            - /url: /about/
+          - link "Get in Touch" [ref=e33] [cursor=pointer]:
+            - /url: /contact/
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]: Who We Are
+          - heading "A Trusted Partner in Defence Business Development" [level=2] [ref=e39]
+          - paragraph [ref=e40]: Floru is a specialised consultancy supporting international defence, security, and high-technology companies entering or expanding in the Dutch and European markets.
+          - paragraph [ref=e41]: With decades of experience at the intersection of government, industry, and procurement, we provide the strategic insight and practical support our clients need to succeed.
+          - link "Learn More About Us" [ref=e42] [cursor=pointer]:
+            - /url: /about/
+        - generic [ref=e43]:
+          - figure [ref=e44]:
+            - img "European institutional alignment" [ref=e46]
+          - complementary [ref=e47]:
+            - generic [ref=e48]: Where Floru adds value
+            - heading "Strategic support shaped for institutional buying cycles." [level=3] [ref=e49]
+            - list "Core support themes" [ref=e50]:
+              - listitem [ref=e51]: Market-entry direction
+              - listitem [ref=e52]: Stakeholder positioning
+              - listitem [ref=e53]: Tender discipline
+            - paragraph [ref=e54]: Small senior team. Direct involvement where decision quality matters most.
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]: 20+
+          - generic [ref=e60]: Years of Experience
+        - generic [ref=e61]:
+          - generic [ref=e62]: 50+
+          - generic [ref=e63]: Completed Projects
+        - generic [ref=e64]:
+          - generic [ref=e65]: 15+
+          - generic [ref=e66]: International Clients
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]: What We Do
+          - heading "Three Pillars of Support" [level=2] [ref=e71]
+          - paragraph [ref=e72]: Strategic advisory, relationship management, and hands-on tender expertise — combined to give our clients a decisive edge.
+        - generic [ref=e73]:
+          - link "01 Business Development Market opportunity identification, procurement pipeline mapping, and go-to-market strategies tailored to the European defence landscape. Learn more" [ref=e74] [cursor=pointer]:
+            - /url: /services/
+            - generic [ref=e75]: "01"
+            - img [ref=e77]
+            - heading "Business Development" [level=3] [ref=e80]
+            - paragraph [ref=e81]: Market opportunity identification, procurement pipeline mapping, and go-to-market strategies tailored to the European defence landscape.
+            - generic [ref=e82]: Learn more →
+          - link "02 Stakeholder Engagement Connecting our clients with the right decision-makers across government, military, and industry — with the right message at the right time. Learn more" [ref=e83] [cursor=pointer]:
+            - /url: /services/
+            - generic [ref=e84]: "02"
+            - img [ref=e86]
+            - heading "Stakeholder Engagement" [level=3] [ref=e91]
+            - paragraph [ref=e92]: Connecting our clients with the right decision-makers across government, military, and industry — with the right message at the right time.
+            - generic [ref=e93]: Learn more →
+          - link "03 Tender Support End-to-end tender lifecycle guidance — from positioning and pre-qualification through to proposal development and contract award. Learn more" [ref=e94] [cursor=pointer]:
+            - /url: /services/
+            - generic [ref=e95]: "03"
+            - img [ref=e97]
+            - heading "Tender Support" [level=3] [ref=e100]
+            - paragraph [ref=e101]: End-to-end tender lifecycle guidance — from positioning and pre-qualification through to proposal development and contract award.
+            - generic [ref=e102]: Learn more →
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - generic [ref=e107]: Why Floru
+          - heading "Built on Experience, Driven by Results" [level=2] [ref=e108]:
+            - text: Built on Experience,
+            - text: Driven by Results
+          - paragraph [ref=e109]: We are not a large agency. We are a focused team of senior professionals with deep domain expertise and a strong track record in defence and security.
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - img [ref=e113]
+            - generic [ref=e115]:
+              - heading "Defence Domain Expertise" [level=3] [ref=e116]
+              - paragraph [ref=e117]: Hands-on knowledge of defence procurement, government structures, and the political context of European security markets.
+          - generic [ref=e118]:
+            - img [ref=e120]
+            - generic [ref=e123]:
+              - heading "International Reach" [level=3] [ref=e124]
+              - paragraph [ref=e125]: Bridging international manufacturers and European end-users, understanding both sides of the conversation.
+          - generic [ref=e126]:
+            - img [ref=e128]
+            - generic [ref=e132]:
+              - heading "Strategic Focus" [level=3] [ref=e133]
+              - paragraph [ref=e134]: Every engagement starts with a clear objective. We invest time where it matters most and avoid unnecessary complexity.
+          - generic [ref=e135]:
+            - img [ref=e137]
+            - generic [ref=e140]:
+              - heading "Proven Track Record" [level=3] [ref=e141]
+              - paragraph [ref=e142]: Award-winning tenders and successful market entries for defence companies in the Netherlands and beyond.
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - generic [ref=e146]: Our Team
+          - heading "Senior Professionals, Personal Approach" [level=2] [ref=e147]
+          - paragraph [ref=e148]: Our consultants bring decades of experience in defence, government, international business, and procurement.
+        - generic [ref=e149]:
+          - article [ref=e150]:
+            - figure [ref=e151]:
+              - img "Portrait of Ruud de Pruyssenaere de la Woestijne" [ref=e152]
+            - generic [ref=e153]:
+              - generic [ref=e154]:
+                - generic [ref=e155]: Director FLORU Consultancy
+                - heading "Ruud de Pruyssenaere de la Woestijne" [level=3] [ref=e156]
+              - link "View Ruud de Pruyssenaere de la Woestijne profile" [ref=e158] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/drs-ruud-de-pruyssenaere-de-la-woestijne-bb204833/
+                - generic [ref=e159]: LinkedIn profile
+                - generic [ref=e160]: →
+          - article [ref=e161]:
+            - figure [ref=e162]:
+              - img "Portrait of Marina Eppen-Pruyssenaere" [ref=e163]
+            - generic [ref=e164]:
+              - generic [ref=e165]:
+                - generic [ref=e166]: Technical Support
+                - heading "Marina Eppen-Pruyssenaere" [level=3] [ref=e167]
+              - link "View Marina Eppen-Pruyssenaere profile" [ref=e169] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/marina-eppen-35870b57/
+                - generic [ref=e170]: LinkedIn profile
+                - generic [ref=e171]: →
+          - article [ref=e172]:
+            - figure [ref=e173]:
+              - img "Portrait of Jaap Willemse" [ref=e174]
+            - generic [ref=e175]:
+              - generic [ref=e176]:
+                - generic [ref=e177]: Air Force, Major General ret.
+                - heading "Jaap Willemse" [level=3] [ref=e178]
+              - link "View Jaap Willemse profile" [ref=e180] [cursor=pointer]:
+                - /url: https://nl.linkedin.com/in/jaapwillemse
+                - generic [ref=e181]: LinkedIn profile
+                - generic [ref=e182]: →
+        - link "Meet the Full Team" [ref=e184] [cursor=pointer]:
+          - /url: http://florunl.local/our-team/
+      - generic [ref=e187]:
+        - generic [ref=e188]:
+          - heading "Ready to Discuss Your Next Opportunity?" [level=2] [ref=e189]
+          - paragraph [ref=e190]: Whether you are exploring market entry, preparing for a tender, or seeking strategic support — we welcome the conversation.
+        - link "Contact Us" [ref=e192] [cursor=pointer]:
+          - /url: /contact/
+    - contentinfo [ref=e193]:
+      - generic [ref=e194]:
+        - generic [ref=e195]:
+          - generic [ref=e196]:
+            - paragraph [ref=e197]: Strategic consultancy in defence and security. We help international companies navigate complex government markets, build relationships, and win tenders.
+            - generic [ref=e198]:
+              - generic [ref=e199]: Trusted conversations
+              - paragraph [ref=e200]: Senior strategic guidance for discreet defence and security engagements, from market entry to stakeholder positioning.
+          - generic [ref=e201]:
+            - heading "Company" [level=4] [ref=e202]
+            - list [ref=e203]:
+              - listitem [ref=e204]:
+                - link "About Us" [ref=e205] [cursor=pointer]:
+                  - /url: http://florunl.local/about/
+              - listitem [ref=e206]:
+                - link "Services" [ref=e207] [cursor=pointer]:
+                  - /url: http://florunl.local/services/
+              - listitem [ref=e208]:
+                - link "Team" [ref=e209] [cursor=pointer]:
+                  - /url: http://florunl.local/our-team/
+              - listitem [ref=e210]:
+                - link "Clients" [ref=e211] [cursor=pointer]:
+                  - /url: http://florunl.local/clients/
+          - generic [ref=e212]:
+            - heading "Services" [level=4] [ref=e213]
+            - list [ref=e214]:
+              - listitem [ref=e215]:
+                - link "Business Development" [ref=e216] [cursor=pointer]:
+                  - /url: http://florunl.local/services/
+              - listitem [ref=e217]:
+                - link "Stakeholder Engagement" [ref=e218] [cursor=pointer]:
+                  - /url: http://florunl.local/services/
+              - listitem [ref=e219]:
+                - link "Tender Support" [ref=e220] [cursor=pointer]:
+                  - /url: http://florunl.local/services/
+          - generic [ref=e221]:
+            - heading "Contact" [level=4] [ref=e222]
+            - list [ref=e223]:
+              - listitem [ref=e224]:
+                - img [ref=e226]
+                - generic [ref=e229]:
+                  - generic [ref=e230]: Email
+                  - link "r.pruijss@floru.nl" [ref=e231] [cursor=pointer]:
+                    - /url: mailto:r.pruijss@floru.nl
+              - listitem [ref=e232]:
+                - img [ref=e234]
+                - generic [ref=e236]:
+                  - generic [ref=e237]: Phone
+                  - link "+ 31 6 42 58 75 15" [ref=e238] [cursor=pointer]:
+                    - /url: tel:+31642587515
+              - listitem [ref=e239]:
+                - img [ref=e241]
+                - generic [ref=e244]:
+                  - generic [ref=e245]: Office
+                  - link "De klerkplan 10, 2728 EH Zoetermeer" [ref=e246] [cursor=pointer]:
+                    - /url: http://florunl.local/contact/
+            - paragraph [ref=e247]: Response within one business day. Dutch and international engagements handled discreetly.
+            - link "Start a conversation" [ref=e248] [cursor=pointer]:
+              - /url: http://florunl.local/contact/
+        - generic [ref=e249]:
+          - generic [ref=e250]:
+            - generic [ref=e251]: © 2026 Floru Consultancy. All rights reserved.
+            - generic [ref=e252]: Defence & Security Consultancy
+          - generic "Language" [ref=e253]:
+            - generic [ref=e254]: Language
+            - generic [ref=e255]:
+              - link "English" [ref=e256] [cursor=pointer]:
+                - /url: http://florunl.local/?lang=en
+              - link "Nederlands" [ref=e257] [cursor=pointer]:
+                - /url: http://florunl.local/?lang=nl
+  - generic [ref=e258] [cursor=pointer]:
+    - img [ref=e260]
+    - generic [ref=e262]: Scroll to Top

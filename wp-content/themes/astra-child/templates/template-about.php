@@ -11,10 +11,29 @@ $pid = get_the_ID();
 $m = function( $key, $default = '' ) use ( $pid ) {
     return floru_get_meta( $pid, $key, $default );
 };
+
+$about_story_image = has_post_thumbnail( $pid )
+    ? get_the_post_thumbnail_url( $pid, 'large' )
+    : '';
+$about_has_media = (bool) $about_story_image;
+$about_story_visual = $about_has_media
+    ? $about_story_image
+    : get_stylesheet_directory_uri() . '/assets/images/floru-boardroom.jpg';
+$about_story_alt = $about_has_media
+    ? $m( '_floru_about_intro_heading', 'Floru consultancy approach' )
+    : __( 'Executive boardroom meeting', 'astra-child-floru' );
+
+$about_story_foundations = array(
+    floru_t( 'Senior defence network' ),
+    floru_t( 'Government literacy' ),
+    floru_t( 'Commercial judgment' ),
+);
+$about_story_support_title = __( 'Built for high-trust market work.', 'astra-child-floru' );
+$about_story_note = __( 'Senior advisory, Dutch institutional fluency, and commercial judgment for long-cycle defence engagements.', 'astra-child-floru' );
 ?>
 
 <!-- ========== PAGE HEADER ========== -->
-<section class="floru-page-header" data-animate="fade-in">
+<section class="floru-page-header floru-page-header--about" data-animate="fade-in">
     <div class="floru-container">
         <span class="floru-section-label"><?php echo esc_html( $m( '_floru_ph_label', 'About Floru' ) ); ?></span>
         <h1><?php echo esc_html( $m( '_floru_ph_heading', 'Our Modus Operandi' ) ); ?></h1>
@@ -23,37 +42,51 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== ABOUT INTRO ========== -->
-<section class="floru-section" data-animate>
+<section class="floru-section floru-section--story" data-animate>
     <div class="floru-container">
-        <div class="floru-about-grid">
-            <div>
-                <span class="floru-section-label"><?php echo esc_html( $m( '_floru_about_intro_label', 'Our Story' ) ); ?></span>
-                <h2><?php echo esc_html( $m( '_floru_about_intro_heading', 'Founded on Experience, Focused on Outcomes' ) ); ?></h2>
-                <?php
-                $content = get_the_content();
-                if ( $content && trim( strip_tags( $content ) ) ) :
-                    echo wp_kses_post( apply_filters( 'the_content', $content ) );
-                else : ?>
-                    <p>Floru was founded to address a clear need in the European defence market: international companies entering or expanding in the Netherlands and broader European markets need a trusted local partner who understands both the business environment and the government landscape.</p>
-                    <p>Our team brings together decades of experience at the intersection of defence, government affairs, and international business development. We have held senior positions within government, defence organisations, and industry — giving us a unique perspective that benefits our clients.</p>
-                    <p>We work closely with our clients as an extension of their team. We do not believe in generic, arms-length advisory. Our approach is hands-on, results-oriented, and built on trust.</p>
-                <?php endif; ?>
-            </div>
-            <div>
-                <div class="floru-intro__image-wrapper">
-                    <?php if ( has_post_thumbnail( $pid ) ) : ?>
-                        <?php echo get_the_post_thumbnail( $pid, 'large', array( 'class' => 'floru-img-block', 'loading' => 'lazy' ) ); ?>
-                    <?php else : ?>
-                        <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/illustration-experience.svg" alt="<?php echo esc_attr( $m( '_floru_about_intro_heading', 'Floru consultancy approach' ) ); ?>" loading="lazy" class="floru-img-block">
+        <div class="floru-about-editorial floru-story-grid">
+            <div class="floru-story-block">
+                <div class="floru-story-block__body">
+                    <span class="floru-section-label"><?php echo esc_html( $m( '_floru_about_intro_label', 'Our Story' ) ); ?></span>
+                    <h2><?php echo esc_html( $m( '_floru_about_intro_heading', 'Founded on Experience, Focused on Outcomes' ) ); ?></h2>
+                    <?php
+                    $content = floru_get_translated_post_content_raw( $pid );
+                    if ( $content && trim( strip_tags( $content ) ) ) :
+                        echo wp_kses_post( apply_filters( 'the_content', $content ) );
+                    else : ?>
+                        <p><?php echo esc_html( floru_t( 'Floru was founded to address a clear need in the European defence market: international companies entering or expanding in the Netherlands and broader European markets need a trusted local partner who understands both the business environment and the government landscape.' ) ); ?></p>
+                        <p><?php echo esc_html( floru_t( 'Our team brings together decades of experience at the intersection of defence, government affairs, and international business development. We have held senior positions within government, defence organisations, and industry — giving us a unique perspective that benefits our clients.' ) ); ?></p>
+                        <p><?php echo esc_html( floru_t( 'We work closely with our clients as an extension of their team. We do not believe in generic, arms-length advisory. Our approach is hands-on, results-oriented, and built on trust.' ) ); ?></p>
                     <?php endif; ?>
                 </div>
             </div>
+            <aside class="floru-story-support">
+                <figure class="floru-context-frame floru-context-frame--about<?php echo $about_has_media ? '' : ' floru-context-frame--photo'; ?>">
+                    <div class="floru-context-frame__media">
+                        <img src="<?php echo esc_url( $about_story_visual ); ?>" alt="<?php echo esc_attr( $about_story_alt ); ?>" loading="lazy" class="floru-img-block">
+                    </div>
+                </figure>
+
+                <div class="floru-context-panel floru-context-panel--about">
+                    <span class="floru-context-panel__eyebrow"><?php esc_html_e( 'Foundational strengths', 'astra-child-floru' ); ?></span>
+                    <h3 class="floru-context-panel__title"><?php echo esc_html( $about_story_support_title ); ?></h3>
+                    <ul class="floru-context-panel__list" aria-label="<?php echo esc_attr__( 'Foundational strengths', 'astra-child-floru' ); ?>">
+                        <?php foreach ( $about_story_foundations as $about_story_foundation ) : ?>
+                            <li><?php echo esc_html( $about_story_foundation ); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <p class="floru-context-panel__note">
+                        <span class="floru-context-panel__note-label"><?php esc_html_e( 'Working style', 'astra-child-floru' ); ?></span>
+                        <?php echo esc_html( $about_story_note ); ?>
+                    </p>
+                </div>
+            </aside>
         </div>
     </div>
 </section>
 
 <!-- ========== APPROACH STEPS ========== -->
-<section class="floru-section floru-section--gray" data-animate>
+<section class="floru-section floru-section--gray floru-section--approach" data-animate>
     <div class="floru-container floru-container--narrow">
         <div class="floru-section-header">
             <span class="floru-section-label"><?php echo esc_html( $m( '_floru_approach_label', 'How We Work' ) ); ?></span>
@@ -75,7 +108,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                 $desc  = $m( '_floru_step' . $i . '_desc', $step_defaults[ $i ][1] );
                 if ( $title ) : ?>
             <li>
-                <h4><?php echo esc_html( $title ); ?></h4>
+                <h3><?php echo esc_html( $title ); ?></h3>
                 <p><?php echo esc_html( $desc ); ?></p>
             </li>
             <?php endif; endfor; ?>
@@ -84,7 +117,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 </section>
 
 <!-- ========== VALUES ========== -->
-<section class="floru-section" data-animate>
+<section class="floru-section floru-section--values" data-animate>
     <div class="floru-container">
         <div class="floru-section-header">
             <span class="floru-section-label"><?php echo esc_html( $m( '_floru_values_label', 'What Guides Us' ) ); ?></span>
@@ -109,7 +142,7 @@ $m = function( $key, $default = '' ) use ( $pid ) {
                     <?php echo floru_icon( $icon ); ?>
                 </div>
                 <div class="floru-trust-item__text">
-                    <h4><?php echo esc_html( $title ); ?></h4>
+                    <h3><?php echo esc_html( $title ); ?></h3>
                     <p><?php echo esc_html( $desc ); ?></p>
                 </div>
             </div>
@@ -121,15 +154,19 @@ $m = function( $key, $default = '' ) use ( $pid ) {
 <!-- ========== CTA ========== -->
 <section class="floru-section floru-section--navy floru-cta" data-animate="fade-in">
     <div class="floru-container">
-        <h2><?php echo esc_html( $m( '_floru_pcta_heading', 'Interested in Working Together?' ) ); ?></h2>
-        <p><?php echo esc_html( $m( '_floru_pcta_description', 'We welcome the opportunity to discuss how we can support your objectives in the European defence market.' ) ); ?></p>
-        <div class="floru-cta__actions">
-            <?php
-            $cta_text = $m( '_floru_pcta_btn_text', 'Contact Us' );
-            $cta_url  = $m( '_floru_pcta_btn_url', home_url( '/contact/' ) );
-            if ( $cta_text ) : ?>
-                <a href="<?php echo esc_url( $cta_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $cta_text ); ?></a>
-            <?php endif; ?>
+        <div class="floru-cta__inner">
+            <div class="floru-cta__text">
+                <h2><?php echo esc_html( $m( '_floru_pcta_heading', 'Interested in Working Together?' ) ); ?></h2>
+                <p><?php echo esc_html( $m( '_floru_pcta_description', 'We welcome the opportunity to discuss how we can support your objectives in the European defence market.' ) ); ?></p>
+            </div>
+            <div class="floru-cta__actions">
+                <?php
+                $cta_text = $m( '_floru_pcta_btn_text', 'Contact Us' );
+                $cta_url  = $m( '_floru_pcta_btn_url', home_url( '/contact/' ) );
+                if ( $cta_text ) : ?>
+                    <a href="<?php echo esc_url( $cta_url ); ?>" class="floru-btn floru-btn--primary floru-btn--lg"><?php echo esc_html( $cta_text ); ?></a>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </section>

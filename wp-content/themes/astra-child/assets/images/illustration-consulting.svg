@@ -1,45 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
-  <!-- Background -->
-  <rect width="800" height="600" fill="#F0F2F5"/>
-  <!-- Subtle grid pattern -->
-  <defs>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E2E6EC" stroke-width="0.5"/>
-    </pattern>
-  </defs>
-  <rect width="800" height="600" fill="url(#grid)" opacity="0.5"/>
-  <!-- Conference table scene -->
-  <rect x="180" y="320" width="440" height="12" rx="6" fill="#1B2A4A" opacity="0.15"/>
-  <!-- Documents on table -->
-  <rect x="300" y="280" width="60" height="44" rx="3" fill="#FFFFFF" stroke="#C9913B" stroke-width="1.5"/>
-  <line x1="310" y1="292" x2="350" y2="292" stroke="#C9913B" stroke-width="1" opacity="0.5"/>
-  <line x1="310" y1="300" x2="345" y2="300" stroke="#1B2A4A" stroke-width="1" opacity="0.3"/>
-  <line x1="310" y1="308" x2="340" y2="308" stroke="#1B2A4A" stroke-width="1" opacity="0.3"/>
-  <rect x="380" y="285" width="55" height="40" rx="3" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="1" opacity="0.6"/>
-  <line x1="390" y1="297" x2="425" y2="297" stroke="#1B2A4A" stroke-width="1" opacity="0.3"/>
-  <line x1="390" y1="305" x2="420" y2="305" stroke="#1B2A4A" stroke-width="1" opacity="0.3"/>
-  <!-- Person left - consultant -->
-  <circle cx="280" cy="200" r="28" fill="#1B2A4A"/>
-  <rect x="254" y="236" width="52" height="70" rx="10" fill="#1B2A4A"/>
-  <rect x="258" y="240" width="44" height="60" rx="8" fill="#2D4A7A"/>
-  <!-- Person right - client -->
-  <circle cx="520" cy="205" r="26" fill="#4A5568"/>
-  <rect x="496" y="239" width="48" height="65" rx="10" fill="#4A5568"/>
-  <rect x="500" y="243" width="40" height="55" rx="8" fill="#5A6578"/>
-  <!-- Handshake accent -->
-  <path d="M370 270 L400 260 L430 270" stroke="#C9913B" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <circle cx="400" cy="258" r="4" fill="#C9913B"/>
-  <!-- Decorative elements -->
-  <circle cx="650" cy="120" r="40" fill="#C9913B" opacity="0.08"/>
-  <circle cx="150" cy="420" r="50" fill="#1B2A4A" opacity="0.05"/>
-  <path d="M100 100 L140 100 L140 140" stroke="#C9913B" stroke-width="2" opacity="0.3" fill="none"/>
-  <path d="M700 500 L660 500 L660 460" stroke="#1B2A4A" stroke-width="2" opacity="0.2" fill="none"/>
-  <!-- Chart element in background -->
-  <rect x="560" y="340" width="140" height="100" rx="4" fill="#FFFFFF" opacity="0.8"/>
-  <polyline points="575,420 600,400 625,410 650,380 680,390" stroke="#C9913B" stroke-width="2" fill="none"/>
-  <circle cx="600" cy="400" r="3" fill="#C9913B"/>
-  <circle cx="650" cy="380" r="3" fill="#C9913B"/>
-  <!-- Shield icon - security theme -->
-  <path d="M120 200 L120 240 C120 270 160 290 160 290 C160 290 200 270 200 240 L200 200 L160 185 Z" fill="none" stroke="#1B2A4A" stroke-width="2" opacity="0.15"/>
-  <path d="M148 230 L158 240 L175 218" stroke="#C9913B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" width="800" height="560" fill="none">
+    <defs>
+        <linearGradient id="cns-gold" x1="208" y1="332" x2="594" y2="170" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#9FAFCA"/>
+            <stop offset="0.55" stop-color="#5E7393"/>
+            <stop offset="1" stop-color="#C9913B"/>
+        </linearGradient>
+    </defs>
+    <path d="M170 388C232 336 292 308 356 298C413 289 468 275 522 244C565 219 608 187 654 146" stroke="#6B7F9F" stroke-opacity="0.2" stroke-width="2" stroke-dasharray="8 14" stroke-linecap="round"/>
+    <path d="M206 334L344 244L468 286L594 170" stroke="#1B2A4A" stroke-opacity="0.16" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M208 334L352 286L488 304L594 170" stroke="url(#cns-gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="208" cy="334" r="6" fill="#556A8A" fill-opacity="0.62"/>
+    <circle cx="352" cy="286" r="5" fill="#556A8A" fill-opacity="0.78"/>
+    <circle cx="488" cy="304" r="5" fill="#556A8A" fill-opacity="0.78"/>
+    <circle cx="594" cy="170" r="8" fill="#FBFCFD" stroke="#C9913B" stroke-width="3"/>
+    <circle cx="344" cy="244" r="4" fill="#C9913B"/>
+    <path d="M286 154C326 130 372 118 426 118C485 118 540 132 600 164" stroke="#1B2A4A" stroke-opacity="0.08" stroke-width="2" stroke-linecap="round"/>
+    <path d="M248 382H338" stroke="#1B2A4A" stroke-opacity="0.08" stroke-width="2" stroke-linecap="round"/>
+    <path d="M502 382H608" stroke="#1B2A4A" stroke-opacity="0.08" stroke-width="2" stroke-linecap="round"/>
+    <path d="M594 170V110" stroke="#1B2A4A" stroke-opacity="0.08" stroke-width="2"/>
+    <path d="M574 110H614" stroke="#1B2A4A" stroke-opacity="0.08" stroke-width="2" stroke-linecap="round"/>
 </svg>

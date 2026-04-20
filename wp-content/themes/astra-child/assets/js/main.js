@@ -9,6 +9,101 @@
     'use strict';
 
     var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var languageScrollRestoreKey = 'floruLanguageScrollRestore';
+
+    function getLanguageScrollRestorePageKey(urlValue) {
+        try {
+            var url = new URL(urlValue, window.location.origin);
+            url.searchParams.delete('lang');
+            return url.pathname + url.search;
+        } catch (error) {
+            return window.location.pathname + window.location.search;
+        }
+    }
+
+    function readLanguageScrollRestoreState() {
+        try {
+            var rawValue = window.sessionStorage.getItem(languageScrollRestoreKey);
+            if (!rawValue) return null;
+
+            var state = JSON.parse(rawValue);
+            if (!state || typeof state !== 'object') return null;
+
+            return state;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function clearLanguageScrollRestoreState() {
+        try {
+            window.sessionStorage.removeItem(languageScrollRestoreKey);
+        } catch (error) {
+            // Ignore storage failures and fall back to default browser behavior.
+        }
+    }
+
+    function initLanguageSwitchScrollPersistence() {
+        document.addEventListener('click', function (event) {
+            var link = event.target.closest('.floru-footer__language-link');
+            if (!link) return;
+
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                return;
+            }
+
+            try {
+                window.sessionStorage.setItem(
+                    languageScrollRestoreKey,
+                    JSON.stringify({
+                        page: getLanguageScrollRestorePageKey(link.href),
+                        x: window.scrollX || 0,
+                        y: window.scrollY || 0,
+                        createdAt: Date.now(),
+                    })
+                );
+            } catch (error) {
+                // Ignore storage failures and keep the existing language switch behavior.
+            }
+        });
+    }
+
+    function initLanguageSwitchScrollRestore() {
+        var state = readLanguageScrollRestoreState();
+        if (!state) return;
+
+        var currentPage = getLanguageScrollRestorePageKey(window.location.href);
+        var isFreshState = typeof state.createdAt === 'number' && Date.now() - state.createdAt < 120000;
+        var targetX = typeof state.x === 'number' ? state.x : 0;
+        var targetY = typeof state.y === 'number' ? state.y : 0;
+
+        if (!isFreshState || state.page !== currentPage) {
+            clearLanguageScrollRestoreState();
+            return;
+        }
+
+        clearLanguageScrollRestoreState();
+
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+
+        var restoreScrollPosition = function () {
+            window.scrollTo(targetX, targetY);
+        };
+
+        restoreScrollPosition();
+        window.requestAnimationFrame(restoreScrollPosition);
+        window.setTimeout(restoreScrollPosition, 80);
+        window.setTimeout(restoreScrollPosition, 220);
+        window.addEventListener('load', restoreScrollPosition, { once: true });
+
+        window.setTimeout(function () {
+            if ('scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'auto';
+            }
+        }, 300);
+    }
 
     /* ======================================================================
        SCROLL-TRIGGERED ANIMATIONS (Intersection Observer)
@@ -155,13 +250,54 @@
     }
 
     /* ======================================================================
+       CONTACT FORM — prevent double submit
+       ====================================================================== */
+
+    function initContactFormGuard() {
+        var form = document.querySelector('form.floru-form');
+        if (!form) return;
+
+        form.addEventListener('submit', function () {
+            var btn = form.querySelector('button[type="submit"]');
+            if (!btn || btn.disabled) return;
+
+            // Capture original label so we can restore on validation failure (browser keeps the page).
+            var labelEl = btn.querySelector('span.floru-btn__label');
+            var original = btn.innerHTML;
+
+            // Native validation: if the form is invalid, the browser cancels submit.
+            // We listen for invalid as a signal to NOT lock the button.
+            requestAnimationFrame(function () {
+                if (!form.checkValidity || form.checkValidity()) {
+                    btn.disabled = true;
+                    btn.setAttribute('aria-busy', 'true');
+                    btn.innerHTML = '<span>Sending...</span>';
+                }
+            });
+
+            // Safety net: if for any reason the page does not navigate within 8s, restore.
+            setTimeout(function () {
+                if (btn.disabled && document.body.contains(btn)) {
+                    btn.disabled = false;
+                    btn.removeAttribute('aria-busy');
+                    btn.innerHTML = original;
+                    if (labelEl) { /* noop, kept for ref */ }
+                }
+            }, 8000);
+        });
+    }
+
+    /* ======================================================================
        INITIALIZE
        ====================================================================== */
 
     document.addEventListener('DOMContentLoaded', function () {
+        initLanguageSwitchScrollRestore();
+        initLanguageSwitchScrollPersistence();
         initStaggerChildren();
         initScrollAnimations();
         initStatsCounter();
         initSmoothScroll();
+        initContactFormGuard();
     });
 })();
